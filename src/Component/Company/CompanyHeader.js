@@ -2,17 +2,15 @@ import React, { Component, Fragment } from 'react'
 import {
   AppBar,
   Toolbar,
-  IconButton,
   Typography,
   Button,
-  Grid,
   Avatar,
   Menu,
   MenuItem
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import { browserHistory } from 'react-router'
-import MenuIcon from '@material-ui/icons/Menu'
+// import { browserHistory } from 'react-router'
+// import MenuIcon from '@material-ui/icons/Menu'
 
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
@@ -60,7 +58,7 @@ class CompanyHeader extends Component {
     const { anchorEl } = this.state
     return (
       <Fragment>
-        {this.state.toggle == 'Main'
+        {this.state.toggle === 'Main'
           ? <AppBar position='fixed' style={{ flexGrow: 1 }}>
 
             <Toolbar>

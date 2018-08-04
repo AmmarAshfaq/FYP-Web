@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import {
-  Paper,
   Grid,
   Card,
   CardMedia,
@@ -10,7 +9,7 @@ import {
 import temperature from '../../images/Temperature.jpg'
 import rates from '../../images/Rates.jpg'
 import slider5 from '../../images/slider5.jpg'
-import {browserHistory} from 'react-router'
+// import {browserHistory} from 'react-router'
 import cropBuyer from '../../images/CropBuyer.jpg'
 import tractor from '../../images/Machinery/tractor1.jpg'
 import pesticide from '../../images/Pesticide.jpeg'

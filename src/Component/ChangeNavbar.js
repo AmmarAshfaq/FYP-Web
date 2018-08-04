@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react'
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import DrawerOpenClose from '../Container/DrawerOpenClose'
 import FarmerHeader from './Farmer/FarmerHeader'

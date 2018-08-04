@@ -29,9 +29,7 @@ const styles = theme => ({
   }
 })
 class Main extends Component {
-  constructor (props) {
-    super(props)
-  }
+ 
 
   render () {
     const { classes } = this.props

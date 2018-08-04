@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component} from 'react'
 import {
   Paper,
   Typography,
@@ -8,7 +8,6 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Collapse
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import StarIcon from '@material-ui/icons/Star'

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Paper, Tab, Tabs, Grid, Typography, Button } from '@material-ui/core'
+import { Paper, Tabs,  Button } from '@material-ui/core'
 
 export default class Footer extends Component {
   render () {

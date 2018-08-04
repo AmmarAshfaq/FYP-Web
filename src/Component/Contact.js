@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Paper, Typography, Grid, TextField, Button } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import Background from '../images/contact.jpg'
+// import Background from '../images/contact.jpg'
 const styles = theme => ({
   root: {
     marginTop: 80

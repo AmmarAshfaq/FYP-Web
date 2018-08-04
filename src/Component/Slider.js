@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Typography } from '@material-ui/core'
+// import { Typography } from '@material-ui/core'
 import './SliderC.css'
 const imgUrls = [
   {
@@ -33,24 +33,7 @@ const imgUrls = [
   }
 ]
 
-const styles = {
-  manageArrow: {
-    position: 'absolute',
-    color: '#000',
-    cursor: 'pointer',
-    fontSize: '3rem'
-  },
-  rightArrow: {
-    right: -5,
-    top: 255
-  },
-  leftArrow: {
-    position: 'absolute',
-    color: '#000',
-    cursor: 'pointer',
-    fontSize: '3rem'
-  }
-}
+
 
 export default class Slider extends React.Component {
   constructor (props) {
@@ -133,13 +116,13 @@ export default class Slider extends React.Component {
   }
 }
 
-const Arrow = ({ direction, clickFunction, glyph }) => {
-  return (
-    <div onClick={clickFunction} style={styles.manageArrow}>
-      {glyph}
-    </div>
-  )
-}
+// const Arrow = ({ direction, clickFunction, glyph }) => {
+//   return (
+//     <div onClick={clickFunction} style={styles.manageArrow}>
+//       {glyph}
+//     </div>
+//   )
+// }
 
 const ImageSlide = ({ url }) => {
   console.log(url.img)
@@ -183,7 +166,7 @@ const ImageSlide = ({ url }) => {
       >
         {' '}{url.functionTitle1}
       </p>
-      <img src={url.img} style={styles.imgStyle} />
+      <img src={url.img} style={styles.imgStyle} alt="loading..."/>
     </div>
   )
 }

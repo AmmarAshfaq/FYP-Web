@@ -2,10 +2,8 @@ import React, { Component, Fragment } from 'react'
 import {
   AppBar,
   Toolbar,
-  IconButton,
   Typography,
   Button,
-  Grid,
   Avatar,
   Menu,
   MenuItem
@@ -13,7 +11,7 @@ import {
 // import history from '../History'
 import { withStyles } from '@material-ui/core/styles'
 import { browserHistory } from 'react-router'
-import MenuIcon from '@material-ui/icons/Menu'
+// import MenuIcon from '@material-ui/icons/Menu'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { selectManu } from './store/action/action'
@@ -64,7 +62,7 @@ class DrawerOpenClose extends Component {
     // console.log(this.props.itemList)
     return (
       <Fragment>
-        {this.state.toggle == 'Main'
+        {this.state.toggle === 'Main'
           ? <AppBar position='fixed' style={{ flexGrow: 1 }}>
 
             <Toolbar>
@@ -102,6 +100,7 @@ class DrawerOpenClose extends Component {
                     Contact
                   </Button>
                 <Button
+                style={{position:'relative'}}
                   aria-owns={anchorEl ? 'simple-menu' : null}
                   aria-haspopup='true'
                   onClick={this.handleClick}
@@ -110,6 +109,7 @@ class DrawerOpenClose extends Component {
                     Services
                   </Button>
                 <Menu
+                style={{position:'absolute',top:40}}
                   id='simple-menu'
                   anchorEl={anchorEl}
                   open={Boolean(anchorEl)}
