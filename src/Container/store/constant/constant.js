@@ -1,6 +1,7 @@
 const ActionTypes = {
     MENU: 'MENU',
-    CHANGE:'CHANGE'
+    CHANGE:'CHANGE',
+    OPEN:'OPEN'
   }
   
   export default ActionTypes;

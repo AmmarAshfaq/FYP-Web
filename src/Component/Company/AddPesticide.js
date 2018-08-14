@@ -1,109 +1,90 @@
-import React from 'react'
-import { TextField,Button } from '@material-ui/core'
-import { browserHistory } from 'react-router'
-const style = {
-  paperWapper: {
-    width: '40%',
-    margin: '100px auto 0px',
-    border: '5px solid #fff',
-    padding: '20px',
-    backgroundColor: '#3f51b5', 
-    color: '#fff',
-    textAlign:'center',
-    borderRadius: 10
+import React, { Component } from 'react'
+import TextField from '@material-ui/core/TextField'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import { Button } from '@material-ui/core'
+import { connect } from 'react-redux'
+import { openModel } from '../../Container/store/action/action'
 
-  },
-  textStyle: {
-    width: '100%',
-    color:'#fff'
-  },
-  button: {
-    width: '100%',
-    marginTop: '10px',
-    marginBottom: '10px',
-    // backgroundColor:'#fff',
-    color:'#fff',
-    backgroundColor:'#000'
-  },
-  heading: {
-    color: '#fff'
+class AddPesticide extends Component {
+ 
+  handleClose = () => {
+    this.props.itemValueFunc(false)
   }
-}
-
-class AddPesticide extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      name: '',
-      price: 0,
-      image: [],
-      description:''
-
-    }
-    console.log(this.props)
-  }
-  
-  updateValue = (ev, target) => {
-    let obj = {}
-    obj[target] = ev.target.value
-    this.setState(obj)
-  }
-  goTo = () => {
-    browserHistory.push('/companymain')
-  }
-
   render () {
     return (
-      <div style={style.paperWapper}>
-        <div>
-          <h1 style={style.heading}>Add Pesticide</h1>
-          <TextField
-            onChange={event => {
-              this.updateValue(event, 'name')
-            }}
-            value={this.state.name}
-            style={style.textStyle}
-            type='text'
-            label='Pesticide Name'
-          /><br />
-           <TextField
-            onChange={event => {
-              this.updateValue(event, 'price')
-            }}
-            value={this.state.price}
-            style={style.textStyle}
-            type='text'
-            label='Pesticide Price'
-          /><br />
-           <TextField
-            onChange={event => {
-              this.updateValue(event, 'image')
-            }}
-            value={this.state.image}
-            style={style.textStyle}
-            type='text'
-            label='Add Image'
-          /><br />
-          <TextField
-            onChange={event => {
-              this.updateValue(event, 'decription')
-            }}
-            value={this.state.description}
-            style={style.textStyle}
-            type='text'
-            label='Decription'
-          /><br />
-          
-         
-          <Button  onClick={this.goTo} style={style.button}>
-            Add
-          </Button>
-          
+      <div>
 
-        </div>
+        <Dialog
+          open={this.props.itemValue.reducer.modelOpen}
+          onClose={this.handleClose}
+          aria-labelledby='form-dialog-title'
+        >
+          <DialogTitle id='form-dialog-title'>Fill Form</DialogTitle>
+          <DialogContent>
+          
+            <TextField
+              autoFocus
+              margin='dense'
+              id='name'
+              label='Email Address'
+              type='email'
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin='dense'
+              id='name'
+              label='Email Address'
+              type='email'
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin='dense'
+              id='name'
+              label='Email Address'
+              type='email'
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin='dense'
+              id='name'
+              label='Email Address'
+              type='email'
+              fullWidth
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color='primary'>
+              Cancel
+            </Button>
+            <Button onClick={this.handleClose} color='primary'>
+              Subscribe
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     )
   }
 }
 
-export default AddPesticide
+function mapStateToProps (state) {
+  console.log(state)
+  return {
+    itemValue: state
+  }
+}
+function mapDispatchToProps (dispatch) {
+  return {
+    itemValueFunc: data => {
+      dispatch(openModel(data))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPesticide)

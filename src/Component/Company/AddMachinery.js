@@ -1,115 +1,96 @@
-import React from 'react'
-import { TextField, Button } from '@material-ui/core'
-import { browserHistory } from 'react-router'
-const style = {
-  paperWapper: {
-    width: '40%',
-    margin: '100px auto 0px',
-    border: '5px solid #fff',
-    padding: '20px',
-    backgroundColor: '#3f51b5',
-    color: '#fff',
-    textAlign: 'center',
-    borderRadius: 10
-  },
-  textStyle: {
-    width: '100%',
-    color: '#fff'
-  },
-  button: {
-    width: '100%',
-    marginTop: '10px',
-    marginBottom: '10px',
-    // backgroundColor:'#fff',
-    color: '#fff',
-    backgroundColor: '#000'
-  },
-  heading: {
-    color: '#fff'
-  }
-}
+import React, { Component } from 'react'
+import TextField from '@material-ui/core/TextField'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import Typography from '@material-ui/core/Typography'
+import { Button } from '@material-ui/core'
+import { connect } from 'react-redux'
+import { openModel } from '../../Container/store/action/action'
 
-class AddMachinery extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      modelNum: '',
-      name: '',
-      image: [],
-      description: '',
-      price: 0
-    }
-    console.log(this.props)
+class AddMachinery extends Component {
+ 
+  handleClose = () => {
+    this.props.itemValueFunc(false)
   }
-
-  updateValue = (ev, target) => {
-    let obj = {}
-    obj[target] = ev.target.value
-    this.setState(obj)
-  }
-  goTo = () => {
-    browserHistory.push('/companymain')
-  }
-
   render () {
     return (
-      <div style={style.paperWapper}>
-        <div>
-          <h1 style={style.heading}>Add Machinery</h1>
-          <TextField
-            onChange={event => {
-              this.updateValue(event, 'modelNo')
-            }}
-            value={this.state.name}
-            style={style.textStyle}
-            type='text'
-            label='Model No'
-          /><br />
-          <TextField
-            onChange={event => {
-              this.updateValue(event, 'name')
-            }}
-            value={this.state.price}
-            style={style.textStyle}
-            type='text'
-            label='Machine Name'
-          /><br />
-          <TextField
-            onChange={event => {
-              this.updateValue(event, 'image')
-            }}
-            value={this.state.image}
-            style={style.textStyle}
-            type='text'
-            label='Add Image'
-          /><br />
-          <TextField
-            onChange={event => {
-              this.updateValue(event, 'decription')
-            }}
-            value={this.state.description}
-            style={style.textStyle}
-            type='text'
-            label='Decription'
-          /><br />
-          <TextField
-            onChange={event => {
-              this.updateValue(event, 'Price')
-            }}
-            value={this.state.Product}
-            style={style.textStyle}
-            type='text'
-            label='Price'
-          /><br />
+      <div>
 
-          <Button onClick={this.goTo} style={style.button}>
-            Add
-          </Button>
-
-        </div>
+        <Dialog
+          open={this.props.itemValue.reducer.modelOpen}
+          onClose={this.handleClose}
+          aria-labelledby='form-dialog-title'
+        >
+          <DialogTitle id='form-dialog-title'>
+          <Typography 
+          variant='display1'
+          color='secondry'
+          align='center'>Add Product Detail!!</Typography>
+          </DialogTitle>
+          <DialogContent>
+          
+            <TextField
+              autoFocus
+              margin='dense'
+              id='name'
+              label='Name'
+              type='name'
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin='dense'
+              id='price'
+              label='Price'
+              type='name'
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin='dense'
+              id='discription'
+              label='Discription'
+              type='email'
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin='dense'
+              id='image'
+              label='Add Image'
+              type='email'
+              fullWidth
+            />
+          </DialogContent>
+          <DialogActions style={{alignItems:'center'}}>
+            <Button onClick={this.handleClose} color='primary'>
+              Cancel
+            </Button>
+            <Button onClick={this.handleClose} color='primary'>
+              Submit
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     )
   }
 }
 
-export default AddMachinery
+function mapStateToProps (state) {
+  console.log(state)
+  return {
+    itemValue: state
+  }
+}
+function mapDispatchToProps (dispatch) {
+  return {
+    itemValueFunc: data => {
+      dispatch(openModel(data))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddMachinery)

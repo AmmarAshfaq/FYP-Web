@@ -13,6 +13,9 @@ import AddMachinery from './Component/Company/AddMachinery'
 import AddPesticide from './Component/Company/AddPesticide'
 import About from './Component/About'
 import Contact from './Component/Contact'
+import ProductList from './Container/ProductList'
+import ProblemSolution from './Container/ProblemSolution'
+import ProductData from './Container/ProductData'
 
 
 export default class Routers extends Component {
@@ -32,6 +35,10 @@ export default class Routers extends Component {
         <Route path='/addfertilizer' component={AddFertilizer}/>
         <Route path='/about' component={About}/>
         <Route path='/contact' component={Contact}/>
+        <Route path='/productList' component={ProductList}/>
+        <Route path='/problemSolution' component={ProblemSolution}/>
+        <Route path='/productdata' component={ProductData}/>
+        
 
       </Router>
     )

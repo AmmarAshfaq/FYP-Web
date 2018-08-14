@@ -9,7 +9,7 @@ import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { openModel } from '../../Container/store/action/action'
 
-class AddFertilizer extends Component {
+class AddCrop extends Component {
  
   handleClose = () => {
     this.props.itemValueFunc(false)
@@ -18,47 +18,25 @@ class AddFertilizer extends Component {
     return (
       <div>
 
-         <Dialog
+        <Dialog
           open={this.props.itemValue.reducer.modelOpen}
           onClose={this.handleClose}
           aria-labelledby='form-dialog-title'
         >
-          <DialogTitle id='form-dialog-title'>Add Product Detail!!</DialogTitle>
+          <DialogTitle id='form-dialog-title'>Subscribe</DialogTitle>
           <DialogContent>
-            
+            <DialogContentText>
+              To subscribe to this website, please enter your email address here. We will send
+              updates occasionally.
+            </DialogContentText>
             <TextField
               autoFocus
               margin='dense'
               id='name'
-              label='Name'
-              type='name'
+              label='Email Address'
+              type='email'
               fullWidth
             />
-            <TextField
-              autoFocus
-              margin='dense'
-              id='price'
-              label='Price'
-              type='name'
-              fullWidth
-            />
-            <TextField
-              autoFocus
-              margin='dense'
-              id='image'
-              label='Add Image'
-              type='name'
-              fullWidth
-            />
-            <TextField
-              autoFocus
-              margin='dense'
-              id='description'
-              label='Description'
-              type='name'
-              fullWidth
-            />
-           
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color='primary'>
@@ -88,4 +66,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddFertilizer)
+export default connect(mapStateToProps, mapDispatchToProps)(AddCrop)

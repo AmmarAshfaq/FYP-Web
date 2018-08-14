@@ -304,4 +304,4 @@ const rates = [
 ]
 
 
-export default rates;
+export default  rates;

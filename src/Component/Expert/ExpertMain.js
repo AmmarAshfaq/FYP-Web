@@ -1,149 +1,266 @@
 import React, { Component } from 'react'
+import croprates from '../AllData/CropRates'
+import Search from '@material-ui/icons/Search'
+import KeyBoardArrow from '@material-ui/icons/KeyboardArrowDown'
+import MachinerySlider from '../../Container/ProductSlider'
+import FarmerProblem from '../AllData/FarmerProblem'
+import ImgData from '../AllData/MachineryData'
+
+import FertilizerData from '../AllData/FertilizerData'
+import PesticideData from '../AllData/PesticideData'
+import ProblemSlider from '../../Container/ProblemSlider'
+
+import classNames from 'classnames'
+
 import {
-  
+  Button,
+  Menu,
+  MenuItem,
+  Paper,
+  Table,
+  TableHead,
+  TableRow,
+  TableBody,
+  TableCell,
   Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  Typography
+  Typography,
+  TextField,
+  InputAdornment
 } from '@material-ui/core'
-import problem from '../../images/ProblemFarmer.jpg'
-import slider5 from '../../images/slider5.jpg'
-// import {browserHistory} from 'react-router'
+import { withStyles } from '@material-ui/core/styles'
 
-import tractor from '../../images/Machinery/tractor1.jpg'
-import pesticide from '../../images/Pesticide.jpeg'
+const CustomTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    textAlign: 'left',
+    color: theme.palette.common.white
+  },
+  body: {
+    fontSize: 14,
+    textAlign: 'left'
+  }
+}))(TableCell)
 
-
-export default class ExpertMain extends Component {
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    marginTop: 100,
+    marginRight: 15,
+    marginLeft: 15,
+    marginBottom: 15
+  },
+  papper: {
+    padding: theme.spacing.unit * 2,
+    color: theme.palette.text.secondary,
+  },
+  rootTable: {
+    width: '100%',
+    overflowX: 'auto'
+  },
+  table: {
+    minWidth: 700
+  },
+  row: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.background.default
+    }
+  },
+  margin: {
+    margin: theme.spacing.unit
+  },
   
+})
+class ExpertMain extends Component {
+  state = {
+    selectList: [],
+    search: '',
+    city: '',
+    anchorEl: null
+  }
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget })
+  }
+
+  handleClose = () => {
+    this.setState({ anchorEl: null })
+  }
+
+  onChange = (name, event) => {
+    this.setState({
+      [name]: event.target.value
+    })
+  }
+  onSelect = name => {
+    this.setState({
+      city: name
+    })
+  }
+  onSubmit = () => {
+    this.setState({
+      selectList: croprates.filter(
+        item =>
+          item.category === this.state.search || item.city === this.state.city
+      )
+    })
+  }
+
   render () {
+    const { classes } = this.props
+    const { selectList, city, search, anchorEl } = this.state
+    let i = 0
     return (
-      <div style={{backgroundColor: '#F5FCFF'}}>
-      
-        <Grid container sm>
-          <Grid item sm>
-            <Card
-              style={{
-                maxWidth: 345,
-                marginLeft: 250,
-                marginTop: 80
-              }}
-            >
-              <CardMedia
-                style={styles.media}
-                image={problem}
-                title='Farmer Problem'
-              />
-              <CardContent>
-                <Typography
-                  gutterBottom
-                  variant='headline'
-                  style={styles.textDec}
-                  component='h2'
-                >
-               Farmer Problem
-                </Typography>
-
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item sm>
-            <Card
-              style={{
-                maxWidth: 345,
-                marginLeft: 10,
-                marginTop: 80
-              }}
-            >
-              <CardMedia
-                style={styles.media}
-                image={tractor}
-                title='Machinery'
-              />
-              <CardContent>
-                <Typography
-                  gutterBottom
-                  variant='headline'
-                  style={styles.textDec}
-                  component='h2'
-                >
-                Machinery
-                </Typography>
-
-              </CardContent>
-            </Card>
+      <div className={classes.root}>
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>xs=12</Paper>
           </Grid>
 
-        </Grid>
-        <Grid container sm>
-          <Grid item sm>
-            <Card
-              style={{
-                maxWidth: 345,
-                marginLeft: 250,
-                marginTop: 10,
-                marginBottom:15
+          <Grid item xs={12} sm={9}>
+            <Paper className={classes.paper}>
+              <Paper className={classes.rootTable}>
+                <Table className={classes.table}>
+
+                  <TableHead>
+                    <TableRow>
+                      <TableCell colSpan='2'>
+                        <Typography variant='headline' gutterBottom>
+                          Crop Rates
+                        </Typography>
+                      </TableCell>
+                      <TableCell colSpan='2'>
+                        {/* <button
+                          onClick={this.onSubmit}
+                          style={{ float: 'right' }}
+                        >
+                          Submit
+                        </button> */}
+
+                        <Button
+                          variant='contained'
+                          color='default'
+                          onClick={this.onSubmit}
+                          style={{ float: 'right', padding: 10 }}
+                        >
+                          Submit
+                        </Button>
+                        <Button
+                          style={{
+                            position: 'relative',
+                            float: 'right',
+                            marginRight: 5
+                          }}
+                          aria-owns={anchorEl ? 'simple-menu' : null}
+                          aria-haspopup='true'
+                          onClick={this.handleClick}
+                          color='default'
+                          variant='contained'
+                        >
+                          Select
+                          <KeyBoardArrow />
+                        </Button>
+                        <Menu
+                          style={{ position: 'absolute', top: 40 }}
+                          id='simple-menu'
+                          anchorEl={anchorEl}
+                          open={Boolean(anchorEl)}
+                          onClose={this.handleClose}
+                        >
+                          <MenuItem
+                            onClick={this.onSelect.bind(this, 'Karachi')}
+                          >
+                            Karachi
+                          </MenuItem>
+                          <MenuItem
+                            onClick={this.onSelect.bind(this, 'Hyderabad')}
+                          >
+                            Hyderabad
+                          </MenuItem>
+                          <MenuItem
+                            onClick={this.onSelect.bind(this, 'Lahore')}
+                          >
+                            Lahore
+                          </MenuItem>
+
+                          s{' '}
+                        </Menu>
+
+                     
+                        <TextField
+                          className={classes.margin}
+                          id='input-with-icon-textfield'
+                          onChange={this.onChange.bind(this, 'search')}
+                          // label="Search"
+                          value={search}
+                          style={{ float: 'right' }}
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position='start'>
+                                <Search />
+                              </InputAdornment>
+                            )
+                          }}
+                        />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell colSpan='4'>
+                        <Typography
+                          variant='headline'
+                          gutterBottom
+                          style={{ textAlign: 'center' }}
+                        >
+                          {this.state.city} Market Rate's
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow className={classes.row}>
+                      <CustomTableCell numeric>No.</CustomTableCell>
+                      <CustomTableCell numeric>Name</CustomTableCell>
+                      <CustomTableCell numeric>Price</CustomTableCell>
+                      <CustomTableCell numeric>Weight</CustomTableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {selectList.map((n, key) => {
+                      return (
+                        <TableRow className={classes.row} key={n.name}>
+                          <CustomTableCell numeric>
+                            {++i}
+                          </CustomTableCell>
+                          <CustomTableCell numeric>{n.name}</CustomTableCell>
+                          <CustomTableCell numeric>{n.price}</CustomTableCell>
+                          <CustomTableCell numeric>{n.weight}</CustomTableCell>
+                        </TableRow>
+                      )
+                    })}
+                  </TableBody>
+                </Table>
+              </Paper>
+            </Paper>
+
+          </Grid>
+          <Grid item xs={12} sm container>
+            <Grid item xs container direction='column'>
+              <Grid item xs>
+                <Paper className={classNames(classes.paper)}><MachinerySlider info={ImgData}/></Paper>
+                <Paper className={classNames(classes.paper)}><MachinerySlider info={FertilizerData}/></Paper>
+                <Paper className={classNames(classes.paper)}><MachinerySlider info={PesticideData}/></Paper>
                 
-              }}
-            >
-              <CardMedia
-                style={styles.media}
-                image={slider5}
-                title='Fertilizer'
-              />
-              <CardContent>
-                <Typography
-                  gutterBottom
-                  variant='headline'
-                  style={styles.textDec}
-                  component='h2'
-                >
-                  Fertilizer's
-                </Typography>
 
-              </CardContent>
-            </Card>
+              </Grid>
+
+            </Grid>
+
           </Grid>
-          <Grid item sm>
-            <Card
-              style={{
-                maxWidth: 345,
-                marginLeft: 10,
-                marginTop: 10,
-                marginBottom:15
-              }}
-            >
-              <CardMedia
-                style={styles.media}
-                image={pesticide}
-                title='Pesticide'
-              />
-              <CardContent>
-                <Typography
-                  gutterBottom
-                  variant='headline'
-                  style={styles.textDec}
-                  component='h2'
-                >
-                  Pesticide's
-                </Typography>
 
-              </CardContent>
-            </Card>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}><ProblemSlider info={FarmerProblem}/></Paper>
           </Grid>
         </Grid>
+
       </div>
     )
   }
 }
 
-const styles = {
-  media: {
-    height: 0,
-    paddingTop: '56.25%' // 16:9
-  },
-  textDec: {
-    textAlign: 'center'
-  }
-}
+export default withStyles(styles)(ExpertMain)

@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-// import { Typography } from '@material-ui/core'
 import './SliderC.css'
 const imgUrls = [
   {
@@ -43,12 +42,10 @@ export default class Slider extends React.Component {
       currentImageIndex: 0
     }
 
-    // this.nextSlide = this.nextSlide.bind(this)
-    // this.previousSlide = this.previousSlide.bind(this)
+   
   }
 
   previousSlide () {
-    // console.log(imgUrls)
     const lastIndex = imgUrls.length - 1
     const { currentImageIndex } = this.state
     const shouldResetIndex = currentImageIndex === 0
@@ -87,11 +84,9 @@ export default class Slider extends React.Component {
             color: '#000',
             cursor: 'pointer',
             fontSize: '3rem',
-            // right: -5,
             top: 255
           }}
         >
-          {/* {glyph} */}
         ◀
           
         </div>
@@ -108,7 +103,6 @@ export default class Slider extends React.Component {
             top: 255
           }}
         >
-          {/* {glyph} */}
           ▶
         </div>
       </Fragment>
@@ -116,19 +110,15 @@ export default class Slider extends React.Component {
   }
 }
 
-// const Arrow = ({ direction, clickFunction, glyph }) => {
-//   return (
-//     <div onClick={clickFunction} style={styles.manageArrow}>
-//       {glyph}
-//     </div>
-//   )
-// }
+
 
 const ImageSlide = ({ url }) => {
   console.log(url.img)
   const styles = {
     imgStyle: {
       width: '100%',
+      // overflowX:'hidden',
+    // overflowY:'hidden',
       height: 500,
       paddingTop: 40
     },
@@ -149,7 +139,6 @@ const ImageSlide = ({ url }) => {
           right: 950,
           fontSize: 60,
           color: '#fff',
-          // width:'100%',
           
         }}
       >

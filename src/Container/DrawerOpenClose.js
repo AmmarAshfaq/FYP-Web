@@ -31,6 +31,9 @@ class DrawerOpenClose extends Component {
     this.setState({ anchorEl: event.currentTarget })
   }
 
+  handleClose = () =>{
+    this.setState({anchorEl:null})
+  }
   // componentWillMount(){
   //   this.setState({toggle:this.props.itemList})
   // }

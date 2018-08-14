@@ -2,9 +2,14 @@ import React, { Component } from 'react'
 import croprates from '../AllData/CropRates'
 import Search from '@material-ui/icons/Search'
 import KeyBoardArrow from '@material-ui/icons/KeyboardArrowDown'
-import MachinerySlider from '../../Container/MachinerySlider'
-import FertilizerSlider from '../../Container/FertilizerSlider'
-import PesticideSlider from '../../Container/PesticideSlider'
+import MachinerySlider from '../../Container/ProductSlider'
+import ProblemData from '../AllData/ProblemData'
+import ImgData from '../AllData/MachineryData'
+
+import FertilizerData from '../AllData/FertilizerData'
+import PesticideData from '../AllData/PesticideData'
+import ProblemSlider from '../../Container/ProblemSlider'
+
 import classNames from 'classnames'
 
 import {
@@ -23,18 +28,14 @@ import {
   InputAdornment
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-// import { grey } from '@material-ui/core/colors/grey'
 
-// import { browserHistory } from 'react-router'
 const CustomTableCell = withStyles(theme => ({
   head: {
     backgroundColor: theme.palette.common.black,
     textAlign: 'left',
-    // width:'100%',
     color: theme.palette.common.white
   },
   body: {
-    // width:'100%',
     fontSize: 14,
     textAlign: 'left'
   }
@@ -98,7 +99,7 @@ class FarmerMain extends Component {
     this.setState({
       selectList: croprates.filter(
         item =>
-          item.category === this.state.search && item.city === this.state.city
+          item.category === this.state.search || item.city === this.state.city
       )
     })
   }
@@ -106,7 +107,6 @@ class FarmerMain extends Component {
   render () {
     const { classes } = this.props
     const { selectList, city, search, anchorEl } = this.state
-    console.log(city)
     let i = 0
     return (
       <div className={classes.root}>
@@ -184,9 +184,7 @@ class FarmerMain extends Component {
                           s{' '}
                         </Menu>
 
-                        {/* <input
-                          type='text'
-                        /> */}
+                     
                         <TextField
                           className={classes.margin}
                           id='input-with-icon-textfield'
@@ -244,9 +242,9 @@ class FarmerMain extends Component {
           <Grid item xs={12} sm container>
             <Grid item xs container direction='column'>
               <Grid item xs>
-                <Paper className={classNames(classes.paper)}><MachinerySlider/></Paper>
-                <Paper className={classNames(classes.paper)}><FertilizerSlider/></Paper>
-                <Paper className={classNames(classes.paper)}><PesticideSlider/></Paper>
+                <Paper className={classNames(classes.paper)}><MachinerySlider info={ImgData}/></Paper>
+                <Paper className={classNames(classes.paper)}><MachinerySlider info={FertilizerData}/></Paper>
+                <Paper className={classNames(classes.paper)}><MachinerySlider info={PesticideData}/></Paper>
                 
 
               </Grid>
@@ -256,7 +254,7 @@ class FarmerMain extends Component {
           </Grid>
 
           <Grid item xs={12}>
-            <Paper className={classes.paper}>xs=12</Paper>
+            <Paper className={classes.paper}><ProblemSlider info={ProblemData}/></Paper>
           </Grid>
         </Grid>
 

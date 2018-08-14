@@ -6,60 +6,54 @@ import {
   Button,
   Avatar,
   Menu,
-  MenuItem
+  MenuItem,
+  Badge
+  
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-// import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router'
+import DownArrow from '@material-ui/icons/KeyboardArrowDown'
+import { connect } from 'react-redux'
+import { openModel ,changeNavbar} from '../../Container/store/action/action'
+import { compose } from 'redux'
+import AddPesticide from './AddPesticide'
+import AddMachinery from './AddMachinery'
+import AddFertilizer from './AddFertilizer'
 // import MenuIcon from '@material-ui/icons/Menu'
 
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
-  titleStyle: { flexDirection: 'column', flexGrow: 1 }
+  titleStyle: { flexDirection: 'column', flexGrow: 1 },
+  buttonStyle: { marginRight: 5, position: 'relative' }
+  
 })
 class CompanyHeader extends Component {
   constructor () {
     super()
     this.state = {
-      toggle: 'Main',
       achorEl: null
     }
   }
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget })
   }
+  handleClose = () => {
+    this.setState({ anchorEl: null })
+  }
 
-  // componentWillMount(){
-  //   this.setState({toggle:this.props.itemList})
-  // }
-//   changeScreen = argument => {
-//     //  browserHistory.push('/login')
-//     // console.log(argument)
-//     if (argument === 'Main') {
-//       browserHistory.push('/')
-//       console.log(argument)
-//     } else if (argument === 'Company') {
-//       browserHistory.push('/login')
-//     } else if (argument === 'Expert') {
-//       browserHistory.push('/login')
-//     } else if (argument === 'Farmer') {
-//       browserHistory.push('/login')
-//     } else if (argument === 'Buyer') {
-//       browserHistory.push('/login')
-//     } else if (argument === 'Contact') {
-//       browserHistory.push('/contact')
-//     } else if (argument === 'About') {
-//       browserHistory.push('/about')
-//     }
-//     // this.props.itemAdd(argument)
-//     this.setState({ anchorEl: null })
-//   }
+  handleClickOpen = () => {
+    this.props.selectValue(true)
+  }
+  handleLogOut=(passParam)=>{
+    browserHistory.push('/login')
+    this.props.changeRoute(passParam)
+      }
   render () {
     const { classes } = this.props
     const { anchorEl } = this.state
     return (
       <Fragment>
-        {this.state.toggle === 'Main'
-          ? <AppBar position='fixed' style={{ flexGrow: 1 }}>
+        <AppBar position='fixed' style={{ flexGrow: 1 }}>
 
             <Toolbar>
               <Avatar
@@ -81,52 +75,54 @@ class CompanyHeader extends Component {
                   >
                     Home
                   </Button>
-                <Button
-                //   onClick={this.changeScreen.bind(this, 'About')}
-                  color='inherit'
-                  >
-                    Messeges
-                  </Button>
-                <Button
-                //   onClick={this.changeScreen.bind(this, 'Contact')}
-                  color='inherit'
-                  >
-                    Notification
-                  </Button>
+                  <Badge color='secondary' badgeContent={4}>
+                <Button color='inherit' className={classes.buttonStyle}>
+                  Messege
+                </Button>
+              </Badge>
+
+              <Badge color='secondary' badgeContent={6}>
+                <Button color='inherit' className={classes.buttonStyle}>
+                  Notification
+                </Button>
+              </Badge>
                 <Button
                   aria-owns={anchorEl ? 'simple-menu' : null}
                   aria-haspopup='true'
                   onClick={this.handleClick}
                   color='inherit'
                   >
-                    More Option
+                    More Option<DownArrow />
                   </Button>
                 <Menu
                   id='simple-menu'
                   anchorEl={anchorEl}
                   open={Boolean(anchorEl)}
-                //   onClose={this.handleClose}
+                  onClose={this.handleClose}
+                  style={{ position: 'absolute', top: 40 }}
                   >
                   <MenuItem 
                 //   onClick={this.changeScreen.bind(this, 'Farmer')}
+                onClick={this.handleClickOpen}
                   >
                       Add Fertilizer
                     </MenuItem>
                   <MenuItem 
                   
                 //   onClick={this.changeScreen.bind(this, 'Company')}
+                onClick={this.handleClickOpen}
                   >
                       Add Machinery
                     </MenuItem>
                  
                   <MenuItem
-                //    onClick={this.changeScreen.bind(this, 'Buyer')}
+                onClick={this.handleClickOpen}
                    >
                       Add Pesticide
                     </MenuItem>
                     
                   <MenuItem
-                //    onClick={this.changeScreen.bind(this, 'Buyer')}
+                onClick={this.handleLogOut.bind(this,'Main')}
                    >
                       Log Out
                     </MenuItem>
@@ -137,16 +133,27 @@ class CompanyHeader extends Component {
             </Toolbar>
 
           </AppBar>
-          : <AppBar position='static'>
-
-            <Toolbar>
-              <p>ammar</p>
-            </Toolbar>
-          </AppBar>}
-
+          <AddPesticide/>
+          <AddFertilizer/>
+          <AddMachinery/>
       </Fragment>
     )
   }
 }
 
-export default withStyles(styles)(CompanyHeader)
+function mapDispatchToProp (dispatch) {
+  return {
+    selectValue: data => {
+      dispatch(openModel(data))
+    },
+    changeRoute : (passParam)=>{
+      dispatch(changeNavbar(passParam))
+    }
+
+  }
+}
+
+export default compose(
+  withStyles(styles, { name: 'CompanyHeader' }),
+  connect(null, mapDispatchToProp)
+)(CompanyHeader)

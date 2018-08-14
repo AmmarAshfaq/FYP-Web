@@ -25,7 +25,10 @@ const styles = theme => ({
     // margin:'auto'
   },
   root:{
-    backgroundColor:'#000'
+    backgroundColor:'#000',
+    overflowX:'hidden',
+    overflowY:'hidden'
+    
   }
 })
 class Main extends Component {
@@ -36,7 +39,7 @@ class Main extends Component {
     return (
       <Fragment className={classes.root}>
         <Slider />
-        <Grid container spacing={24} style={{marginTop:5}}>
+        <Grid container spacing={24} style={{marginTop:5,}}>
           <Grid item xs style={{ marginLeft: 10 }}>
             <Paper className={classes.paperStyle}>
               <Typography variant='display1' gutterBottom>
