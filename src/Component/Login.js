@@ -2,7 +2,9 @@ import React from 'react'
 import { TextField, Button } from '@material-ui/core'
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
-import {changeNavbar} from '../Container/store/action/action'
+import { changeNavbar } from '../Container/store/action/action'
+import { signinUser } from '../Container/store/action/authAction'
+
 const style = {
   paperWapper: {
     width: '70%',
@@ -13,6 +15,7 @@ const style = {
     color: '#fff',
     textAlign: 'center',
     borderRadius: 10
+    // marginBottom:100
   },
   textStyle: {
     width: '100%',
@@ -35,11 +38,9 @@ class Login extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      name: '',
       email: '',
       password: ''
     }
-    // console.log(this.props)
   }
 
   register = () => {
@@ -51,10 +52,13 @@ class Login extends React.Component {
     this.setState(obj)
   }
 
-  signIn = itemList => {
-    console.log(itemList)
+  signIn = (itemList,authenticate) => {
+    const { email, password } = this.state
+    // console.log(email)
+    // console.log(itemList)
     browserHistory.push('/menu')
     this.props.componentList(itemList)
+    this.props.siginUserForm({ email, password ,authenticate})
   }
 
   render () {
@@ -85,7 +89,8 @@ class Login extends React.Component {
             ? <Button
               onClick={this.signIn.bind(
                   this,
-                  this.props.ComponentName + 'Home'
+                  this.props.ComponentName + 'Home',
+                  'farmermain'
                 )}
               style={style.button}
               >
@@ -95,7 +100,8 @@ class Login extends React.Component {
                 ? <Button
                   onClick={this.signIn.bind(
                       this,
-                      this.props.ComponentName + 'Home'
+                      this.props.ComponentName + 'Home',
+                      'companymain'
                     )}
                   style={style.button}
                   >
@@ -105,7 +111,8 @@ class Login extends React.Component {
                     ? <Button
                       onClick={this.signIn.bind(
                           this,
-                          this.props.ComponentName + 'Home'
+                          this.props.ComponentName + 'Home',
+                          'expertmain'
                         )}
                       style={style.button}
                       >
@@ -115,19 +122,17 @@ class Login extends React.Component {
                         ? <Button
                           onClick={this.signIn.bind(
                               this,
-                              this.props.ComponentName + 'Home'
+                              this.props.ComponentName + 'Home',
+                              'buyermain'
+
                             )}
                           style={style.button}
                           >
-                          LOGIN
+                            LOGIN
                           </Button>
-                        : <Button
-                        onClick={this.signIn}
-                        style={style.button}
-
-                        >
-                        LOGIN
-                        </Button>}
+                        : <Button onClick={this.signIn} style={style.button}>
+                            LOGIN
+                          </Button>}
           <Button onClick={this.register} style={style.button}>
             Register
           </Button>
@@ -146,7 +151,8 @@ function mapDispatchToProps (dispatch) {
   return {
     componentList: componentValue => {
       dispatch(changeNavbar(componentValue))
-    }
+    },
+    siginUserForm: obj => dispatch(signinUser(obj))
   }
 }
 

@@ -1,6 +1,8 @@
 import React from 'react'
 import { TextField,Button } from '@material-ui/core'
 import { browserHistory } from 'react-router'
+import {connect} from 'react-redux'
+import {signupUser,authError} from '../Container/store/action/authAction'
 const style = {
   paperWapper: {
     width: '70%',
@@ -37,11 +39,18 @@ class SignUp extends React.Component {
     this.state = {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      confirmPassword:''
     }
     console.log(this.props)
   }
-  register = () => {
+  handelFormSubmit  () {
+    const {email,password,confirmPassword} = this.state;
+    if(password === confirmPassword){
+      this.props.signupForm({email,password})
+    }else{
+      this.props.authSignUpError("Password Doesn't match")
+    }
   }
   updateValue = (ev, target) => {
     let obj = {}
@@ -78,9 +87,9 @@ class SignUp extends React.Component {
           /><br />
            <TextField
             onChange={event => {
-              this.updateValue(event, 'password')
+              this.updateValue(event, 'confirmPassword')
             }}
-            value={this.state.password}
+            value={this.state.confirmPassword}
             style={style.textStyle}
             type='password'
             label='Confirm Password'
@@ -88,7 +97,7 @@ class SignUp extends React.Component {
           <Button  onClick={this.signIn} style={style.button}>
             Login
           </Button>
-          <Button  onClick={this.register} style={style.button}>
+          <Button  onClick={this.handelFormSubmit.bind(this)} style={style.button}>
             Register
           </Button>
 
@@ -98,5 +107,15 @@ class SignUp extends React.Component {
   }
 }
 
+function mapDispatchToProps (dispatch) {
+  return {
+    signupForm: obj => {
+      dispatch(signupUser(obj))
+    },
+    authSignUpError: obj => {
+      dispatch(authError(obj))
+    }
+  }
+}
 // export default Login;
-export default SignUp
+export default connect(null, mapDispatchToProps)(SignUp)

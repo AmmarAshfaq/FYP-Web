@@ -8,6 +8,8 @@ export function selectManu (itemReceive) {
   }
 }
 
+
+
 export function openModel (itemReceive) {
   return dispatch => {
     dispatch({

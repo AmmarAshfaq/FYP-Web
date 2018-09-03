@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { Paper, Tabs,  Button } from '@material-ui/core'
-
+import {withStyle} from '@material-ui/core/styles'
 export default class Footer extends Component {
   render () {
     return (

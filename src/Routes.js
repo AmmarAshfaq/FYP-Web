@@ -16,6 +16,8 @@ import Contact from './Component/Contact'
 import ProductList from './Container/ProductList'
 import ProblemSolution from './Container/ProblemSolution'
 import ProductData from './Container/ProductData'
+import Messenger from './Container/messenger'
+import AuthReducer from './Container/RequireAuth'
 
 
 export default class Routers extends Component {
@@ -25,19 +27,21 @@ export default class Routers extends Component {
         <Route exact path='/' component={Main} />
         <Route path='/login' component={Login} />
         <Route path='/signup' component={SignUp} />
-        <Route path='/buyermain' component={BuyerMain} />
-        <Route path='/expertmain' component={ExpertMain} />
-        <Route path='/farmermain' component={FarmerMain} />
-        <Route path='/companymain' component={CompanyMain} />
-        <Route path='/menu' component={Menu}/>
-        <Route path='/addpesticide' component={AddPesticide}/>
-        <Route path='/addmachinery' component={AddMachinery}/>
-        <Route path='/addfertilizer' component={AddFertilizer}/>
+        <Route path='/buyermain' component={AuthReducer(BuyerMain)} />
+        <Route path='/expertmain' component={AuthReducer(ExpertMain)} />
+        <Route path='/farmermain' component={AuthReducer(FarmerMain)} />
+        <Route path='/companymain' component={AuthReducer(CompanyMain)} />
+        {/* <Route path='/menu' component={Menu}/> */}
+        <Route path='/addpesticide' component={AuthReducer(AddPesticide)}/>
+        <Route path='/addmachinery' component={AuthReducer(AddMachinery)}/>
+        <Route path='/addfertilizer' component={AuthReducer(AddFertilizer)}/>
         <Route path='/about' component={About}/>
         <Route path='/contact' component={Contact}/>
-        <Route path='/productList' component={ProductList}/>
-        <Route path='/problemSolution' component={ProblemSolution}/>
-        <Route path='/productdata' component={ProductData}/>
+        <Route path='/productList' component={AuthReducer(ProductList)}/>
+        <Route path='/problemSolution' component={AuthReducer(ProblemSolution)}/>
+        <Route path='/productdata' component={AuthReducer(ProductData)}/>
+        <Route path='/messenger' component={AuthReducer(Messenger)}/>
+        
         
 
       </Router>

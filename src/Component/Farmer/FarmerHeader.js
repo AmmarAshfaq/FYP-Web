@@ -15,9 +15,10 @@ import AddProblem from './AddProblem'
 import AddCrop from './AddCrop'
 
 import { connect } from 'react-redux'
-import { openModel,changeNavbar } from '../../Container/store/action/action'
+import { openModel, changeNavbar } from '../../Container/store/action/action'
+import { signoutUser } from '../../Container/store/action/authAction'
 import { compose } from 'redux'
-import {browserHistory} from 'react-router'
+import { browserHistory } from 'react-router'
 
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
@@ -43,9 +44,13 @@ class FarmerHeader extends Component {
     this.props.selectValue(true)
   }
 
-  handleLogOut=(passParam)=>{
-browserHistory.push('/login')
-this.props.ChangeRoute(passParam)
+  handleLogOut = passParam => {
+    // browserHistory.push('/login')
+    this.props.ChangeRoute(passParam)
+    this.props.signOutComp()
+  }
+  messengerApp = () => {
+    browserHistory.push('/messenger')
   }
   render () {
     const { classes } = this.props
@@ -71,7 +76,11 @@ this.props.ChangeRoute(passParam)
               </Button>
 
               <Badge color='secondary' badgeContent={4}>
-                <Button color='inherit' className={classes.buttonStyle}>
+                <Button
+                  color='inherit'
+                  className={classes.buttonStyle}
+                  onClick={this.messengerApp}
+                >
                   Messege
                 </Button>
               </Badge>
@@ -99,11 +108,11 @@ this.props.ChangeRoute(passParam)
                 <MenuItem onClick={this.handleClickOpen}>
                   Add Problem
                 </MenuItem>
-                <MenuItem  onClick={this.handleClickOpen}>
+                <MenuItem onClick={this.handleClickOpen}>
                   Add Crop
                 </MenuItem>
 
-                <MenuItem onClick={this.handleLogOut.bind(this,'Main')}>
+                <MenuItem onClick={this.handleLogOut.bind(this, 'Main')}>
                   Log Out
                 </MenuItem>
                 s{' '}
@@ -124,8 +133,11 @@ function mapDispatchToProp (dispatch) {
     selectValue: data => {
       dispatch(openModel(data))
     },
-    ChangeRoute: data =>{
+    ChangeRoute: data => {
       dispatch(changeNavbar(data))
+    },
+    signOutComp: () => {
+      dispatch(signoutUser())
     }
   }
 }

@@ -12,7 +12,7 @@ import { browserHistory } from 'react-router'
 import {connect} from 'react-redux'
 import {compose} from 'redux'
 import {changeNavbar} from '../../Container/store/action/action'
-// import MenuIcon from '@material-ui/icons/Menu'
+import { signoutUser } from '../../Container/store/action/authAction';
 
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
@@ -35,8 +35,10 @@ class ExpertHeader extends Component {
   
   handleLogOut=(passParam)=>{
 
-    browserHistory.push('/login')
+    // browserHistory.push('/login')
+
   this.props.changeRoute(passParam)  
+  this.props.signoutUserComp()
   }
  
   render () {
@@ -101,6 +103,9 @@ function mapDispatchToProps(dispatch){
   return{
 changeRoute : (passParam)=>{
   dispatch(changeNavbar(passParam))
+},
+signoutUserComp:()=>{
+  dispatch(signoutUser)
 }
   }
 }

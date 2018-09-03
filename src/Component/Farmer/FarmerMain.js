@@ -5,10 +5,12 @@ import KeyBoardArrow from '@material-ui/icons/KeyboardArrowDown'
 import MachinerySlider from '../../Container/ProductSlider'
 import ProblemData from '../AllData/ProblemData'
 import ImgData from '../AllData/MachineryData'
-
 import FertilizerData from '../AllData/FertilizerData'
 import PesticideData from '../AllData/PesticideData'
 import ProblemSlider from '../../Container/ProblemSlider'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { fecthMessage } from '../../Container/store/action/authAction'
 
 import classNames from 'classnames'
 
@@ -51,7 +53,7 @@ const styles = theme => ({
   },
   papper: {
     padding: theme.spacing.unit * 2,
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   rootTable: {
     width: '100%',
@@ -67,8 +69,7 @@ const styles = theme => ({
   },
   margin: {
     margin: theme.spacing.unit
-  },
-  
+  }
 })
 class FarmerMain extends Component {
   state = {
@@ -76,6 +77,9 @@ class FarmerMain extends Component {
     search: '',
     city: '',
     anchorEl: null
+  }
+  componentWillMount () {
+    this.props.fetchMessageMain()
   }
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget })
@@ -105,6 +109,7 @@ class FarmerMain extends Component {
   }
 
   render () {
+    console.log(this.props.message)
     const { classes } = this.props
     const { selectList, city, search, anchorEl } = this.state
     let i = 0
@@ -184,7 +189,6 @@ class FarmerMain extends Component {
                           s{' '}
                         </Menu>
 
-                     
                         <TextField
                           className={classes.margin}
                           id='input-with-icon-textfield'
@@ -242,10 +246,15 @@ class FarmerMain extends Component {
           <Grid item xs={12} sm container>
             <Grid item xs container direction='column'>
               <Grid item xs>
-                <Paper className={classNames(classes.paper)}><MachinerySlider info={ImgData}/></Paper>
-                <Paper className={classNames(classes.paper)}><MachinerySlider info={FertilizerData}/></Paper>
-                <Paper className={classNames(classes.paper)}><MachinerySlider info={PesticideData}/></Paper>
-                
+                <Paper className={classNames(classes.paper)}>
+                  <MachinerySlider info={ImgData} />
+                </Paper>
+                <Paper className={classNames(classes.paper)}>
+                  <MachinerySlider info={FertilizerData} />
+                </Paper>
+                <Paper className={classNames(classes.paper)}>
+                  <MachinerySlider info={PesticideData} />
+                </Paper>
 
               </Grid>
 
@@ -254,7 +263,9 @@ class FarmerMain extends Component {
           </Grid>
 
           <Grid item xs={12}>
-            <Paper className={classes.paper}><ProblemSlider info={ProblemData}/></Paper>
+            <Paper className={classes.paper}>
+              <ProblemSlider info={ProblemData} />
+            </Paper>
           </Grid>
         </Grid>
 
@@ -262,5 +273,20 @@ class FarmerMain extends Component {
     )
   }
 }
+function mapStateToProps (state) {
+  return {
+    message: state.authReducer.message
+  }
+}
+function mapDispatchToProps (dispatch) {
+  return {
+    fetchMessageMain: () => {
+      dispatch(fecthMessage())
+    }
+  }
+}
 
-export default withStyles(styles)(FarmerMain)
+export default compose(
+  withStyles(styles, { name: 'FarmerMain' }),
+  connect(mapStateToProps, mapDispatchToProps)
+)(FarmerMain)

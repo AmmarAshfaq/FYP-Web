@@ -9,9 +9,10 @@ import {
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import { browserHistory } from 'react-router'
-import {compose} from 'redux'
-import {connect} from 'react-redux'
-import {changeNavbar} from '../../Container/store/action/action'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import { changeNavbar } from '../../Container/store/action/action'
+import { signoutUser } from '../../Container/store/action/authAction'
 // import MenuIcon from '@material-ui/icons/Menu'
 
 const styles = theme => ({
@@ -28,9 +29,9 @@ class BuyerHeader extends Component {
     }
   }
 
-  onClickLogout = (passParam) => {
-    browserHistory.push('/login')
+  onClickLogout = passParam => {
     this.props.ChangeRoute(passParam)
+    this.props.signoutUser()
   }
 
   render () {
@@ -71,7 +72,7 @@ class BuyerHeader extends Component {
                 aria-owns={anchorEl ? 'simple-menu' : null}
                 aria-haspopup='true'
                 color='inherit'
-                onClick={this.onClickLogout.bind(this,'Main')}
+                onClick={this.onClickLogout.bind(this, 'Main')}
               >
                 Log Out
               </Button>
@@ -89,9 +90,11 @@ class BuyerHeader extends Component {
 
 function mapDispatchToProp (dispatch) {
   return {
-   
-    ChangeRoute: data =>{
+    ChangeRoute: data => {
       dispatch(changeNavbar(data))
+    },
+    signoutUserComp: () => {
+      dispatch(signoutUser())
     }
   }
 }
