@@ -37,7 +37,8 @@ class Main extends Component {
   render () {
     const { classes } = this.props
     return (
-      <Fragment className={classes.root}>
+      // <Fragment className={classes.root}>
+      <Fragment>
         <Slider />
         <Grid container spacing={24} style={{marginTop:5,}}>
           <Grid item xs style={{ marginLeft: 10 }}>

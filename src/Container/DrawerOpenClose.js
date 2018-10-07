@@ -65,8 +65,7 @@ class DrawerOpenClose extends Component {
     // console.log(this.props.itemList)
     return (
       <Fragment>
-        {this.state.toggle === 'Main'
-          ? <AppBar position='fixed' style={{ flexGrow: 1 }}>
+        <AppBar position='fixed' style={{ flexGrow: 1 }}>
 
             <Toolbar>
               <Avatar
@@ -137,12 +136,7 @@ class DrawerOpenClose extends Component {
             </Toolbar>
 
           </AppBar>
-          : <AppBar position='static'>
-
-            <Toolbar>
-             <p>ammar</p>
-            </Toolbar>
-          </AppBar>}
+          
 
       </Fragment>
     )

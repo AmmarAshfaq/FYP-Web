@@ -1,32 +1,30 @@
 import React from 'react'
-import { TextField,Button } from '@material-ui/core'
+import { TextField, Button } from '@material-ui/core'
 import { browserHistory } from 'react-router'
-import {connect} from 'react-redux'
-import {signupUser,authError} from '../Container/store/action/authAction'
+import { connect } from 'react-redux'
+import { signupUser, authError } from '../Container/store/action/authAction'
 const style = {
   paperWapper: {
     width: '70%',
     margin: '100px auto 0px',
     border: '5px solid darkgray',
     padding: '20px',
-    backgroundColor: '#3f51b5', 
+    backgroundColor: '#3f51b5',
     color: '#fff',
-    textAlign:'center',
+    textAlign: 'center',
     borderRadius: 10
-
   },
   textStyle: {
     width: '100%',
-    color:'#fff'
+    color: '#fff'
   },
   button: {
     width: '100%',
     marginTop: '10px',
     marginBottom: '10px',
     // backgroundColor:'#fff',
-    color:'#fff',
-    backgroundColor:'#000'
-    
+    color: '#fff',
+    backgroundColor: '#000'
   },
   heading: {
     color: '#212121'
@@ -40,15 +38,15 @@ class SignUp extends React.Component {
       name: '',
       email: '',
       password: '',
-      confirmPassword:''
+      confirmPassword: ''
     }
     console.log(this.props)
   }
-  handelFormSubmit  () {
-    const {email,password,confirmPassword} = this.state;
-    if(password === confirmPassword){
-      this.props.signupForm({email,password})
-    }else{
+  handelFormSubmit () {
+    const { email, password, confirmPassword } = this.state
+    if (password === confirmPassword) {
+      this.props.signupForm({ email, password })
+    } else {
       this.props.authSignUpError("Password Doesn't match")
     }
   }
@@ -57,10 +55,9 @@ class SignUp extends React.Component {
     obj[target] = ev.target.value
     this.setState(obj)
   }
-    signIn = () => {
+  signIn = () => {
     browserHistory.push('/login')
-        
-    }
+  }
 
   render () {
     return (
@@ -85,7 +82,7 @@ class SignUp extends React.Component {
             type='password'
             label='Password'
           /><br />
-           <TextField
+          <TextField
             onChange={event => {
               this.updateValue(event, 'confirmPassword')
             }}
@@ -94,10 +91,13 @@ class SignUp extends React.Component {
             type='password'
             label='Confirm Password'
           /><br />
-          <Button  onClick={this.signIn} style={style.button}>
+          <Button onClick={this.signIn} style={style.button}>
             Login
           </Button>
-          <Button  onClick={this.handelFormSubmit.bind(this)} style={style.button}>
+          <Button
+            onClick={this.handelFormSubmit.bind(this)}
+            style={style.button}
+          >
             Register
           </Button>
 

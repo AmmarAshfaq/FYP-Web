@@ -73,7 +73,7 @@ export default class Slider extends React.Component {
   }
 
   render () {
-    console.log(this.state.currentImageIndex)
+    // console.log(this.state.currentImageIndex)
     return (
       <Fragment>
         <div
@@ -113,7 +113,7 @@ export default class Slider extends React.Component {
 
 
 const ImageSlide = ({ url }) => {
-  console.log(url.img)
+  // console.log(url.img)
   const styles = {
     imgStyle: {
       width: '100%',
