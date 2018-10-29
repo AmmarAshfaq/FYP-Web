@@ -3,12 +3,18 @@ import { Grid, Paper } from '@material-ui/core'
 import { browserHistory } from 'react-router'
 import TableGrid from '../../Container/TableGrid'
 import { withStyles } from '@material-ui/core/styles'
+import { changeNavbar } from '../../Container/store/action/action'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
 class CompanyMain extends Component {
+  componentWillMount () {
+    this.props.changeAppbar('CompanyHome')
+  }
   render () {
     const { classes } = this.props
     return (
       <div style={{ marginTop: 100 }}>
-        <Grid container >
+        <Grid container>
           <Grid item xs={12}>
             <Paper className={classes.paper}><TableGrid /></Paper>
 
@@ -42,4 +48,13 @@ const styles = theme => ({
     color: theme.palette.text.secondary
   }
 })
-export default withStyles(styles)(CompanyMain)
+function mapDispatchToProps (dispatch) {
+  return {
+    changeAppbar: (obj) => {
+      dispatch(changeNavbar(obj))
+    }
+  }
+}
+export default compose(connect(null, mapDispatchToProps), withStyles(styles))(
+  CompanyMain
+)

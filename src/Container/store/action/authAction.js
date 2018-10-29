@@ -30,10 +30,12 @@ export function signoutUser () {
   browserHistory.push('/login')
   return { type: ActionTypes.UNAUTH_USER }
 }
-export function signupUser ({ email, password }) {
+export function signupUser (obj) {
+  console.log(obj)
+  const {email,password,imagePath,name} = obj
   return function (dispatch) {
     axios
-      .post(`${ROOT_URL}/signup`, { email, password })
+      .post(`${ROOT_URL}/signup`, { email, password,imagePath,name })
       .then(res => {
         dispatch({ type: ActionTypes.AUTH_USER })
 

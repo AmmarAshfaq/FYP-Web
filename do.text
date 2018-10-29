@@ -1,0 +1,2 @@
+window.document.referrer // check the last route
+// error when some one is going messenger to productlist or any route then navbar is gone

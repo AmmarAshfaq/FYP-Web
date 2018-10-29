@@ -10,7 +10,10 @@ import PesticideData from '../AllData/PesticideData'
 import ProblemSlider from '../../Container/ProblemSlider'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import 'weather-icons/css/weather-icons.css'
 import { fecthMessage } from '../../Container/store/action/authAction'
+import { changeNavbar } from '../../Container/store/action/action'
+
 
 import classNames from 'classnames'
 
@@ -62,6 +65,13 @@ const styles = theme => ({
   table: {
     minWidth: 700
   },
+  tableCellIncrease: {
+    fontSize: 20,
+    lineHeight: 0
+  },
+  weatherTable: {
+    height: 50
+  },
   row: {
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.background.default
@@ -80,6 +90,8 @@ class FarmerMain extends Component {
   }
   componentWillMount () {
     this.props.fetchMessageMain()
+    this.props.changeAppBar('FarmerHome')
+    
   }
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget })
@@ -117,7 +129,78 @@ class FarmerMain extends Component {
       <div className={classes.root}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>xs=12</Paper>
+            <Paper className={classes.paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell className={classes.tableCellIncrease}>
+
+                      <span>
+                        <p>MON</p>
+                        <i className='wi wi-day-lightning' />
+                        <p>26'C</p>
+                      </span>
+
+                    </TableCell>
+                    <TableCell className={classes.tableCellIncrease}>
+
+                      <span>
+                        <p>TUE</p>
+                        <i className='wi wi-day-cloudy-windy' />
+                        <p>24'C</p>
+                      </span>
+
+                    </TableCell>
+                    <TableCell className={classes.tableCellIncrease}>
+
+                      <span>
+                        <p>WED</p>
+                        <i className='wi wi-day-cloudy-windy' />
+                        <p>34'C</p>
+                      </span>
+
+                    </TableCell>
+                    <TableCell className={classes.tableCellIncrease}>
+
+                      <span>
+                        <p>THU</p>
+                        <i className='wi wi-day-hail' />
+                        <p>30'C</p>
+                      </span>
+
+                    </TableCell>
+                    <TableCell className={classes.tableCellIncrease}>
+
+                      <span>
+                        <p>FRI</p>
+                        <i className='wi wi-day-thunderstorm' />
+                        <p>10'C</p>
+                      </span>
+
+                    </TableCell>
+                    <TableCell className={classes.tableCellIncrease}>
+
+                      <span>
+                        <p>SAT</p>
+                        <i className='wi wi-day-sunny-overcast' />
+                        <p>30'C</p>
+                      </span>
+
+                    </TableCell>
+                    <TableCell className={classes.tableCellIncrease}>
+
+                      <span>
+                        <p>SUN</p>
+                        <i className='wi wi-day-cloudy-windy' />
+                        <p>20'C</p>
+                      </span>
+
+                    </TableCell>
+
+                  </TableRow>
+                </TableHead>
+              </Table>
+            </Paper>
           </Grid>
 
           <Grid item xs={12} sm={9}>
@@ -282,7 +365,11 @@ function mapDispatchToProps (dispatch) {
   return {
     fetchMessageMain: () => {
       dispatch(fecthMessage())
+    },
+    changeAppBar:(obj)=>{
+      dispatch(changeNavbar(obj))
     }
+   
   }
 }
 

@@ -40,64 +40,76 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
     width: '20%',
-    fontSize:12
+    fontSize: 12
   },
   card: {
     maxWidth: 345,
-    cursor:'pointer'
+    cursor: 'pointer'
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
+    paddingTop: '56.25%' // 16:9
+  }
 })
 function FormRow (props) {
-  const { classes,item } = props
+  const { classes, item } = props
   console.log(props)
 
   return (
-
     <Fragment>
-{
-    item.map((value,ind)=>
-    <Fragment >
-     
-      <Grid item xs={3}>
-      <Paper className={classes.paper}>
-        <Card className={classes.card}>
-        <CardMedia
-          className={classes.media}
-          image={value.img}
-          title="Contemplative Reptile"
-          onClick={props.funcChange}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="headline" component="h2">
-            {value.title}
-          </Typography>
-          <Typography component="p">
-          {value.functionTitle1}
-          </Typography>
-        </CardContent>
-        <CardActions>
-        <Button variant="contained" size="large" color="primary" className={classes.button}>
-      Add to Card
-        </Button>
-        <Button variant="contained" size="large" color="primary" className={classes.button}>
-       Add to List
-        </Button>
-        </CardActions>
-      </Card>
-        </Paper>      </Grid>
-</Fragment>
-    )}
- </Fragment>
+      {item.map((value, ind) => (
+        <Fragment>
+
+          <Grid item xs={3}>
+            <Paper className={classes.paper}>
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.media}
+                  image={value.img}
+                  title='Contemplative Reptile'
+                  onClick={props.funcChange}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant='headline' component='h2'>
+                    {value.title}
+                  </Typography>
+                  <Typography component='p'>
+                    {value.functionTitle1}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    variant='contained'
+                    size='large'
+                    color='primary'
+                    className={classes.button}
+                  >
+                    Add to Card
+                  </Button>
+                  <Button
+                    variant='contained'
+                    size='large'
+                    color='primary'
+                    className={classes.button}
+                  >
+                    Add to List
+                  </Button>
+                </CardActions>
+              </Card>
+            </Paper>{' '}
+          </Grid>
+        </Fragment>
+      ))}
+    </Fragment>
   )
 }
 class ProductList extends Component {
-    changeScreen =()=>{
-        browserHistory.push('/productdata')
-        }
+  changeScreen = () => {
+    browserHistory.push('/productdata')
+  }
+  componentWillMount () {
+    console.log(window.document.referrer)
+  }
   render () {
     const { classes } = this.props
     const settings = {
@@ -108,6 +120,7 @@ class ProductList extends Component {
       autoplay: true,
       autoplaySpeed: 2000
     }
+
     return (
       <div className={classes.root}>
         <Grid container spacing={8}>
@@ -160,15 +173,19 @@ class ProductList extends Component {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={3}>
-            <NewList info={allData}/>
+            <NewList info={allData} />
           </Grid>
         </Grid>
 
         <Grid container spacing={8} style={{ marginLeft: 10 }}>
           <Grid item xs={12} container spacing={24}>
-            <FormRow classes={classes} item={allData} funcChange={this.changeScreen}/>
+            <FormRow
+              classes={classes}
+              item={allData}
+              funcChange={this.changeScreen}
+            />
           </Grid>
-         
+
         </Grid>
       </div>
     )

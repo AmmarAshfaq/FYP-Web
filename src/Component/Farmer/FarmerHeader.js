@@ -40,8 +40,12 @@ class FarmerHeader extends Component {
   handleClose = () => {
     this.setState({ anchorEl: null })
   }
-  handleClickOpen = () => {
-    this.props.selectValue(true)
+  handleClickOpen = obj => {
+    let objSet = {
+      toggle: true,
+      specificDialog: obj
+    }
+    this.props.selectValue(objSet)
   }
 
   handleLogOut = passParam => {
@@ -49,7 +53,8 @@ class FarmerHeader extends Component {
     this.props.ChangeRoute(passParam)
     this.props.signOutComp()
   }
-  messengerApp = () => {
+  messengerApp = (passParam) => {
+    this.props.ChangeRoute(passParam);
     browserHistory.push('/messenger')
   }
   render () {
@@ -79,7 +84,7 @@ class FarmerHeader extends Component {
                 <Button
                   color='inherit'
                   className={classes.buttonStyle}
-                  onClick={this.messengerApp}
+                  onClick={this.messengerApp.bind(this,'Messenger')}
                 >
                   Messege
                 </Button>
@@ -105,10 +110,10 @@ class FarmerHeader extends Component {
                 onClose={this.handleClose}
                 style={{ position: 'absolute', top: 40 }}
               >
-                <MenuItem onClick={this.handleClickOpen}>
+                <MenuItem onClick={this.handleClickOpen.bind(this, 'problem')}>
                   Add Problem
                 </MenuItem>
-                <MenuItem onClick={this.handleClickOpen}>
+                <MenuItem onClick={this.handleClickOpen.bind(this, 'crop')}>
                   Add Crop
                 </MenuItem>
 

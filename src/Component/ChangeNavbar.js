@@ -5,7 +5,8 @@ import FarmerHeader from './Farmer/FarmerHeader'
 import BuyerHeader from './Buyer/BuyerHeader'
 import ExpertHeader from './Expert/ExpertHeader'
 import CompanyHeader from './Company/CompanyHeader'
-const ChangeNavbar = props => {
+// import MessengerNavBar from '../Container/messengerNavbar'
+ const ChangeNavbar = props => {
   // console.log(props.componentValue)
   return (
     <Fragment>
@@ -19,7 +20,9 @@ const ChangeNavbar = props => {
                     ? <ExpertHeader />
                     : props.componentValue === 'CompanyHome'
                         ? <CompanyHeader />
-                        : null}
+                        : props.componentValue === 'Messenger'
+                        ? null
+                        :null}
       {/* {props.componentValue === 'Main' ? <Footer /> : null} */}
     </Fragment>
   )

@@ -94,8 +94,7 @@ class ProblemSlider extends React.Component {
                 />
                 <CardContent>
                   <Typography component='p'>
-                    This impressive paella is a perfect party dish and a fun meal to cook together with
-                    your guests. Add 1 cup of frozen peas along with the mussels, if you like.
+                  This common garden problem is often caused by a lack of calcium and/or uneven watering. Learn how to identify, prevent and fix blossom end rot here.
                   </Typography>
                 </CardContent>
 

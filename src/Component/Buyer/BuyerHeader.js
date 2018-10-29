@@ -28,10 +28,13 @@ class BuyerHeader extends Component {
       achorEl: null
     }
   }
-
+  messengerApp = (passParam) => {
+    this.props.changeRoute(passParam);
+    browserHistory.push('/messenger')
+  }
   onClickLogout = passParam => {
-    this.props.ChangeRoute(passParam)
-    this.props.signoutUser()
+    this.props.changeRoute(passParam)
+    this.props.signoutUserComp()
   }
 
   render () {
@@ -58,7 +61,9 @@ class BuyerHeader extends Component {
                 Home
               </Button>
               <Badge color='secondary' badgeContent={4}>
-                <Button color='inherit' className={classes.buttonStyle}>
+                <Button color='inherit' className={classes.buttonStyle}
+                 onClick={this.messengerApp.bind(this,'Messenger')}
+                >
                   Messege
                 </Button>
               </Badge>
@@ -90,7 +95,7 @@ class BuyerHeader extends Component {
 
 function mapDispatchToProp (dispatch) {
   return {
-    ChangeRoute: data => {
+    changeRoute: data => {
       dispatch(changeNavbar(data))
     },
     signoutUserComp: () => {

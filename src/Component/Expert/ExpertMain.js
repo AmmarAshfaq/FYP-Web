@@ -5,13 +5,13 @@ import KeyBoardArrow from '@material-ui/icons/KeyboardArrowDown'
 import MachinerySlider from '../../Container/ProductSlider'
 import FarmerProblem from '../AllData/FarmerProblem'
 import ImgData from '../AllData/MachineryData'
-
 import FertilizerData from '../AllData/FertilizerData'
 import PesticideData from '../AllData/PesticideData'
 import ProblemSlider from '../../Container/ProblemSlider'
-
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import { changeNavbar } from '../../Container/store/action/action'
 import classNames from 'classnames'
-
 import {
   Button,
   Menu,
@@ -65,6 +65,10 @@ const styles = theme => ({
       backgroundColor: theme.palette.background.default
     }
   },
+  tableCellIncrease: {
+    fontSize: 20,
+    lineHeight: 0
+  },
   margin: {
     margin: theme.spacing.unit
   },
@@ -76,6 +80,9 @@ class ExpertMain extends Component {
     search: '',
     city: '',
     anchorEl: null
+  }
+  componentWillMount(){
+this.props.changeAppBar('ExpertHome')
   }
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget })
@@ -112,7 +119,78 @@ class ExpertMain extends Component {
       <div className={classes.root}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>xs=12</Paper>
+            <Paper className={classes.paper}>
+            <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell className={classes.tableCellIncrease}>
+
+                      <span>
+                        <p>MON</p>
+                        <i className='wi wi-day-lightning' />
+                        <p>26'C</p>
+                      </span>
+
+                    </TableCell>
+                    <TableCell className={classes.tableCellIncrease}>
+
+                      <span>
+                        <p>TUE</p>
+                        <i className='wi wi-day-cloudy-windy' />
+                        <p>24'C</p>
+                      </span>
+
+                    </TableCell>
+                    <TableCell className={classes.tableCellIncrease}>
+
+                      <span>
+                        <p>WED</p>
+                        <i className='wi wi-day-cloudy-windy' />
+                        <p>34'C</p>
+                      </span>
+
+                    </TableCell>
+                    <TableCell className={classes.tableCellIncrease}>
+
+                      <span>
+                        <p>THU</p>
+                        <i className='wi wi-day-hail' />
+                        <p>30'C</p>
+                      </span>
+
+                    </TableCell>
+                    <TableCell className={classes.tableCellIncrease}>
+
+                      <span>
+                        <p>FRI</p>
+                        <i className='wi wi-day-thunderstorm' />
+                        <p>10'C</p>
+                      </span>
+
+                    </TableCell>
+                    <TableCell className={classes.tableCellIncrease}>
+
+                      <span>
+                        <p>SAT</p>
+                        <i className='wi wi-day-sunny-overcast' />
+                        <p>30'C</p>
+                      </span>
+
+                    </TableCell>
+                    <TableCell className={classes.tableCellIncrease}>
+
+                      <span>
+                        <p>SUN</p>
+                        <i className='wi wi-day-cloudy-windy' />
+                        <p>20'C</p>
+                      </span>
+
+                    </TableCell>
+
+                  </TableRow>
+                </TableHead>
+              </Table>
+            </Paper>
           </Grid>
 
           <Grid item xs={12} sm={9}>
@@ -263,4 +341,13 @@ class ExpertMain extends Component {
   }
 }
 
-export default withStyles(styles)(ExpertMain)
+function mapDispatchToProps (dispatch) {
+  return {
+   
+    changeAppBar:(obj)=>{
+      dispatch(changeNavbar(obj))
+    }
+   
+  }
+}
+export default compose(withStyles(styles),connect(null,mapDispatchToProps))(ExpertMain)

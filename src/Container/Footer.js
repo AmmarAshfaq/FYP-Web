@@ -1,20 +1,12 @@
 import React, { Component, Fragment } from 'react'
 import { Paper, Tabs,  Button } from '@material-ui/core'
-import {withStyle} from '@material-ui/core/styles'
-export default class Footer extends Component {
+import {connect} from 'react-redux';
+// import {changeNavbar} from './store/action/action'
+ class Footer extends Component {
   render () {
     return (
       <Fragment>
-        {/* <Paper style={{ height: 200, margin: 10, textAlign: 'center' }}>
-
-          <Typography variant='display2' style={{ margin: 5,paddingTop:30,paddingBottom:10 }}>
-Grow With Us
-          </Typography>
-          <Typography variant='headline' style={{ margin: 5 }}>
-            Together Let's Build SAES As A Resource For Agriculture
-          </Typography>
-
-        </Paper> */}
+     {(this.props.footerChange === 'Main' || this.props.footerChange === 'FarmerHome' || this.props.footerChange === 'BuyerHome' || this.props.footerChange === 'CompanyHome' || this.props.footerChange === 'ExpertHome')?
         <Paper>
           <Tabs
             indicatorColor='primary'
@@ -42,7 +34,17 @@ Grow With Us
             </Button>
           </Tabs>
         </Paper>
+        :
+        null
+     }
       </Fragment>
     )
   }
 }
+
+function mapStateToProps(state){
+  return{
+footerChange:state.reducer.componentUpdate
+  }
+}
+export default connect(mapStateToProps,null)(Footer);

@@ -14,8 +14,9 @@ const style = {
     backgroundColor: '#3f51b5',
     color: '#fff',
     textAlign: 'center',
-    borderRadius: 10
-    // marginBottom:100
+    borderRadius: 10,
+    marginBottom:70,
+    marginTop:170
   },
   textStyle: {
     width: '100%',
@@ -56,7 +57,7 @@ class Login extends React.Component {
     const { email, password } = this.state
     // console.log(email)
     // console.log(itemList)
-    browserHistory.push('/menu')
+    // browserHistory.push('/menu')
     this.props.componentList(itemList)
     this.props.siginUserForm({ email, password ,authenticate})
   }

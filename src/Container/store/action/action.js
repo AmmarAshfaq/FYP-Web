@@ -19,7 +19,7 @@ export function openModel (itemReceive) {
   }
 }
 export function changeNavbar (componentChange) {
-  console.log(componentChange)
+  console.log(componentChange+ 'jasjkajkajdskjakdjakdkjdkajkdja')
   return dispatch => {
     dispatch({
       type: ActionTypes.CHANGE,

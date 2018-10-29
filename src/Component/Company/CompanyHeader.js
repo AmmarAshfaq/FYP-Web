@@ -47,6 +47,10 @@ class CompanyHeader extends Component {
     this.props.changeRoute(passParam)
     this.props.signoutUserComp()
   }
+  messengerApp = (passParam) => {
+    this.props.changeRoute(passParam);
+    browserHistory.push('/messenger')
+  }
   render () {
     const { classes } = this.props
     const { anchorEl } = this.state
@@ -73,7 +77,9 @@ class CompanyHeader extends Component {
                 Home
               </Button>
               <Badge color='secondary' badgeContent={4}>
-                <Button color='inherit' className={classes.buttonStyle}>
+                <Button color='inherit' className={classes.buttonStyle}
+                 onClick={this.messengerApp.bind(this,'Messenger')}
+                >
                   Messege
                 </Button>
               </Badge>
