@@ -65,7 +65,7 @@ class DrawerOpenClose extends Component {
     // console.log(this.props.itemList)
     return (
       <Fragment>
-        <AppBar position='fixed' style={{ flexGrow: 1 }}>
+        <AppBar position='fixed' style={{ flexGrow: 1 ,backgroundColor:'#00806d'}} >
 
             <Toolbar>
               <Avatar

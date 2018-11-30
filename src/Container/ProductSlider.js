@@ -64,7 +64,7 @@ class MachinerySlider extends React.Component {
   }
 
   goToProduct = ()=>{
-    browserHistory.push('/productList')
+    browserHistory.push({pathname:'/productList',state:{typeCheck:this.props.typeSelect}})
   }
 
   render() {
@@ -73,6 +73,7 @@ class MachinerySlider extends React.Component {
     // console.log(item)
 
     return (
+      
       <div>
         <Card className={classes.card} >
           <CardHeader

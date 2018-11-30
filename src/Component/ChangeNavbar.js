@@ -11,7 +11,7 @@ import CompanyHeader from './Company/CompanyHeader'
   return (
     <Fragment>
       {props.componentValue === 'Main'
-        ? <DrawerOpenClose />
+        ? <DrawerOpenClose  />
         : props.componentValue === 'FarmerHome'
             ? <FarmerHeader />
             : props.componentValue === 'BuyerHome'

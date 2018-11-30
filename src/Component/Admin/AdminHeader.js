@@ -13,15 +13,14 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { changeNavbar } from '../../Container/store/action/action'
 import { signoutUser } from '../../Container/store/action/authAction'
-import NotificationDialog from '../../Container/NotificationDialog'
-// import MenuIcon from '@material-ui/icons/Menu'
+
 
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
   titleStyle: { flexDirection: 'column', flexGrow: 1 },
   buttonStyle: { marginRight: 5, position: 'relative' }
 })
-class BuyerHeader extends Component {
+class AdminHeader extends Component {
   constructor () {
     super()
     this.state = {
@@ -29,10 +28,7 @@ class BuyerHeader extends Component {
       achorEl: null
     }
   }
-  messengerApp = (passParam) => {
-    this.props.changeRoute(passParam);
-    browserHistory.push('/messenger')
-  }
+ 
   onClickLogout = passParam => {
     this.props.changeRoute(passParam)
     this.props.signoutUserComp()
@@ -53,27 +49,14 @@ class BuyerHeader extends Component {
             />
             <div className={classes.titleStyle}>
               <Typography variant='title' color='inherit'>
-                Buyer
+                Admin
               </Typography>
 
             </div>
             <div>
-              <Button color='inherit'
-              onClick={()=> browserHistory.push('/buyermain')}
-              >
-                Home
-              </Button>
-              <Badge color='secondary' badgeContent={4}>
-                <Button color='inherit' className={classes.buttonStyle}
-                 onClick={this.messengerApp.bind(this,'Messenger')}
-                >
-                  Messege
-                </Button>
-              </Badge>
+             
 
-              <Badge color='secondary' badgeContent={6}>
-                <NotificationDialog typeSelect="Crop"/>
-              </Badge>
+              
               <Button
                 aria-owns={anchorEl ? 'simple-menu' : null}
                 aria-haspopup='true'
@@ -105,6 +88,6 @@ function mapDispatchToProp (dispatch) {
   }
 }
 export default compose(
-  withStyles(styles, { name: 'BuyerHeader' }),
+  withStyles(styles, { name: 'AdminHeader' }),
   connect(null, mapDispatchToProp)
 )(BuyerHeader)

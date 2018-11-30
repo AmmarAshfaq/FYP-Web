@@ -13,6 +13,8 @@ import {connect} from 'react-redux'
 import {compose} from 'redux'
 import {changeNavbar} from '../../Container/store/action/action'
 import { signoutUser } from '../../Container/store/action/authAction';
+import NotificationDialog from '../../Container/NotificationDialog'
+
 
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
@@ -51,7 +53,7 @@ class ExpertHeader extends Component {
     const { anchorEl } = this.state
     return (
       <Fragment>
-         <AppBar position='fixed' style={{ flexGrow: 1 }}>
+         <AppBar position='fixed' style={{ flexGrow: 1 , backgroundColor: '#00806d'}}>
 
             <Toolbar>
               <Avatar
@@ -82,9 +84,7 @@ class ExpertHeader extends Component {
               </Badge>
 
               <Badge color='secondary' badgeContent={6}>
-                <Button color='inherit' className={classes.buttonStyle}>
-                  Notification
-                </Button>
+                <NotificationDialog typeSelect="Problem"/>
               </Badge>
                 <Button
                   aria-owns={anchorEl ? 'simple-menu' : null}

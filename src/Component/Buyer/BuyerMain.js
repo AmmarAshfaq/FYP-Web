@@ -110,7 +110,8 @@ componentWillMount(){
 }
   render () {
     const { classes } = this.props
-    const { selectList, city, search, anchorEl } = this.state
+    const { selectList,  search, anchorEl } = this.state
+    
     let i = 0
     return (
       <div className={classes.root}>
@@ -320,13 +321,13 @@ componentWillMount(){
             <Grid item xs container direction='column'>
               <Grid item xs>
                 <Paper className={classNames(classes.paper)}>
-                  <MachinerySlider info={ImgData} />
+                  <MachinerySlider info={ImgData} typeSelect=""/>
                 </Paper>
                 <Paper className={classNames(classes.paper)}>
-                  <MachinerySlider info={FertilizerData} />
+                  <MachinerySlider info={FertilizerData} typeSelect=""/>
                 </Paper>
                 <Paper className={classNames(classes.paper)}>
-                  <MachinerySlider info={PesticideData} />
+                  <MachinerySlider info={PesticideData} typeSelect="" />
                 </Paper>
 
               </Grid>
@@ -337,7 +338,7 @@ componentWillMount(){
 
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <ProblemSlider info={FermerCrop} />
+              <ProblemSlider info={FermerCrop} typeSelect="Crop"/>
             </Paper>
           </Grid>
         </Grid>

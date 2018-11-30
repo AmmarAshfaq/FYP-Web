@@ -53,7 +53,7 @@ class AddCrop extends Component {
         <Dialog
           open={
             !!(this.props.itemValue.reducer.modelOpen === true &&
-              this.props.itemValue.reducer.selectDialog === 'crop')
+              this.props.itemValue.reducer.selectDialog === 'Crops')
           }
           onClose={this.handleClose}
           aria-labelledby='form-dialog-title'

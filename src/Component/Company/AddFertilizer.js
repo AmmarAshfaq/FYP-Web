@@ -10,7 +10,17 @@ import { connect } from 'react-redux'
 import { openModel } from '../../Container/store/action/action'
 
 class AddFertilizer extends Component {
- 
+ constructor(){
+   super()
+   this.state ={
+     name:'',
+     productName:'',
+     description:'',
+     price:0,
+     image:'',
+     application:''
+   }
+ }
   handleClose = () => {
     this.props.itemValueFunc(false)
   }
@@ -19,11 +29,11 @@ class AddFertilizer extends Component {
       <div>
 
          <Dialog
-          open={this.props.itemValue.reducer.modelOpen}
+          open={(this.props.itemValue.reducer.modelOpen === true && this.props.itemValue.reducer.selectDialog === 'Fertilizer')}
           onClose={this.handleClose}
           aria-labelledby='form-dialog-title'
         >
-          <DialogTitle id='form-dialog-title'>Add Product Detail!!</DialogTitle>
+          <DialogTitle id='form-dialog-title'>Add Fertilizer Detail</DialogTitle>
           <DialogContent>
             
             <TextField
@@ -65,7 +75,7 @@ class AddFertilizer extends Component {
               Cancel
             </Button>
             <Button onClick={this.handleClose} color='primary'>
-              Subscribe
+              Submit
             </Button>
           </DialogActions>
         </Dialog>

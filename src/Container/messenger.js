@@ -116,6 +116,13 @@ class Messenger extends React.Component {
     mobileMoreAnchorEl: null
   }
 
+  componentWillMount(){
+    console.log(window.document.referrer)
+    
+  }
+  componentDidMount(){
+    console.log(window.document.referrer)
+  }
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget })
   }
@@ -141,7 +148,7 @@ class Messenger extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position='static'>
+        <AppBar position='static' style={{ backgroundColor: '#00806d'}}>
           <Toolbar>
 
             <div className={classes.search}>

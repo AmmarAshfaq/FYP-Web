@@ -13,7 +13,9 @@ import { compose } from 'redux'
 import 'weather-icons/css/weather-icons.css'
 import { fecthMessage } from '../../Container/store/action/authAction'
 import { changeNavbar } from '../../Container/store/action/action'
-
+import FormHelperText from '@material-ui/core/FormHelperText'
+import FormControl from '@material-ui/core/FormControl'
+import NativeSelect from '@material-ui/core/NativeSelect'
 
 import classNames from 'classnames'
 
@@ -79,6 +81,15 @@ const styles = theme => ({
   },
   margin: {
     margin: theme.spacing.unit
+  },
+  formControl: {
+    margin: theme.spacing.unit * 2,
+    minWidth: 120,
+    float: 'right',
+    marginBottom: 10
+  },
+  selectEmpty: {
+    marginTop: theme.spacing.unit * 2
   }
 })
 class FarmerMain extends Component {
@@ -91,7 +102,6 @@ class FarmerMain extends Component {
   componentWillMount () {
     this.props.fetchMessageMain()
     this.props.changeAppBar('FarmerHome')
-    
   }
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget })
@@ -101,24 +111,30 @@ class FarmerMain extends Component {
     this.setState({ anchorEl: null })
   }
 
-  onChange = (name, event) => {
+  onChange = event => {
     this.setState({
-      [name]: event.target.value
-    })
-  }
-  onSelect = name => {
-    this.setState({
-      city: name
-    })
-  }
-  onSubmit = () => {
-    this.setState({
+      city: event.target.value,
       selectList: croprates.filter(
         item =>
-          item.category === this.state.search || item.city === this.state.city
+          // item.category === this.state.search || item.city === this.state.city
+          item.city === this.state.city
       )
     })
   }
+  // onSelect = name => {
+  //   this.setState({
+  //     city: name
+  //   })
+  // }
+  // onSubmit = () => {
+  //   this.setState({
+  //     selectList: croprates.filter(
+  //       item =>
+  //         // item.category === this.state.search || item.city === this.state.city
+  //         item.city === this.state.city
+  //     )
+  //   })
+  // }
 
   render () {
     console.log(this.props.message)
@@ -210,12 +226,16 @@ class FarmerMain extends Component {
 
                   <TableHead>
                     <TableRow>
-                      <TableCell colSpan='2'>
-                        <Typography variant='headline' gutterBottom>
+                      <TableCell colSpan='3'>
+                        <Typography
+                          variant='headline'
+                          gutterBottom
+                          style={{ fontSize: 32 }}
+                        >
                           Crop Rates
                         </Typography>
                       </TableCell>
-                      <TableCell colSpan='2'>
+                      <TableCell colSpan='1'>
                         {/* <button
                           onClick={this.onSubmit}
                           style={{ float: 'right' }}
@@ -223,7 +243,7 @@ class FarmerMain extends Component {
                           Submit
                         </button> */}
 
-                        <Button
+                        {/* <Button
                           variant='contained'
                           color='default'
                           onClick={this.onSubmit}
@@ -270,9 +290,22 @@ class FarmerMain extends Component {
                           </MenuItem>
 
                           s{' '}
-                        </Menu>
+                        </Menu> */}
+                        <FormControl className={classes.formControl}>
+                          <NativeSelect
+                            value={this.state.city}
+                            onChange={this.onChange}
+                            name='Select City'
+                            className={classes.selectEmpty}
+                          >
+                            <option value=''>Select City</option>
+                            <option value={'Karachi'}>Karachi</option>
+                            <option value={'Lahore'}>Lahore</option>
+                            <option value={'Hyderabad'}>Hyderabad</option>
+                          </NativeSelect>
+                        </FormControl>
 
-                        <TextField
+                        {/* <TextField
                           className={classes.margin}
                           id='input-with-icon-textfield'
                           onChange={this.onChange.bind(this, 'search')}
@@ -286,7 +319,7 @@ class FarmerMain extends Component {
                               </InputAdornment>
                             )
                           }}
-                        />
+                        /> */}
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -366,10 +399,9 @@ function mapDispatchToProps (dispatch) {
     fetchMessageMain: () => {
       dispatch(fecthMessage())
     },
-    changeAppBar:(obj)=>{
+    changeAppBar: obj => {
       dispatch(changeNavbar(obj))
     }
-   
   }
 }
 

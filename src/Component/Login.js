@@ -11,12 +11,12 @@ const style = {
     margin: '100px auto 0px',
     border: '5px solid darkgray',
     padding: '20px',
-    backgroundColor: '#3f51b5',
+    backgroundColor: '#00806d',
     color: '#fff',
     textAlign: 'center',
     borderRadius: 10,
-    marginBottom:70,
-    marginTop:170
+    marginBottom: 70,
+    marginTop: 170
   },
   textStyle: {
     width: '100%',
@@ -53,17 +53,17 @@ class Login extends React.Component {
     this.setState(obj)
   }
 
-  signIn = (itemList,authenticate) => {
+  signIn = (itemList, authenticate) => {
     const { email, password } = this.state
     // console.log(email)
     // console.log(itemList)
     // browserHistory.push('/menu')
     this.props.componentList(itemList)
-    this.props.siginUserForm({ email, password ,authenticate})
+    this.props.siginUserForm({ email, password, authenticate })
   }
 
   render () {
-    console.log(this.props.ComponentName)
+    // console.log(this.props.ComponentName)
     return (
       <div style={style.paperWapper}>
         <div>
@@ -125,7 +125,6 @@ class Login extends React.Component {
                               this,
                               this.props.ComponentName + 'Home',
                               'buyermain'
-
                             )}
                           style={style.button}
                           >

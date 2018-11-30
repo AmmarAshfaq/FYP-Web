@@ -5,85 +5,73 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import Typography from '@material-ui/core/Typography'
-import { Button } from '@material-ui/core';
-import { connect } from 'react-redux';
-import { openModel } from '../../Container/store/action/action';
-import Divider from '@material-ui/core/Divider';
+import { Button } from '@material-ui/core'
+import { connect } from 'react-redux'
+import { openModel } from './store/action/action'
 
-
-class AddPesticide extends Component {
+class PurchaseForm extends Component {
  constructor(){
    super()
    this.state ={
      name:'',
+     productName:'',
      description:'',
      price:0,
-     image:''
+     image:'',
+     application:''
    }
  }
   handleClose = () => {
     this.props.itemValueFunc(false)
   }
   render () {
+      console.log(this.props.itemValue.reducer.selectDialog)
     return (
       <div>
 
-        <Dialog
-          open={
-            (this.props.itemValue.reducer.modelOpen === true && 
-            this.props.itemValue.reducer.selectDialog === 'Pesticide')}
+         <Dialog
+          open={(this.props.itemValue.reducer.modelOpen === true && this.props.itemValue.reducer.selectDialog === "ContactCompany")}
           onClose={this.handleClose}
           aria-labelledby='form-dialog-title'
         >
-          <DialogTitle id='form-dialog-title'>
-          <Typography 
-          variant='display1'
-          color='secondry'
-          align='center'>Add Pesticide Detail</Typography>
-          </DialogTitle>
-          <Divider/>
-
+          <DialogTitle id='form-dialog-title'>Fill Form</DialogTitle>
           <DialogContent>
+            
             <TextField
               autoFocus
               margin='dense'
               id='name'
               label='Name'
-              type='text'
+              type='name'
               fullWidth
             />
-            
             <TextField
               autoFocus
               margin='dense'
               id='price'
               label='Price'
-              type='text'
+              type='name'
               fullWidth
             />
-            <TextField
-              autoFocus
-              margin='dense'
-              id='discription'
-              label='Discription'
-              type='text'
-              fullWidth
-            />
-
             <TextField
               autoFocus
               margin='dense'
               id='image'
               label='Add Image'
-              type='email'
+              type='name'
               fullWidth
             />
-
+            <TextField
+              autoFocus
+              margin='dense'
+              id='description'
+              label='Description'
+              type='name'
+              fullWidth
+            />
+           
           </DialogContent>
-          <Divider/>
-          
-          <DialogActions style={{alignItems:'center'}}>
+          <DialogActions>
             <Button onClick={this.handleClose} color='primary'>
               Cancel
             </Button>
@@ -111,4 +99,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddPesticide)
+export default connect(mapStateToProps, mapDispatchToProps)(PurchaseForm)

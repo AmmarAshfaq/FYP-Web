@@ -19,6 +19,8 @@ import AddPesticide from './AddPesticide'
 import AddMachinery from './AddMachinery'
 import AddFertilizer from './AddFertilizer'
 import { signoutUser } from '../../Container/store/action/authAction'
+import NotificationDialog from '../../Container/NotificationDialog'
+
 // import MenuIcon from '@material-ui/icons/Menu'
 
 const styles = theme => ({
@@ -40,8 +42,13 @@ class CompanyHeader extends Component {
     this.setState({ anchorEl: null })
   }
 
-  handleClickOpen = () => {
-    this.props.selectValue(true)
+  handleClickOpen = (obj) => {
+    let objSet = {
+      toggle: true,
+      specificDialog: obj
+    }
+    console.log(objSet)
+    this.props.selectValue(objSet)
   }
   handleLogOut = passParam => {
     this.props.changeRoute(passParam)
@@ -56,7 +63,7 @@ class CompanyHeader extends Component {
     const { anchorEl } = this.state
     return (
       <Fragment>
-        <AppBar position='fixed' style={{ flexGrow: 1 }}>
+        <AppBar position='fixed' style={{ flexGrow: 1 , backgroundColor: '#00806d'}}>
 
           <Toolbar>
             <Avatar
@@ -85,9 +92,7 @@ class CompanyHeader extends Component {
               </Badge>
 
               <Badge color='secondary' badgeContent={6}>
-                <Button color='inherit' className={classes.buttonStyle}>
-                  Notification
-                </Button>
+               <NotificationDialog typeSelect=""/>
               </Badge>
               <Button
                 aria-owns={anchorEl ? 'simple-menu' : null}
@@ -106,18 +111,18 @@ class CompanyHeader extends Component {
               >
                 <MenuItem
                   //   onClick={this.changeScreen.bind(this, 'Farmer')}
-                  onClick={this.handleClickOpen}
+                  onClick={this.handleClickOpen.bind(this,'Fertilizer')}
                 >
                   Add Fertilizer
                 </MenuItem>
                 <MenuItem
                   //   onClick={this.changeScreen.bind(this, 'Company')}
-                  onClick={this.handleClickOpen}
+                  onClick={this.handleClickOpen.bind(this,'Machinery')}
                 >
                   Add Machinery
                 </MenuItem>
 
-                <MenuItem onClick={this.handleClickOpen}>
+                <MenuItem onClick={this.handleClickOpen.bind(this,'Pesticide')}>
                   Add Pesticide
                 </MenuItem>
 

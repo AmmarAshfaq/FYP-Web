@@ -1,4 +1,4 @@
-import React  from 'react'
+import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
@@ -47,26 +47,31 @@ const styles = theme => ({
     maxWidth: 400,
     textAlign: 'center',
     marginBottom: 10,
-    marginTop:10,
-    marginLeft:18
+    marginTop: 10,
+    marginLeft: 18
   },
   media: {
     height: 0,
-    paddingTop: '56.25%' ,// 16:9,
+    paddingTop: '56.25%', // 16:9,
     cursor: 'pointer'
   }
 })
 
 class ProblemSlider extends React.Component {
-  constructor(props){
+  constructor (props) {
     super(props)
-
   }
-  goToProblem =()=>{
-    browserHistory.push('/problemSolution')
-    }
+  componentWillMount () {
+    console.log(this.props.typeSelect)
+  }
+  goToProblem = () => {
+    this.props.typeSelect === 'Crop'
+      ? browserHistory.push({pathname:'/ProductList',state:{typeCheck:this.props.typeSelect}})
+      : browserHistory.push('/problemSolution')
+  }
   render () {
-    const { classes } = this.props
+    const { classes, typeSelect } = this.props
+    console.log(typeSelect)
     // console.log(item)
     const settings = {
       // dots: true,
@@ -79,31 +84,28 @@ class ProblemSlider extends React.Component {
       autoplaySpeed: 2000
     }
     return (
-      
-      
-        <Slider {...settings}>
-          {this.props.info.map((data, ind) => {
-            return (
-              <Card className={classes.card}>
-                <CardHeader title={data.title} />
-                <CardMedia
-                  className={classes.media}
-                  image={data.img}
-                  title='Contemplative Reptile'
-                  onClick= {this.goToProblem.bind(this)}
-                />
-                <CardContent>
-                  <Typography component='p'>
+      <Slider {...settings}>
+        {this.props.info.map((data, ind) => {
+          return (
+            <Card className={classes.card}>
+              <CardHeader title={data.title} />
+              <CardMedia
+                className={classes.media}
+                image={data.img}
+                title='Contemplative Reptile'
+                onClick={this.goToProblem.bind(this)}
+              />
+              <CardContent>
+                <Typography component='p'>
                   This common garden problem is often caused by a lack of calcium and/or uneven watering. Learn how to identify, prevent and fix blossom end rot here.
-                  </Typography>
-                </CardContent>
+                </Typography>
+              </CardContent>
 
-              </Card>
-            )
-          })}
-      
-        </Slider>
-      
+            </Card>
+          )
+        })}
+
+      </Slider>
     )
   }
 }

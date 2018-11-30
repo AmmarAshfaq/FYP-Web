@@ -9,17 +9,18 @@ import {
   MenuItem,
   Badge
 } from '@material-ui/core'
+
 import DownArrow from '@material-ui/icons/KeyboardArrowDown'
 import { withStyles } from '@material-ui/core/styles'
 import AddProblem from './AddProblem'
 import AddCrop from './AddCrop'
-
 import { connect } from 'react-redux'
 import { openModel, changeNavbar } from '../../Container/store/action/action'
 import { signoutUser } from '../../Container/store/action/authAction'
 import { compose } from 'redux'
 import { browserHistory } from 'react-router'
-
+import NotificationDialog from '../../Container/NotificationDialog'
+import TableGrid from '../../Container/TableGrid'
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
   titleStyle: { flexDirection: 'column', flexGrow: 1 },
@@ -30,15 +31,19 @@ class FarmerHeader extends Component {
     super()
     this.state = {
       toggle: 'Main',
-      achorEl: null
+      achorEl: null,
+      open: false
     }
   }
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget })
   }
+  handleClickNoti = event => {
+    this.setState({ open: true })
+  }
 
   handleClose = () => {
-    this.setState({ anchorEl: null })
+    this.setState({ anchorEl: null, open: false })
   }
   handleClickOpen = obj => {
     let objSet = {
@@ -46,6 +51,7 @@ class FarmerHeader extends Component {
       specificDialog: obj
     }
     this.props.selectValue(objSet)
+    browserHistory.push('/AddedItem')
   }
 
   handleLogOut = passParam => {
@@ -53,8 +59,8 @@ class FarmerHeader extends Component {
     this.props.ChangeRoute(passParam)
     this.props.signOutComp()
   }
-  messengerApp = (passParam) => {
-    this.props.ChangeRoute(passParam);
+  messengerApp = passParam => {
+    this.props.ChangeRoute(passParam)
     browserHistory.push('/messenger')
   }
   render () {
@@ -62,7 +68,10 @@ class FarmerHeader extends Component {
     const { anchorEl } = this.state
     return (
       <Fragment>
-        <AppBar position='fixed' style={{ flexGrow: 1 }}>
+        <AppBar
+          position='fixed'
+          style={{ flexGrow: 1, backgroundColor: '#00806d' }}
+        >
 
           <Toolbar>
             <Avatar
@@ -84,17 +93,23 @@ class FarmerHeader extends Component {
                 <Button
                   color='inherit'
                   className={classes.buttonStyle}
-                  onClick={this.messengerApp.bind(this,'Messenger')}
+                  onClick={this.messengerApp.bind(this, 'Messenger')}
                 >
                   Messege
                 </Button>
               </Badge>
 
               <Badge color='secondary' badgeContent={6}>
-                <Button color='inherit' className={classes.buttonStyle}>
+                {/* <Button
+                  color='inherit'
+                  className={classes.buttonStyle}
+                  onClick={this.handleClickNoti}
+                >
                   Notification
-                </Button>
+                </Button> */}
+                <NotificationDialog typeSelect="Crop"/>
               </Badge>
+
               <Button
                 aria-haspopup='true'
                 onClick={this.handleClick}
@@ -110,11 +125,14 @@ class FarmerHeader extends Component {
                 onClose={this.handleClose}
                 style={{ position: 'absolute', top: 40 }}
               >
-                <MenuItem onClick={this.handleClickOpen.bind(this, 'problem')}>
+                <MenuItem onClick={this.handleClickOpen.bind(this, 'Problem')}>
                   Add Problem
                 </MenuItem>
-                <MenuItem onClick={this.handleClickOpen.bind(this, 'crop')}>
+                <MenuItem onClick={this.handleClickOpen.bind(this, 'Crops')}>
                   Add Crop
+                </MenuItem>
+                <MenuItem onClick={this.handleClickOpen.bind(this)}>
+                  Added Item
                 </MenuItem>
 
                 <MenuItem onClick={this.handleLogOut.bind(this, 'Main')}>

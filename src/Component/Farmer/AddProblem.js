@@ -49,7 +49,7 @@ class AddProblem extends Component {
         <Dialog
           open={
             !!(this.props.itemValue.reducer.modelOpen === true &&
-              this.props.itemValue.reducer.selectDialog === 'problem')
+              this.props.itemValue.reducer.selectDialog === 'Problem')
           }
           onClose={this.handleClose}
           aria-labelledby='form-dialog-title'

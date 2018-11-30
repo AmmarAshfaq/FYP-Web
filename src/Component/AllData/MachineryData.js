@@ -1,8 +1,12 @@
 const imgUrls = [
+  
     {
       title: "Machineries",
       functionTitle1: 'All Types Of Diseases Information Related To Agriculture',
-      img: 'http://mediad.publicbroadcasting.net/p/wunc/files/styles/x_large/public/201307/Blght.jpg'
+      name:'Truck',
+      price:34000,
+      img: 'http://mediad.publicbroadcasting.net/p/wunc/files/styles/x_large/public/201307/Blght.jpg',
+description:'Use for the purpose of loading Crops'
     },
     {
         title: "Machineries",
