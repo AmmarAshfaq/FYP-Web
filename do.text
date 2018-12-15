@@ -1,9 +1,0 @@
-window.document.referrer // check the last route
-// error when some one is going messenger to productlist or any route then navbar is gone
-//show by default city list
-
-
-
-05/11/2018
-changing in farmer select button change 
-1. we handle buyer Crop and company product with typeSelect in buyer main through crop

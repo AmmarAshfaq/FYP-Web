@@ -17,7 +17,8 @@ const styles = theme => ({
   },
   textCenter: {
     textAlign: 'center',
-    margin: 10
+    margin: 10,
+    padding:7
   },
   imgSize: {
     width: '100%',
@@ -39,7 +40,7 @@ class SpecificCrop extends Component {
             <Grid item xs={4} />
             <Grid item xs={4} zeroMinWidth>
               <Paper className={classNames(classes.paper, classes.textCenter)}>
-                <Typography variant='headline' gutterBottom noWrap>
+                <Typography variant='headline' gutterBottom noWrap >
                 CROP DATA
                 </Typography>
               </Paper>

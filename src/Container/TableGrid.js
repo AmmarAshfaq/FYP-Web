@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
 import {
-  Paper,
   Table,
   TableHead,
   TableRow,
   TableBody,
   TableCell,
-  Grid,
   Typography
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import cropRates from '../Component/AllData/CropRates'
 import DeleteIcon from '@material-ui/icons/Delete'
 import UpdateIcon from '@material-ui/icons/Update'
 import classNames from 'classnames'
@@ -37,8 +34,9 @@ const CustomTableCell = withStyles(theme => ({
 
 const styles = theme => ({
   table: {
-    minWidth: 700,
-    overflowY: 'auto'
+    // minWidth: ,
+    overflowY: 'auto',
+    width:'100%'
   },
   avatar: {
     margin: 10
@@ -72,7 +70,7 @@ class TableGrid extends Component {
       toggle: true,
       specificDialog: obj
     }
-    console.log(objSet)
+    // console.log(objSet)
     this.props.selectValue(objSet)
   }
   render () {
@@ -80,9 +78,11 @@ class TableGrid extends Component {
     let i = 0
     return (
       // console.log(this.props)
-      (
-        <div>
-        <Table className={classes.table}>
+      <div  className={classes.table}>
+        <Table
+        
+       
+        >
 
           <TableHead>
 
@@ -174,8 +174,7 @@ class TableGrid extends Component {
           <AddPesticide />
       <AddFertilizer />
       <AddMachinery />
-        </div>
-      )
+      </div>
       
     )
   }

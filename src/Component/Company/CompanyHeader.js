@@ -13,7 +13,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { browserHistory } from 'react-router'
 import DownArrow from '@material-ui/icons/KeyboardArrowDown'
 import { connect } from 'react-redux'
-import { openModel, changeNavbar } from '../../Container/store/action/action'
+import { openModel } from '../../Container/store/action/action'
 import { compose } from 'redux'
 import AddPesticide from './AddPesticide'
 import AddMachinery from './AddMachinery'
@@ -50,12 +50,13 @@ class CompanyHeader extends Component {
     console.log(objSet)
     this.props.selectValue(objSet)
   }
+ 
   handleLogOut = passParam => {
-    this.props.changeRoute(passParam)
-    this.props.signoutUserComp()
+    // this.props.changeRoute(passParam)
+    this.props.signoutUserComp(passParam)
   }
   messengerApp = (passParam) => {
-    this.props.changeRoute(passParam);
+    // this.props.changeRoute(passParam);
     browserHistory.push('/messenger')
   }
   render () {
@@ -149,11 +150,11 @@ function mapDispatchToProp (dispatch) {
     selectValue: data => {
       dispatch(openModel(data))
     },
-    changeRoute: passParam => {
-      dispatch(changeNavbar(passParam))
-    },
-    signoutUserComp: () => {
-      dispatch(signoutUser())
+    // changeRoute: passParam => {
+    //   dispatch(changeNavbar(passParam))
+    // },
+    signoutUserComp: (data) => {
+      dispatch(signoutUser(data))
     }
   }
 }

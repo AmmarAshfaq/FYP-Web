@@ -11,7 +11,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { browserHistory } from 'react-router'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { changeNavbar } from '../../Container/store/action/action'
+// import { changeNavbar } from '../../Container/store/action/action'
 import { signoutUser } from '../../Container/store/action/authAction'
 
 
@@ -30,7 +30,7 @@ class AdminHeader extends Component {
   }
  
   onClickLogout = passParam => {
-    this.props.changeRoute(passParam)
+    // this.props.changeRoute(passParam)
     this.props.signoutUserComp()
   }
 
@@ -79,9 +79,9 @@ class AdminHeader extends Component {
 
 function mapDispatchToProp (dispatch) {
   return {
-    changeRoute: data => {
-      dispatch(changeNavbar(data))
-    },
+    // changeRoute: data => {
+    //   dispatch(changeNavbar(data))
+    // },
     signoutUserComp: () => {
       dispatch(signoutUser())
     }
@@ -90,4 +90,4 @@ function mapDispatchToProp (dispatch) {
 export default compose(
   withStyles(styles, { name: 'AdminHeader' }),
   connect(null, mapDispatchToProp)
-)(BuyerHeader)
+)(AdminHeader)

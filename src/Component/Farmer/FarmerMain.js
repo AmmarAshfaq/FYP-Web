@@ -4,18 +4,23 @@ import Search from '@material-ui/icons/Search'
 import KeyBoardArrow from '@material-ui/icons/KeyboardArrowDown'
 import MachinerySlider from '../../Container/ProductSlider'
 import ProblemData from '../AllData/ProblemData'
-import ImgData from '../AllData/MachineryData'
+import ImgData from '../AllData/MachineryDataCompany'
 import FertilizerData from '../AllData/FertilizerData'
 import PesticideData from '../AllData/PesticideData'
 import ProblemSlider from '../../Container/ProblemSlider'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import 'weather-icons/css/weather-icons.css'
-import { fecthMessage } from '../../Container/store/action/authAction'
-import { changeNavbar } from '../../Container/store/action/action'
+import { weatherData } from '../../Container/store/action/weatherAction'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import FormControl from '@material-ui/core/FormControl'
 import NativeSelect from '@material-ui/core/NativeSelect'
+import Weather from '../../Container/Weather'
+// import { geolocated } from 'react-geolocated'
+import {
+  getCropAddData,
+  getProblemAddData
+} from '../../Container/store/action/farmerAction'
 
 import classNames from 'classnames'
 
@@ -96,16 +101,21 @@ class FarmerMain extends Component {
   state = {
     selectList: [],
     search: '',
-    city: '',
+    city: 'Karachi',
     anchorEl: null
   }
   componentWillMount () {
-    this.props.fetchMessageMain()
-    this.props.changeAppBar('FarmerHome')
+    //   // this.props.fetchMessageMain()
+    //   this.props.changeAppBar('FarmerHome')
+    this.props.requestWeather()
   }
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget })
   }
+  //   componentDidMount(){
+  //  this.props.getAddedCrop(this.props.farmerId)
+  //     this.props.getAddedProblem(this.props.farmerId)
+  //   }
 
   handleClose = () => {
     this.setState({ anchorEl: null })
@@ -121,109 +131,20 @@ class FarmerMain extends Component {
       )
     })
   }
-  // onSelect = name => {
-  //   this.setState({
-  //     city: name
-  //   })
-  // }
-  // onSubmit = () => {
-  //   this.setState({
-  //     selectList: croprates.filter(
-  //       item =>
-  //         // item.category === this.state.search || item.city === this.state.city
-  //         item.city === this.state.city
-  //     )
-  //   })
-  // }
 
   render () {
-    console.log(this.props.message)
     const { classes } = this.props
     const { selectList, city, search, anchorEl } = this.state
     let i = 0
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell className={classes.tableCellIncrease}>
-
-                      <span>
-                        <p>MON</p>
-                        <i className='wi wi-day-lightning' />
-                        <p>26'C</p>
-                      </span>
-
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-
-                      <span>
-                        <p>TUE</p>
-                        <i className='wi wi-day-cloudy-windy' />
-                        <p>24'C</p>
-                      </span>
-
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-
-                      <span>
-                        <p>WED</p>
-                        <i className='wi wi-day-cloudy-windy' />
-                        <p>34'C</p>
-                      </span>
-
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-
-                      <span>
-                        <p>THU</p>
-                        <i className='wi wi-day-hail' />
-                        <p>30'C</p>
-                      </span>
-
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-
-                      <span>
-                        <p>FRI</p>
-                        <i className='wi wi-day-thunderstorm' />
-                        <p>10'C</p>
-                      </span>
-
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-
-                      <span>
-                        <p>SAT</p>
-                        <i className='wi wi-day-sunny-overcast' />
-                        <p>30'C</p>
-                      </span>
-
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-
-                      <span>
-                        <p>SUN</p>
-                        <i className='wi wi-day-cloudy-windy' />
-                        <p>20'C</p>
-                      </span>
-
-                    </TableCell>
-
-                  </TableRow>
-                </TableHead>
-              </Table>
-            </Paper>
-          </Grid>
+          <Weather data={this.props.weatherDetail} />
 
           <Grid item xs={12} sm={9}>
             <Paper className={classes.paper}>
               <Paper className={classes.rootTable}>
                 <Table className={classes.table}>
-
                   <TableHead>
                     <TableRow>
                       <TableCell colSpan='3'>
@@ -236,61 +157,6 @@ class FarmerMain extends Component {
                         </Typography>
                       </TableCell>
                       <TableCell colSpan='1'>
-                        {/* <button
-                          onClick={this.onSubmit}
-                          style={{ float: 'right' }}
-                        >
-                          Submit
-                        </button> */}
-
-                        {/* <Button
-                          variant='contained'
-                          color='default'
-                          onClick={this.onSubmit}
-                          style={{ float: 'right', padding: 10 }}
-                        >
-                          Submit
-                        </Button>
-                        <Button
-                          style={{
-                            position: 'relative',
-                            float: 'right',
-                            marginRight: 5
-                          }}
-                          aria-owns={anchorEl ? 'simple-menu' : null}
-                          aria-haspopup='true'
-                          onClick={this.handleClick}
-                          color='default'
-                          variant='contained'
-                        >
-                          Select
-                          <KeyBoardArrow />
-                        </Button>
-                        <Menu
-                          style={{ position: 'absolute', top: 40 }}
-                          id='simple-menu'
-                          anchorEl={anchorEl}
-                          open={Boolean(anchorEl)}
-                          onClose={this.handleClose}
-                        >
-                          <MenuItem
-                            onClick={this.onSelect.bind(this, 'Karachi')}
-                          >
-                            Karachi
-                          </MenuItem>
-                          <MenuItem
-                            onClick={this.onSelect.bind(this, 'Hyderabad')}
-                          >
-                            Hyderabad
-                          </MenuItem>
-                          <MenuItem
-                            onClick={this.onSelect.bind(this, 'Lahore')}
-                          >
-                            Lahore
-                          </MenuItem>
-
-                          s{' '}
-                        </Menu> */}
                         <FormControl className={classes.formControl}>
                           <NativeSelect
                             value={this.state.city}
@@ -298,28 +164,13 @@ class FarmerMain extends Component {
                             name='Select City'
                             className={classes.selectEmpty}
                           >
-                            <option value=''>Select City</option>
+                            {/* <option value=''>Select City</option> */}
                             <option value={'Karachi'}>Karachi</option>
                             <option value={'Lahore'}>Lahore</option>
                             <option value={'Hyderabad'}>Hyderabad</option>
                           </NativeSelect>
                         </FormControl>
-
-                        {/* <TextField
-                          className={classes.margin}
-                          id='input-with-icon-textfield'
-                          onChange={this.onChange.bind(this, 'search')}
-                          // label="Search"
-                          value={search}
-                          style={{ float: 'right' }}
-                          InputProps={{
-                            startAdornment: (
-                              <InputAdornment position='start'>
-                                <Search />
-                              </InputAdornment>
-                            )
-                          }}
-                        /> */}
+                        {/* // yahn sy hataya */}
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -344,9 +195,7 @@ class FarmerMain extends Component {
                     {selectList.map((n, key) => {
                       return (
                         <TableRow className={classes.row} key={n.name}>
-                          <CustomTableCell numeric>
-                            {++i}
-                          </CustomTableCell>
+                          <CustomTableCell numeric>{++i}</CustomTableCell>
                           <CustomTableCell numeric>{n.name}</CustomTableCell>
                           <CustomTableCell numeric>{n.price}</CustomTableCell>
                           <CustomTableCell numeric>{n.weight}</CustomTableCell>
@@ -357,7 +206,6 @@ class FarmerMain extends Component {
                 </Table>
               </Paper>
             </Paper>
-
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction='column'>
@@ -371,41 +219,50 @@ class FarmerMain extends Component {
                 <Paper className={classNames(classes.paper)}>
                   <MachinerySlider info={PesticideData} />
                 </Paper>
-
               </Grid>
-
             </Grid>
-
           </Grid>
 
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <ProblemSlider info={ProblemData} />
+              <ProblemSlider
+                info={ProblemData}
+
+                // infoCrop={this.props.cropData}
+              />
             </Paper>
           </Grid>
         </Grid>
-
       </div>
     )
   }
 }
 function mapStateToProps (state) {
   return {
-    message: state.authReducer.message
+    weatherDetail: state.reducer.weatherData
+    // cropData: state.farmReducer.cropArray,
+    // problemData:state.farmReducer.problemArray,
+    // farmerId: state.authReducer.currentUserData.user.id,
   }
 }
 function mapDispatchToProps (dispatch) {
   return {
-    fetchMessageMain: () => {
-      dispatch(fecthMessage())
-    },
-    changeAppBar: obj => {
-      dispatch(changeNavbar(obj))
+    requestWeather: () => {
+      dispatch(weatherData())
     }
+    // getAddedCrop: obj => {
+    //   dispatch(getCropAddData(obj))
+    // },
+    // getAddedProblem:obj=>{
+    //   dispatch(getProblemAddData(obj))
+    // }
   }
 }
 
 export default compose(
   withStyles(styles, { name: 'FarmerMain' }),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 )(FarmerMain)

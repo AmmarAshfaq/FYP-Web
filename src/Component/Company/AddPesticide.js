@@ -49,7 +49,7 @@ class AddPesticide extends Component {
               autoFocus
               margin='dense'
               id='name'
-              label='Name'
+              label='Pesticide Name'
               type='text'
               fullWidth
             />
@@ -66,18 +66,16 @@ class AddPesticide extends Component {
               autoFocus
               margin='dense'
               id='discription'
-              label='Discription'
+              label='Pesticide Description'
               type='text'
               fullWidth
             />
 
             <TextField
-              autoFocus
-              margin='dense'
-              id='image'
-              label='Add Image'
-              type='email'
-              fullWidth
+              // onChange={this.handleChange}
+              // style={styles.textStyle}
+              type='file'
+              label='Select File'
             />
 
           </DialogContent>

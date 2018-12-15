@@ -7,40 +7,63 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
+import Typography from '@material-ui/core/Typography'
+
 import { openModel } from '../../Container/store/action/action'
 
 class AddFertilizer extends Component {
- constructor(){
-   super()
-   this.state ={
-     name:'',
-     productName:'',
-     description:'',
-     price:0,
-     image:'',
-     application:''
-   }
- }
+  constructor () {
+    super()
+    this.state = {
+      name: '',
+      productName: '',
+      description: '',
+      price: 0,
+      image: '',
+      application: ''
+    }
+  }
   handleClose = () => {
     this.props.itemValueFunc(false)
   }
   render () {
     return (
       <div>
-
-         <Dialog
-          open={(this.props.itemValue.reducer.modelOpen === true && this.props.itemValue.reducer.selectDialog === 'Fertilizer')}
+        <Dialog
+          open={
+            this.props.itemValue.reducer.modelOpen === true &&
+            this.props.itemValue.reducer.selectDialog === 'Fertilizer'
+          }
           onClose={this.handleClose}
           aria-labelledby='form-dialog-title'
         >
-          <DialogTitle id='form-dialog-title'>Add Fertilizer Detail</DialogTitle>
+          <DialogTitle id='form-dialog-title'>
+            <Typography variant='display1' color='secondry' align='center'>
+              Add Fertilizer Detail
+            </Typography>
+          </DialogTitle>
           <DialogContent>
-            
             <TextField
               autoFocus
               margin='dense'
               id='name'
               label='Name'
+              type='name'
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin='dense'
+              id='product'
+              label='Product'
+              type='name'
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin='dense'
+              id='application'
+              label='Application'
               type='name'
               fullWidth
             />
@@ -53,22 +76,11 @@ class AddFertilizer extends Component {
               fullWidth
             />
             <TextField
-              autoFocus
-              margin='dense'
-              id='image'
-              label='Add Image'
-              type='name'
-              fullWidth
+              // onChange={this.handleChange}
+              // style={styles.textStyle}
+              type='file'
+              label='Select File'
             />
-            <TextField
-              autoFocus
-              margin='dense'
-              id='description'
-              label='Description'
-              type='name'
-              fullWidth
-            />
-           
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color='primary'>
@@ -98,4 +110,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddFertilizer)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddFertilizer)

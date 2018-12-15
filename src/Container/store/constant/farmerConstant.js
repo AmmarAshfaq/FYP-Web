@@ -1,0 +1,8 @@
+const ActionTypes = {
+  GET_CROP_SPECIFIC: 'GET_CROP',
+  GET_PROBLEM_SPECIFIC:'GET_PROBLEM',
+  UPDATE_CROP:'UPDATE_CROP',
+  UPDATE_PROBLEM:'UPDATE_PROBLEM'
+}
+
+export default ActionTypes;

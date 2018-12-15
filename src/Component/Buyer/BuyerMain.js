@@ -8,6 +8,9 @@ import FertilizerData from '../AllData/FertilizerData'
 import PesticideData from '../AllData/PesticideData'
 import ProblemSlider from '../../Container/ProblemSlider'
 import FermerCrop from '../AllData/FarmerCrops'
+import Weather from '../../Container/Weather'
+import { weatherData } from '../../Container/store/action/weatherAction'
+import FarmerCropData from '../AllData/FarmerCropData'
 import classNames from 'classnames'
 import {
   Button,
@@ -25,9 +28,12 @@ import {
   InputAdornment
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import {connect} from 'react-redux';
-import {compose} from 'redux';
-import {changeNavbar} from '../../Container/store/action/action'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import FormControl from '@material-ui/core/FormControl'
+import NativeSelect from '@material-ui/core/NativeSelect'
+import MachinerData from '../AllData/MachineryDataCompany'
+// import {changeNavbar} from '../../Container/store/action/action'
 const CustomTableCell = withStyles(theme => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -70,6 +76,15 @@ const styles = theme => ({
   },
   margin: {
     margin: theme.spacing.unit
+  },
+  formControl: {
+    margin: theme.spacing.unit * 2,
+    minWidth: 120,
+    float: 'right',
+    marginBottom: 10
+  },
+  selectEmpty: {
+    marginTop: theme.spacing.unit * 2
   }
 })
 class BuyerMain extends Component {
@@ -82,202 +97,60 @@ class BuyerMain extends Component {
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget })
   }
-
+  componentWillMount () {
+    //   // this.props.fetchMessageMain()
+    //   this.props.changeAppBar('FarmerHome')
+    this.props.requestWeather()
+  }
   handleClose = () => {
     this.setState({ anchorEl: null })
   }
-
-  onChange = (name, event) => {
+  onChange = event => {
     this.setState({
-      [name]: event.target.value
-    })
-  }
-  onSelect = name => {
-    this.setState({
-      city: name
-    })
-  }
-  onSubmit = () => {
-    this.setState({
+      city: event.target.value,
       selectList: croprates.filter(
         item =>
-          item.category === this.state.search || item.city === this.state.city
+          // item.category === this.state.search || item.city === this.state.city
+          item.city === this.state.city
       )
     })
   }
-componentWillMount(){
-  this.props.changeAppBar('BuyerHome')
-}
+
   render () {
     const { classes } = this.props
-    const { selectList,  search, anchorEl } = this.state
-    
+    const { selectList, search, anchorEl } = this.state
+
     let i = 0
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-            <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell className={classes.tableCellIncrease}>
-
-                      <span>
-                        <p>MON</p>
-                        <i className='wi wi-day-lightning' />
-                        <p>26'C</p>
-                      </span>
-
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-
-                      <span>
-                        <p>TUE</p>
-                        <i className='wi wi-day-cloudy-windy' />
-                        <p>24'C</p>
-                      </span>
-
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-
-                      <span>
-                        <p>WED</p>
-                        <i className='wi wi-day-cloudy-windy' />
-                        <p>34'C</p>
-                      </span>
-
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-
-                      <span>
-                        <p>THU</p>
-                        <i className='wi wi-day-hail' />
-                        <p>30'C</p>
-                      </span>
-
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-
-                      <span>
-                        <p>FRI</p>
-                        <i className='wi wi-day-thunderstorm' />
-                        <p>10'C</p>
-                      </span>
-
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-
-                      <span>
-                        <p>SAT</p>
-                        <i className='wi wi-day-sunny-overcast' />
-                        <p>30'C</p>
-                      </span>
-
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-
-                      <span>
-                        <p>SUN</p>
-                        <i className='wi wi-day-cloudy-windy' />
-                        <p>20'C</p>
-                      </span>
-
-                    </TableCell>
-
-                  </TableRow>
-                </TableHead>
-              </Table>
-            </Paper>
-          </Grid>
+          <Weather data={this.props.weatherDetail} />
 
           <Grid item xs={12} sm={9}>
             <Paper className={classes.paper}>
               <Paper className={classes.rootTable}>
                 <Table className={classes.table}>
-
                   <TableHead>
                     <TableRow>
-                      <TableCell colSpan='2'>
+                      <TableCell colSpan='3'>
                         <Typography variant='headline' gutterBottom>
                           Crop Rates
                         </Typography>
                       </TableCell>
-                      <TableCell colSpan='2'>
-                        {/* <button
-                          onClick={this.onSubmit}
-                          style={{ float: 'right' }}
-                        >
-                          Submit
-                        </button> */}
-
-                        <Button
-                          variant='contained'
-                          color='default'
-                          onClick={this.onSubmit}
-                          style={{ float: 'right', padding: 10 }}
-                        >
-                          Submit
-                        </Button>
-                        <Button
-                          style={{
-                            position: 'relative',
-                            float: 'right',
-                            marginRight: 5
-                          }}
-                          aria-owns={anchorEl ? 'simple-menu' : null}
-                          aria-haspopup='true'
-                          onClick={this.handleClick}
-                          color='default'
-                          variant='contained'
-                        >
-                          Select
-                          <KeyBoardArrow />
-                        </Button>
-                        <Menu
-                          style={{ position: 'absolute', top: 40 }}
-                          id='simple-menu'
-                          anchorEl={anchorEl}
-                          open={Boolean(anchorEl)}
-                          onClose={this.handleClose}
-                        >
-                          <MenuItem
-                            onClick={this.onSelect.bind(this, 'Karachi')}
+                      <TableCell colSpan='1'>
+                        <FormControl className={classes.formControl}>
+                          <NativeSelect
+                            value={this.state.city}
+                            onChange={this.onChange}
+                            name='Select City'
+                            className={classes.selectEmpty}
                           >
-                            Karachi
-                          </MenuItem>
-                          <MenuItem
-                            onClick={this.onSelect.bind(this, 'Hyderabad')}
-                          >
-                            Hyderabad
-                          </MenuItem>
-                          <MenuItem
-                            onClick={this.onSelect.bind(this, 'Lahore')}
-                          >
-                            Lahore
-                          </MenuItem>
-
-                          s{' '}
-                        </Menu>
-
-                        {/* <input
-                          type='text'
-                        /> */}
-                        <TextField
-                          className={classes.margin}
-                          id='input-with-icon-textfield'
-                          onChange={this.onChange.bind(this, 'search')}
-                          // label="Search"
-                          value={search}
-                          style={{ float: 'right' }}
-                          InputProps={{
-                            startAdornment: (
-                              <InputAdornment position='start'>
-                                <Search />
-                              </InputAdornment>
-                            )
-                          }}
-                        />
+                            <option value=''>Select City</option>
+                            <option value={'Karachi'}>Karachi</option>
+                            <option value={'Lahore'}>Lahore</option>
+                            <option value={'Hyderabad'}>Hyderabad</option>
+                          </NativeSelect>
+                        </FormControl>
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -302,9 +175,7 @@ componentWillMount(){
                     {selectList.map((n, key) => {
                       return (
                         <TableRow className={classes.row} key={n.name}>
-                          <CustomTableCell numeric>
-                            {++i}
-                          </CustomTableCell>
+                          <CustomTableCell numeric>{++i}</CustomTableCell>
                           <CustomTableCell numeric>{n.name}</CustomTableCell>
                           <CustomTableCell numeric>{n.price}</CustomTableCell>
                           <CustomTableCell numeric>{n.weight}</CustomTableCell>
@@ -315,44 +186,158 @@ componentWillMount(){
                 </Table>
               </Paper>
             </Paper>
-
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction='column'>
               <Grid item xs>
                 <Paper className={classNames(classes.paper)}>
-                  <MachinerySlider info={ImgData} typeSelect=""/>
+                  <MachinerySlider info={MachinerData} typeSelect='' />
                 </Paper>
                 <Paper className={classNames(classes.paper)}>
-                  <MachinerySlider info={FertilizerData} typeSelect=""/>
+                  <MachinerySlider info={FertilizerData} typeSelect='' />
                 </Paper>
                 <Paper className={classNames(classes.paper)}>
-                  <MachinerySlider info={PesticideData} typeSelect="" />
+                  <MachinerySlider info={PesticideData} typeSelect='' />
                 </Paper>
-
               </Grid>
-
             </Grid>
-
           </Grid>
 
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <ProblemSlider info={FermerCrop} typeSelect="Crop"/>
+              <ProblemSlider info={FarmerCropData} typeSelect='Crop' />
             </Paper>
           </Grid>
         </Grid>
-
       </div>
     )
   }
 }
-
-function mapDispatchToProps(dispatch){
-  return{
-    changeAppBar:(obj)=>{
-      dispatch(changeNavbar(obj))
+function mapStateToProps (state) {
+  return {
+    weatherDetail: state.reducer.weatherData
+    // cropData: state.farmReducer.cropArray,
+    // problemData:state.farmReducer.problemArray,
+    // farmerId: state.authReducer.currentUserData.user.id,
+  }
+}
+function mapDispatchToProps (dispatch) {
+  return {
+    // changeAppBar:(obj)=>{
+    //   dispatch(changeNavbar(obj))
+    // }
+    requestWeather: () => {
+      dispatch(weatherData())
     }
   }
 }
-export default compose(connect(null,mapDispatchToProps),withStyles(styles))(BuyerMain)
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
+  withStyles(styles)
+)(BuyerMain)
+
+// onChange = (name, event) => {
+//   this.setState({
+//     [name]: event.target.value
+//   })
+// }
+// onSelect = name => {
+//   this.setState({
+//     city: name
+//   })
+// }
+// onSubmit = () => {
+//   this.setState({
+//     selectList: croprates.filter(
+//       item =>
+//         item.category === this.state.search || item.city === this.state.city
+//     )
+//   })
+// }
+// componentWillMount(){
+//   this.props.changeAppBar('BuyerHome')
+// } {/* <button
+// onClick={this.onSubmit}
+// style={{ float: 'right' }}
+// >
+// Submit
+// </button> */}
+
+{
+  /* <Button
+variant='contained'
+color='default'
+onClick={this.onSubmit}
+style={{ float: 'right', padding: 10 }}
+>
+Submit
+</Button> */
+}
+{
+  /* <Button
+style={{
+  position: 'relative',
+  float: 'right',
+  marginRight: 5
+}}
+aria-owns={anchorEl ? 'simple-menu' : null}
+aria-haspopup='true'
+onClick={this.handleClick}
+color='default'
+variant='contained'
+>
+Select
+<KeyBoardArrow />
+</Button>
+<Menu
+style={{ position: 'absolute', top: 40 }}
+id='simple-menu'
+anchorEl={anchorEl}
+open={Boolean(anchorEl)}
+onClose={this.handleClose}
+>
+<MenuItem
+  onClick={this.onSelect.bind(this, 'Karachi')}
+>
+  Karachi
+</MenuItem>
+<MenuItem
+  onClick={this.onSelect.bind(this, 'Hyderabad')}
+>
+  Hyderabad
+</MenuItem>
+<MenuItem
+  onClick={this.onSelect.bind(this, 'Lahore')}
+>
+  Lahore
+</MenuItem>
+
+s{' '}
+</Menu> */
+}
+
+{
+  /* <input
+type='text'
+/> */
+}
+{
+  /* <TextField
+className={classes.margin}
+id='input-with-icon-textfield'
+onChange={this.onChange.bind(this, 'search')}
+// label="Search"
+value={search}
+style={{ float: 'right' }}
+InputProps={{
+  startAdornment: (
+    <InputAdornment position='start'>
+      <Search />
+    </InputAdornment>
+  )
+}}
+/> */
+}

@@ -3,14 +3,18 @@ import croprates from '../AllData/CropRates'
 import Search from '@material-ui/icons/Search'
 import KeyBoardArrow from '@material-ui/icons/KeyboardArrowDown'
 import MachinerySlider from '../../Container/ProductSlider'
-import FarmerProblem from '../AllData/FarmerProblem'
+import FarmerProblem from '../AllData/ProblemData'
 import ImgData from '../AllData/MachineryData'
 import FertilizerData from '../AllData/FertilizerData'
 import PesticideData from '../AllData/PesticideData'
 import ProblemSlider from '../../Container/ProblemSlider'
 import {connect} from 'react-redux';
 import {compose} from 'redux';
-import { changeNavbar } from '../../Container/store/action/action'
+import FormControl from '@material-ui/core/FormControl'
+import NativeSelect from '@material-ui/core/NativeSelect'
+import MachinerData from '../AllData/MachineryDataCompany'
+
+// import { changeNavbar } from '../../Container/store/action/action'
 import classNames from 'classnames'
 import {
   Button,
@@ -72,7 +76,15 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit
   },
-  
+  formControl: {
+    margin: theme.spacing.unit * 2,
+    minWidth: 120,
+    float: 'right',
+    marginBottom: 10
+  },
+  selectEmpty: {
+    marginTop: theme.spacing.unit * 2
+  }
 })
 class ExpertMain extends Component {
   state = {
@@ -81,9 +93,9 @@ class ExpertMain extends Component {
     city: '',
     anchorEl: null
   }
-  componentWillMount(){
-this.props.changeAppBar('ExpertHome')
-  }
+//   componentWillMount(){
+// this.props.changeAppBar('ExpertHome')
+//   }
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget })
   }
@@ -97,16 +109,26 @@ this.props.changeAppBar('ExpertHome')
       [name]: event.target.value
     })
   }
-  onSelect = name => {
+  // onSelect = name => {
+  //   this.setState({
+  //     city: name
+  //   })
+  // }
+  // onSubmit = () => {
+  //   this.setState({
+  //     selectList: croprates.filter(
+  //       item =>
+  //         item.category === this.state.search || item.city === this.state.city
+  //     )
+  //   })
+  // }
+  onChange = event => {
     this.setState({
-      city: name
-    })
-  }
-  onSubmit = () => {
-    this.setState({
+      city: event.target.value,
       selectList: croprates.filter(
         item =>
-          item.category === this.state.search || item.city === this.state.city
+          // item.category === this.state.search || item.city === this.state.city
+          item.city === this.state.city
       )
     })
   }
@@ -200,12 +222,11 @@ this.props.changeAppBar('ExpertHome')
 
                   <TableHead>
                     <TableRow>
-                      <TableCell colSpan='2'>
-                        <Typography variant='headline' gutterBottom>
+                      <TableCell colSpan='3'>
+                        <Typography variant='headline' gutterBottom    style={{ fontSize: 32 }}> 
                           Crop Rates
                         </Typography>
                       </TableCell>
-                      <TableCell colSpan='2'>
                         {/* <button
                           onClick={this.onSubmit}
                           style={{ float: 'right' }}
@@ -213,7 +234,7 @@ this.props.changeAppBar('ExpertHome')
                           Submit
                         </button> */}
 
-                        <Button
+                        {/* <Button
                           variant='contained'
                           color='default'
                           onClick={this.onSubmit}
@@ -235,8 +256,8 @@ this.props.changeAppBar('ExpertHome')
                         >
                           Select
                           <KeyBoardArrow />
-                        </Button>
-                        <Menu
+                        </Button> */}
+                        {/* <Menu
                           style={{ position: 'absolute', top: 40 }}
                           id='simple-menu'
                           anchorEl={anchorEl}
@@ -260,9 +281,9 @@ this.props.changeAppBar('ExpertHome')
                           </MenuItem>
 
                           s{' '}
-                        </Menu>
+                        </Menu> */}
 
-                     
+{/*                      
                         <TextField
                           className={classes.margin}
                           id='input-with-icon-textfield'
@@ -277,7 +298,22 @@ this.props.changeAppBar('ExpertHome')
                               </InputAdornment>
                             )
                           }}
-                        />
+                        /> */}
+                           <TableCell colSpan='1'>
+                        <FormControl className={classes.formControl}>
+                          <NativeSelect
+                            value={this.state.city}
+                            onChange={this.onChange}
+                            name='Select City'
+                            className={classes.selectEmpty}
+                          >
+                            <option value=''>Select City</option>
+                            <option value={'Karachi'}>Karachi</option>
+                            <option value={'Lahore'}>Lahore</option>
+                            <option value={'Hyderabad'}>Hyderabad</option>
+                          </NativeSelect>
+                        </FormControl>
+                        {/* // yahn sy hataya */}
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -320,7 +356,7 @@ this.props.changeAppBar('ExpertHome')
           <Grid item xs={12} sm container>
             <Grid item xs container direction='column'>
               <Grid item xs>
-                <Paper className={classNames(classes.paper)}><MachinerySlider info={ImgData}/></Paper>
+                <Paper className={classNames(classes.paper)}><MachinerySlider info={MachinerData}/></Paper>
                 <Paper className={classNames(classes.paper)}><MachinerySlider info={FertilizerData}/></Paper>
                 <Paper className={classNames(classes.paper)}><MachinerySlider info={PesticideData}/></Paper>
                 
@@ -344,9 +380,9 @@ this.props.changeAppBar('ExpertHome')
 function mapDispatchToProps (dispatch) {
   return {
    
-    changeAppBar:(obj)=>{
-      dispatch(changeNavbar(obj))
-    }
+    // changeAppBar:(obj)=>{
+    //   dispatch(changeNavbar(obj))
+    // }
    
   }
 }

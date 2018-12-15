@@ -10,38 +10,41 @@ import { connect } from 'react-redux'
 import { openModel } from './store/action/action'
 
 class PurchaseForm extends Component {
- constructor(){
-   super()
-   this.state ={
-     name:'',
-     productName:'',
-     description:'',
-     price:0,
-     image:'',
-     application:''
-   }
- }
+  constructor () {
+    super()
+    this.state = {
+      name: '',
+      productName: '',
+      description: '',
+      price: 0,
+      image: '',
+      application: ''
+    }
+  }
   handleClose = () => {
     this.props.itemValueFunc(false)
   }
   render () {
-      console.log(this.props.itemValue.reducer.selectDialog)
+    console.log(this.props.itemValue.reducer.selectDialog)
     return (
       <div>
-
-         <Dialog
-          open={(this.props.itemValue.reducer.modelOpen === true && this.props.itemValue.reducer.selectDialog === "ContactCompany")}
+        <Dialog
+          open={
+            this.props.itemValue.reducer.modelOpen === true &&
+            this.props.itemValue.reducer.selectDialog === 'ContactCompany'
+          }
           onClose={this.handleClose}
           aria-labelledby='form-dialog-title'
         >
-          <DialogTitle id='form-dialog-title'>Fill Form</DialogTitle>
+          <DialogTitle id='form-dialog-title' style={{ textAlign: 'center' }}>
+            Contact Form
+          </DialogTitle>
           <DialogContent>
-            
             <TextField
               autoFocus
               margin='dense'
               id='name'
-              label='Name'
+              label='Please Enter Your Name'
               type='name'
               fullWidth
             />
@@ -49,7 +52,7 @@ class PurchaseForm extends Component {
               autoFocus
               margin='dense'
               id='price'
-              label='Price'
+              label='Please Enter Expected Price'
               type='name'
               fullWidth
             />
@@ -57,7 +60,7 @@ class PurchaseForm extends Component {
               autoFocus
               margin='dense'
               id='image'
-              label='Add Image'
+              label='Please Enter Quantity'
               type='name'
               fullWidth
             />
@@ -65,11 +68,10 @@ class PurchaseForm extends Component {
               autoFocus
               margin='dense'
               id='description'
-              label='Description'
-              type='name'
+              label='Please Enter Email'
+              type='email'
               fullWidth
             />
-           
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color='primary'>
@@ -99,4 +101,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PurchaseForm)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PurchaseForm)

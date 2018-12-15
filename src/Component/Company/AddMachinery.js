@@ -71,7 +71,7 @@ class AddMachinery extends Component {
               autoFocus
               margin='dense'
               id='name'
-              label='Name'
+              label='Machine Name'
               type='text'
               fullWidth
             />
@@ -88,18 +88,16 @@ class AddMachinery extends Component {
               autoFocus
               margin='dense'
               id='discription'
-              label='Discription'
+              label='Machine Description'
               type='text'
               fullWidth
             />
 
-            <TextField
-              autoFocus
-              margin='dense'
-              id='image'
-              label='Add Image'
-              type='email'
-              fullWidth
+          <TextField
+              // onChange={this.handleChange}
+              // style={styles.textStyle}
+              type='file'
+              label='Select File'
             />
 
           </DialogContent>

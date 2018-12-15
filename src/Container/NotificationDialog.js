@@ -1,73 +1,39 @@
-// import React, { Component ,Fragment} from 'react'
-// import { withStyles } from '@material-ui/core/styles';
-// const styles ={
-
-// }
-
-// class NotificationDialog extends Component {
-
-//   render () {
-//     return (
-//       <Fragment>
-//         {console.log("ammar")}
-//         </Fragment>
-//     )
-//   }
-// }
-
-// export default withStyles(styles)(NotificationDialog)
-
 import React from 'react'
-// import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-// import MoreVertIcon from '@material-ui/icons/MoreVert'
 import { browserHistory } from 'react-router'
-
-const options = [
-  'None',
-  'Atria',
-  'Callisto',
-  'Dione',
-  'Ganymede',
-  'Hangouts Call',
-  'Luna',
-  'Oberon',
-  'Phobos',
-  'Pyxis',
-  'Sedna',
-  'Titania',
-  'Triton',
-  'Umbriel'
-]
+import Avatar from '@material-ui/core/Avatar'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
+const options = ['Ammar', 'Junaid', 'Meraj', 'Ubaid', 'Shams', 'Aamir']
 
 const ITEM_HEIGHT = 48
 
-class LongMenu extends React.Component {
+class NotificationDialog extends React.Component {
   state = {
     anchorEl: null
   }
 
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget })
-
   }
 
   handleClose = () => {
+    this.props.typeSelect === 'Crop'
+      ? browserHistory.push('/specificCrop')
+      : this.props.typeSelect === 'Problem'
+        ? browserHistory.push('/problemSolution')
+        : browserHistory.push('/notificationpanel')
+
     this.setState({ anchorEl: null })
-    this.props.typeSelect === "Crop"?
-    browserHistory.push('/specificCrop')
-    : this.props.typeSelect === "Problem"?
-    browserHistory.push('/problemSolution')
-    :
-    browserHistory.push('/notificationpanel')
-    
   }
 
   render () {
     const { anchorEl } = this.state
     const open = Boolean(anchorEl)
+    console.log(open)
 
     return (
       <div>
@@ -89,7 +55,7 @@ class LongMenu extends React.Component {
           PaperProps={{
             style: {
               maxHeight: ITEM_HEIGHT * 4.5,
-              width: 200
+              width: 220
             }
           }}
           style={{ position: 'absolute', top: 45 }} // changing
@@ -100,7 +66,12 @@ class LongMenu extends React.Component {
               selected={option === 'Pyxis'}
               onClick={this.handleClose}
             >
-              {option}
+              <Avatar
+                alt='Remy Sharp'
+                src={require('../images/Machinery/tractor.jpg')}
+                style={{ marginRight: 5 }}
+              />
+              <p>{option}</p>
             </MenuItem>
           ))}
         </Menu>
@@ -109,4 +80,4 @@ class LongMenu extends React.Component {
   }
 }
 
-export default LongMenu
+export default NotificationDialog

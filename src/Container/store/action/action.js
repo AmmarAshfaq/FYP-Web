@@ -14,16 +14,17 @@ export function openModel (itemReceive) {
   return dispatch => {
     dispatch({
       type: ActionTypes.OPEN,
-      itemSelect: itemReceive
+      itemSelect: itemReceive,
+      // specificId:id
     })
   }
 }
-export function changeNavbar (componentChange) {
-  console.log(componentChange+ 'jasjkajkajdskjakdjakdkjdkajkdja')
-  return dispatch => {
-    dispatch({
-      type: ActionTypes.CHANGE,
-      componentList: componentChange
-    })
-  }
-}
+// export function changeNavbar (componentChange) {
+//   console.log(componentChange+ 'jasjkajkajdskjakdjakdkjdkajkdja')
+//   return dispatch => {
+//     dispatch({
+//       type: ActionTypes.CHANGE,
+//       componentList: componentChange
+//     })
+//   }
+// }

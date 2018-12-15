@@ -1,4 +1,4 @@
-import React, { Component} from 'react'
+import React, { Component } from 'react'
 import {
   Paper,
   Typography,
@@ -7,11 +7,14 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
+  ListItemText
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import StarIcon from '@material-ui/icons/Star'
 import classNames from 'classnames'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import { changeNavbar } from '../Container/store/action/authAction'
 
 const styles = theme => ({
   paper: {
@@ -50,9 +53,18 @@ const styles = theme => ({
   },
   itemText: {
     fontSize: 32
+  },
+  listDis:{
+    marginTop:5,
+    marginBottom:5
   }
 })
 class About extends Component {
+  componentWillMount () {
+    localStorage.removeItem('token')
+
+    this.props.changeRoutes('Main')
+  }
   render () {
     const { classes } = this.props
     return (
@@ -76,33 +88,25 @@ class About extends Component {
                   className={classNames(classes.bigAvatar, classes.avatar)}
                 />
                 <div className={classes.textStyle}>
-                  <Typography variant='title'>
-                    Ammar Ashfaq
-                  </Typography>
-                  <Typography variant='subheading'>
-                    Team Lead
-                  </Typography>
+                  <Typography variant='title'>Ammar Ashfaq</Typography>
+                  <Typography variant='subheading'>Team Lead</Typography>
                 </div>
+                <div style={{marginBottom:10}}>
+                  <ul>
+                    <li className={classes.listDis}>Qualification</li>
+                    <ul>
+                      <li className={classes.listDis}>Under Graduate from Hamdard University</li>
+                      <li className={classes.listDis}>MERN Stack Development Course from Saylani</li>
+                    </ul>
 
-                <List component='nav'>
+                    <li className={classes.listDis}>Experience</li>
 
-                  <ListItem>
-                    <ListItemIcon>
-                      <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary='Qualification'
-                      className={classes.itemText}
-                    />
-                  </ListItem>
-                 
-                  <ListItem>
-                    <ListItemIcon>
-                      <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText primary='Experience' />
-                  </ListItem>
-                </List>
+                    <ul>
+                      <li className={classes.listDis}>3 Months Internship In BlockLinks</li>
+                    </ul>
+                  </ul>
+                </div>
+              
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -114,31 +118,24 @@ class About extends Component {
                   className={classes.bigAvatar}
                 />
                 <div className={classes.textStyle}>
-                  <Typography variant='title'>
-                    Mobeen Mehboob
-                  </Typography>
-                  <Typography variant='subheading'>
-                    Team Member
-                  </Typography>
+                  <Typography variant='title'>Mobeen Mehboob</Typography>
+                  <Typography variant='subheading'>Team Member</Typography>
                 </div>
-                <List component='nav'>
+                <div style={{marginBottom:10}}>
+                  <ul>
+                    <li className={classes.listDis}>Qualification</li>
+                    <ul>
+                      <li className={classes.listDis}>Under Graduate from Hamdard University</li>
+                      <li className={classes.listDis}>MERN Stack Development Course from Saylani</li>
+                    </ul>
 
-                  <ListItem>
-                    <ListItemIcon>
-                      <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary='Qualification'
-                      className={classes.itemText}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText primary='Experience' />
-                  </ListItem>
-                </List>
+                    <li className={classes.listDis}>Experience</li>
+
+                    <ul>
+                      <li className={classes.listDis}>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</li>
+                    </ul>
+                  </ul>
+                </div>
               </Paper>
             </Grid>
 
@@ -151,32 +148,24 @@ class About extends Component {
                   className={classes.bigAvatar}
                 />
                 <div className={classes.textStyle}>
-                  <Typography variant='title'>
-                    Malik Jamil
-                  </Typography>
-                  <Typography variant='subheading'>
-                    Team Member
-                  </Typography>
+                  <Typography variant='title'>Malik Jamil</Typography>
+                  <Typography variant='subheading'>Team Member</Typography>
                 </div>
-                <List component='nav'>
+                <div style={{marginBottom:10}}>
+                  <ul>
+                    <li className={classes.listDis}>Qualification</li>
+                    <ul>
+                      <li className={classes.listDis}>Under Graduate from Hamdard University</li>
+                      <li className={classes.listDis}>MERN Stack Development Course from Saylani</li>
+                    </ul>
 
-                  <ListItem>
-                    <ListItemIcon>
-                      <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary='Qualification'
-                      className={classes.itemText}
-                    />
-                  </ListItem>
-                  
-                  <ListItem>
-                    <ListItemIcon>
-                      <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText primary='Experience' />
-                  </ListItem>
-                </List>
+                    <li className={classes.listDis}>Experience</li>
+
+                    <ul>
+                      <li className={classes.listDis}>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</li>
+                    </ul>
+                  </ul>
+                </div>
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -191,28 +180,23 @@ class About extends Component {
                   <Typography variant='title'>
                     Dr.Prof.Aqeel-Ur-Rehman
                   </Typography>
-                  <Typography variant='subheading'>
-                    Supervisor
-                  </Typography>
+                  <Typography variant='subheading'>Supervisor</Typography>
                 </div>
-                <List component='nav'>
+                <div style={{marginBottom:10}}>
+                  <ul>
+                    <li className={classes.listDis}>Qualification</li>
+                    <ul>
+                      <li className={classes.listDis}>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</li>
+                      <li className={classes.listDis}>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</li>
+                    </ul>
 
-                  <ListItem>
-                    <ListItemIcon>
-                      <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary='Qualification'
-                      className={classes.itemText}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText primary='Experience' />
-                  </ListItem>
-                </List>
+                    <li className={classes.listDis}>Experience</li>
+
+                    <ul>
+                      <li className={classes.listDis}>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</li>
+                    </ul>
+                  </ul>
+                </div>
               </Paper>
             </Grid>
 
@@ -232,24 +216,21 @@ class About extends Component {
                     External Supervisor
                   </Typography>
                 </div>
-                <List component='nav'>
+                <div style={{marginBottom:10}}>
+                  <ul>
+                    <li className={classes.listDis}>Qualification</li>
+                    <ul>
+                      <li className={classes.listDis}>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</li>
+                      <li className={classes.listDis}>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</li>
+                    </ul>
 
-                  <ListItem>
-                    <ListItemIcon>
-                      <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary='Qualification'
-                      className={classes.itemText}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText primary='Experience' />
-                  </ListItem>
-                </List>
+                    <li className={classes.listDis}>Experience</li>
+
+                    <ul>
+                      <li className={classes.listDis}>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</li>
+                    </ul>
+                  </ul>
+                </div>
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -257,57 +238,60 @@ class About extends Component {
                 {' '}
                 <Avatar
                   alt='loading....'
-                  src={require('../images/ammar.jpg')}
+                  src={require('../images/avatar.png')}
                   className={classes.bigAvatar}
                 />
                 <div className={classes.textStyle}>
                   <Typography variant='title'>
                     Asst.Prof.Muhammad Fahad
                   </Typography>
-                  <Typography variant='subheading'>
-                    Co Supervisor
-                  </Typography>
+                  <Typography variant='subheading'>Co Supervisor</Typography>
                 </div>
-                <List component='nav'>
+                <div style={{marginBottom:10}}>
+                  <ul>
+                    <li className={classes.listDis}>Qualification</li>
+                    <ul>
+                      <li className={classes.listDis}>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</li>
+                      <li className={classes.listDis}>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</li>
+                    </ul>
 
-                  <ListItem>
-                    <ListItemIcon>
-                      <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary='Qualification'
-                      className={classes.itemText}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText primary='Experience' />
-                  </ListItem>
-                </List>
+                    <li className={classes.listDis}>Experience</li>
+
+                    <ul>
+                      <li className={classes.listDis}>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</li>
+                    </ul>
+                  </ul>
+                </div>
               </Paper>
             </Grid>
 
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Typography variant='display1'>
-                  Vision
-                </Typography>
+                <Typography variant='display1'>Vision</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Typography variant='display1'>
-                  Mission
-                </Typography>
+                <Typography variant='display1'>Mission</Typography>
               </Paper>
             </Grid>
           </Grid>
-
         </Paper>
       </div>
     )
   }
 }
-export default withStyles(styles)(About)
+function mapDispatchToProps (dispatch) {
+  return {
+    changeRoutes: obj => {
+      dispatch(changeNavbar(obj))
+    }
+  }
+}
+export default compose(
+  withStyles(styles),
+  connect(
+    null,
+    mapDispatchToProps
+  )
+)(About)

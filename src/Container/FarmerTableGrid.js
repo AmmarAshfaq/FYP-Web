@@ -21,7 +21,10 @@ import IconButton from '@material-ui/core/IconButton'
 import { openModel } from '../Container/store/action/action'
 import AddProblem from '../Component/Farmer/AddProblem'
 import AddCrop from '../Component/Farmer/AddCrop'
-
+import {
+  deleteCropAction,
+  deleteProblemAction
+} from '../Container/store/action/farmerAction'
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -37,8 +40,10 @@ const CustomTableCell = withStyles(theme => ({
 
 const styles = theme => ({
   table: {
-    minWidth: 700,
-    overflowY: 'auto'
+    // minWidth: 700,
+    overflowY: 'auto',
+    width:'100%'
+    
   },
   avatar: {
     margin: 10
@@ -65,165 +70,167 @@ const styles = theme => ({
 class TableGrid extends Component {
   constructor (props) {
     super(props)
-    console.log(this.props.data)
   }
-  handleClickOpen = obj => {
+  handleClickOpen = (obj, index) => {
     let objSet = {
       toggle: true,
-      specificDialog: obj
+      specificDialog: obj,
+      id: index
     }
+
     console.log(objSet)
     this.props.selectValue(objSet)
+  }
+  handleDelete = (obj, index) => {
+    // console.log(obj)
+    if (obj === 'Crops') {
+      this.props.deleteSpecificData(index)
+    } else if (obj === 'Problem') {
+      // this.props.d
+      this.props.deleteProblemData(index)
+    }
   }
   render () {
     const { classes, data, typeSelect } = this.props
     let i = 0
     return (
-      // console.log(this.props)
-      (
-        <div>
-          <Table className={classes.table}>
+      <div className={classes.table}>
+        <Table >
+          <TableHead>
+            <TableRow>
+              <TableCell colSpan='8'>
+                <Typography
+                  variant='display1'
+                  gutterBottom
+                  style={{ textAlign: 'center' }}
+                >
+                  {`${typeSelect}`} List
+                </Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow className={classes.row}>
+              <CustomTableCell numeric className={classes.columnNo}>
+                No.
+              </CustomTableCell>
+              <CustomTableCell numeric className={classes.columnNo}>
+                {' '}
+                Name
+              </CustomTableCell>
+              {typeSelect === 'Crops' ? (
+                <CustomTableCell numeric className={classes.columnNo}>
+                  Price
+                </CustomTableCell>
+              ) : null}
 
-            <TableHead>
-
-              <TableRow>
-                <TableCell colSpan='8'>
-                  <Typography
-                    variant='display1'
-                    gutterBottom
-                    style={{ textAlign: 'center' }}
+              {typeSelect === 'Problem' ? (
+                <CustomTableCell numeric className={classes.columnWidth}>
+                  Description
+                </CustomTableCell>
+              ) : null}
+              {typeSelect === 'Problem' ? (
+                <CustomTableCell numeric className={classes.columnNo}>
+                  Audio
+                </CustomTableCell>
+              ) : null}
+              {typeSelect === 'Crops' ? (
+                <CustomTableCell numeric className={classes.columnNo}>
+                  Weight
+                </CustomTableCell>
+              ) : null}
+              {typeSelect === 'Crops' ? (
+                <CustomTableCell numeric className={classes.columnNo}>
+                  Date
+                </CustomTableCell>
+              ) : null}
+              {typeSelect === 'Crops' ? (
+                <CustomTableCell numeric className={classes.columnNo}>
+                  Transport
+                </CustomTableCell>
+              ) : null}
+              <CustomTableCell numeric className={classes.columnNo}>
+                Image
+              </CustomTableCell>
+              <CustomTableCell numeric className={classes.columnNo}>
+                Delete
+              </CustomTableCell>
+              <CustomTableCell numeric className={classes.columnNo}>
+                Update
+              </CustomTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((n, key) => {
+              return (
+                <TableRow className={classes.row} keys={n._id}>
+                  <CustomTableCell numeric className={classes.columnNo}>
+                    {++i}
+                  </CustomTableCell>
+                  <CustomTableCell numeric className={classes.columnNo}>
+                    {`${n.name.substring(0, 15)}....`}
+                  </CustomTableCell>
+                  {typeSelect === 'Crops' ? (
+                    <CustomTableCell numeric className={classes.columnNo}>
+                      {`Rs. ${n.price}`}{' '}
+                    </CustomTableCell>
+                  ) : null}
+                  {typeSelect === 'Problem' ? (
+                    <CustomTableCell numeric className={classes.columnWidth}>
+                      {`${n.description.substring(0, 50)}.....`}
+                    </CustomTableCell>
+                  ) : null}
+                  {typeSelect === 'Problem' ? (
+                    <CustomTableCell
+                      className={classes.columnWidth}
+                    >{`${n.audio_url.substring(0, 50)}.....`}</CustomTableCell>
+                  ) : null}
+                  {typeSelect === 'Crops' ? (
+                    <CustomTableCell className={classes.columnWidth}>{`${
+                      n.wieght
+                    }`}</CustomTableCell>
+                  ) : null}
+                  {typeSelect === 'Crops' ? (
+                    <CustomTableCell className={classes.columnWidth}>{`${
+                      n.date
+                    }`}</CustomTableCell>
+                  ) : null}
+                  {typeSelect === 'Crops' ? (
+                    <CustomTableCell className={classes.columnWidth}>{`${
+                      n.transport
+                    }`}</CustomTableCell>
+                  ) : null}
+                  <CustomTableCell numeric className={classes.columnNo}>
+                    <Avatar
+                      alt='Adelle Charles'
+                      src={n.image_url}
+                      className={classNames(classes.avatar, classes.bigAvatar)}
+                    />
+                  </CustomTableCell>
+                  <CustomTableCell
+                    numeric
+                    className={classes.columnNo}
+                    onClick={this.handleDelete.bind(this, typeSelect, n._id)}
                   >
-                    {`${typeSelect}`} List
-                  </Typography>
-                </TableCell>
-              </TableRow>
-              <TableRow className={classes.row}>
-                <CustomTableCell numeric className={classes.columnNo}>
-                  No.
-                </CustomTableCell>
-                <CustomTableCell numeric className={classes.columnNo}>
-                  {' '}Name
-                </CustomTableCell>
-                {typeSelect === 'Crops'
-                  ? <CustomTableCell numeric className={classes.columnNo}>
-                      Price
-                    </CustomTableCell>
-                  : null}
-
-                {typeSelect === 'Problem'
-                  ? <CustomTableCell numeric className={classes.columnWidth}>
-                      Description
-                    </CustomTableCell>
-                  : null}
-                {typeSelect === 'Problem'
-                  ? <CustomTableCell numeric className={classes.columnNo}>
-                      Audio
-                    </CustomTableCell>
-                  : null}
-                {typeSelect === 'Crops'
-                  ? <CustomTableCell numeric className={classes.columnNo}>
-                      Weight
-                    </CustomTableCell>
-                  : null}
-                {typeSelect === 'Crops'
-                  ? <CustomTableCell numeric className={classes.columnNo}>
-                      Date
-                    </CustomTableCell>
-                  : null}
-                {typeSelect === 'Crops'
-                  ? <CustomTableCell numeric className={classes.columnNo}>
-                      Transport
-                    </CustomTableCell>
-                  : null}
-                <CustomTableCell numeric className={classes.columnNo}>
-                  Image
-                </CustomTableCell>
-                <CustomTableCell numeric className={classes.columnNo}>
-                  Delete
-                </CustomTableCell>
-                <CustomTableCell numeric className={classes.columnNo}>
-                  Update
-                </CustomTableCell>
-
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.map((n, key) => {
-                return (
-                  <TableRow className={classes.row} key={n.name}>
-                    <CustomTableCell numeric className={classes.columnNo}>
-                      {++i}
-                    </CustomTableCell>
-                    <CustomTableCell
-                      numeric
-                      className={classes.columnNo}
-                    >{`${n.name.substring(0, 15)}....`}</CustomTableCell>
-                    {typeSelect === 'Crops'
-                      ? <CustomTableCell numeric className={classes.columnNo}>
-                        {`Rs. ${n.price}`}{' '}
-                      </CustomTableCell>
-                      : null}
-                    {typeSelect === 'Problem'
-                      ? <CustomTableCell
-                        numeric
-                        className={classes.columnWidth}
-                        >{`${n.description.substring(0, 50)}.....`}</CustomTableCell>
-                      : null}
-                    {typeSelect === 'Problem'
-                      ? <CustomTableCell
-                        className={classes.columnWidth}
-                        >{`${n.audio.substring(0, 50)}.....`}</CustomTableCell>
-                      : null}
-                    {typeSelect === 'Crops'
-                      ? <CustomTableCell
-                        className={classes.columnWidth}
-                        >{`${n.weight}`}</CustomTableCell>
-                      : null}
-                    {typeSelect === 'Crops'
-                      ? <CustomTableCell
-                        className={classes.columnWidth}
-                        >{`${n.CompletionDate}`}</CustomTableCell>
-                      : null}
-                    {typeSelect === 'Crops'
-                      ? <CustomTableCell
-                        className={classes.columnWidth}
-                        >{`${n.transport}`}</CustomTableCell>
-                      : null}
-                    <CustomTableCell numeric className={classes.columnNo}>
-                      <Avatar
-                        alt='Adelle Charles'
-                        src={require('../images/Machinery/tractor.jpg')}
-                        className={classNames(
-                          classes.avatar,
-                          classes.bigAvatar
-                        )}
-                      />
-                    </CustomTableCell>
-                    <CustomTableCell numeric className={classes.columnNo}>
-                      <IconButton aria-label='Delete'>
-                        <DeleteIcon fontSize='large' />
-                      </IconButton>
-                    </CustomTableCell>
-                    <CustomTableCell
-                      numeric
-                      className={classes.columnNo}
-                      onClick={this.handleClickOpen.bind(this, typeSelect)}
-                    >
-                      <IconButton aria-label='Update'>
-                        <UpdateIcon fontSize='large' />
-                      </IconButton>
-                    </CustomTableCell>
-
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-
-          </Table>
-          <AddProblem/>
-          <AddCrop/>
-        </div>
-      )
+                    <IconButton aria-label='Delete'>
+                      <DeleteIcon fontSize='large' />
+                    </IconButton>
+                  </CustomTableCell>
+                  <CustomTableCell
+                    numeric
+                    className={classes.columnNo}
+                    onClick={this.handleClickOpen.bind(this, typeSelect, n._id)}
+                  >
+                    <IconButton aria-label='Update'>
+                      <UpdateIcon fontSize='large' />
+                    </IconButton>
+                  </CustomTableCell>
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
+        <AddProblem />
+        <AddCrop />
+      </div>
     )
   }
 }
@@ -232,9 +239,19 @@ function mapDipatchToProps (dispatch) {
   return {
     selectValue: data => {
       dispatch(openModel(data))
+    },
+    deleteSpecificData: data => {
+      dispatch(deleteCropAction(data))
+    },
+    deleteProblemData: data => {
+      dispatch(deleteProblemAction(data))
     }
   }
 }
-export default compose(withStyles(styles), connect(null, mapDipatchToProps))(
-  TableGrid
-)
+export default compose(
+  withStyles(styles),
+  connect(
+    null,
+    mapDipatchToProps
+  )
+)(TableGrid)

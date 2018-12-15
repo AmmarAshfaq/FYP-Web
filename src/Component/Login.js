@@ -2,8 +2,10 @@ import React from 'react'
 import { TextField, Button } from '@material-ui/core'
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
-import { changeNavbar } from '../Container/store/action/action'
-import { signinUser } from '../Container/store/action/authAction'
+// import { changeNavbar } from '../Container/store/action/authAction'
+import { signinUser, authError } from '../Container/store/action/authAction'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import NativeSelect from '@material-ui/core/NativeSelect'
 
 const style = {
   paperWapper: {
@@ -32,6 +34,12 @@ const style = {
   },
   heading: {
     color: '#212121'
+  },
+  formControl: {
+    minWidth: 120,
+    width: '28%',
+    float: 'right',
+    lineHeight: '2.1875em'
   }
 }
 
@@ -41,6 +49,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: ''
+      // userType:'Farmer'
     }
   }
 
@@ -53,21 +62,20 @@ class Login extends React.Component {
     this.setState(obj)
   }
 
-  signIn = (itemList, authenticate) => {
+  signIn = authenticate => {
     const { email, password } = this.state
-    // console.log(email)
-    // console.log(itemList)
-    // browserHistory.push('/menu')
-    this.props.componentList(itemList)
+
     this.props.siginUserForm({ email, password, authenticate })
+    // this.props.componentList(itemList)
+    // }
   }
 
   render () {
-    // console.log(this.props.ComponentName)
     return (
       <div style={style.paperWapper}>
         <div>
           <h1 style={style.heading}>Log In</h1>
+
           <TextField
             onChange={event => {
               this.updateValue(event, 'email')
@@ -76,7 +84,9 @@ class Login extends React.Component {
             style={style.textStyle}
             type='email'
             label='Email'
-          /><br />
+          />
+
+          <br />
           <TextField
             onChange={event => {
               this.updateValue(event, 'password')
@@ -85,58 +95,81 @@ class Login extends React.Component {
             style={style.textStyle}
             type='password'
             label='Password'
-          /><br />
-          {this.props.ComponentName === 'Farmer'
-            ? <Button
+          />
+          <br />
+          {this.props.loader ? <CircularProgress /> : null}
+
+          <Button
+            onClick={this.signIn.bind(this, 'companymain')}
+            style={style.button}
+          >
+            LOGIN
+          </Button>
+
+          {/* {this.state.userType === 'Farmer' ? (
+            <Button
               onClick={this.signIn.bind(
-                  this,
-                  this.props.ComponentName + 'Home',
-                  'farmermain'
-                )}
+                this,
+                this.state.userType + 'Home',
+                'farmermain'
+              )}
               style={style.button}
-              >
-                LOGIN
-              </Button>
-            : this.props.ComponentName === 'Company'
-                ? <Button
-                  onClick={this.signIn.bind(
-                      this,
-                      this.props.ComponentName + 'Home',
-                      'companymain'
-                    )}
-                  style={style.button}
-                  >
-                    LOGIN
-                  </Button>
-                : this.props.ComponentName === 'Expert'
-                    ? <Button
-                      onClick={this.signIn.bind(
-                          this,
-                          this.props.ComponentName + 'Home',
-                          'expertmain'
-                        )}
-                      style={style.button}
-                      >
-                        LOGIN
-                      </Button>
-                    : this.props.ComponentName === 'Buyer'
-                        ? <Button
-                          onClick={this.signIn.bind(
-                              this,
-                              this.props.ComponentName + 'Home',
-                              'buyermain'
-                            )}
-                          style={style.button}
-                          >
-                            LOGIN
-                          </Button>
-                        : <Button onClick={this.signIn} style={style.button}>
-                            LOGIN
-                          </Button>}
+            >
+              LOGIN
+            </Button>
+          ) : this.state.userType === 'Company' ? (
+            <Button
+              onClick={this.signIn.bind(
+                this,
+                this.state.userType + 'Home',
+                'companymain'
+              )}
+              style={style.button}
+            >
+              LOGIN
+            </Button>
+          ) : this.state.userType === 'Expert' ? (
+            <Button
+              onClick={this.signIn.bind(
+                this,
+                this.state.userType + 'Home',
+                'expertmain'
+              )}
+              style={style.button}
+            >
+              LOGIN
+            </Button>
+          ) : this.state.userType === 'Buyer' ? (
+            <Button
+              onClick={this.signIn.bind(
+                this,
+                this.state.userType + 'Home',
+                'buyermain'
+              )}
+              style={style.button}
+            >
+              LOGIN
+            </Button>
+          ) :
+          this.state.userType === 'Admin' ? (
+            <Button
+              onClick={this.signIn.bind(
+                this,
+                this.state.userType + 'Home',
+                'adminmain'
+              )}
+              style={style.button}
+            >
+              LOGIN
+            </Button>
+          ) :(
+            <Button onClick={this.signIn} style={style.button}>
+              LOGIN
+            </Button>
+          )} */}
           <Button onClick={this.register} style={style.button}>
             Register
           </Button>
-
         </div>
       </div>
     )
@@ -144,17 +177,23 @@ class Login extends React.Component {
 }
 function mapStateToProps (state) {
   return {
-    ComponentName: state.reducer.item
+    ComponentName: state.reducer.item,
+    loader: state.authReducer.authenticated
   }
 }
 function mapDispatchToProps (dispatch) {
   return {
-    componentList: componentValue => {
-      dispatch(changeNavbar(componentValue))
-    },
-    siginUserForm: obj => dispatch(signinUser(obj))
+    // componentList: componentValue => {
+    //   dispatch(changeNavbar(componentValue))
+
+    // },
+    siginUserForm: obj => dispatch(signinUser(obj)),
+    errorLogin: err => dispatch(authError(err))
   }
 }
 
 // export default Login;
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login)

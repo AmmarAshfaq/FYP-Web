@@ -8,10 +8,8 @@ import {
   Menu,
   MenuItem
 } from '@material-ui/core'
-// import history from '../History'
 import { withStyles } from '@material-ui/core/styles'
 import { browserHistory } from 'react-router'
-// import MenuIcon from '@material-ui/icons/Menu'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { selectManu } from './store/action/action'
@@ -34,35 +32,26 @@ class DrawerOpenClose extends Component {
   handleClose = () =>{
     this.setState({anchorEl:null})
   }
-  // componentWillMount(){
-  //   this.setState({toggle:this.props.itemList})
-  // }
+ 
   changeScreen = argument => {
-    //  browserHistory.push('/login')
-    // console.log(argument)
+   
     if (argument === 'Main') {
       browserHistory.push('/')
       console.log(argument)
-    } else if (argument === 'Company') {
-      browserHistory.push('/login')
-    } else if (argument === 'Expert') {
-      browserHistory.push('/login')
-    } else if (argument === 'Farmer') {
-      browserHistory.push('/login')
-    } else if (argument === 'Buyer') {
-      browserHistory.push('/login')
-    } else if (argument === 'Contact') {
+    }  else if (argument === 'Contact') {
       browserHistory.push('/contact')
     } else if (argument === 'About') {
       browserHistory.push('/about')
     }
-    this.props.itemAdd(argument)
+    else if( argument === 'Login'){
+      browserHistory.push('/login')
+    }
+    // this.props.itemAdd(argument)
     this.setState({ anchorEl: null })
   }
   render () {
     const { classes } = this.props
     const { anchorEl } = this.state
-    // console.log(this.props.itemList)
     return (
       <Fragment>
         <AppBar position='fixed' style={{ flexGrow: 1 ,backgroundColor:'#00806d'}} >
@@ -78,7 +67,7 @@ class DrawerOpenClose extends Component {
 
                     SAES
                   </Typography>
-                <Typography variant='Subheading' color='inherit'>
+                <Typography variant='subheading' color='inherit'>
                     Smart Agriculture Extension Services
                   </Typography>
               </div>
@@ -103,14 +92,15 @@ class DrawerOpenClose extends Component {
                   </Button>
                 <Button
                 style={{position:'relative'}}
-                  aria-owns={anchorEl ? 'simple-menu' : null}
-                  aria-haspopup='true'
-                  onClick={this.handleClick}
+                  // aria-owns={anchorEl ? 'simple-menu' : null}
+                  // aria-haspopup='true'
+                  // onClick={this.handleClick}
+                  onClick={this.changeScreen.bind(this,'Login')}
                   color='inherit'
                   >
-                    Services
+                    LogIn
                   </Button>
-                <Menu
+                {/* <Menu
                 style={{position:'absolute',top:40}}
                   id='simple-menu'
                   anchorEl={anchorEl}
@@ -130,7 +120,7 @@ class DrawerOpenClose extends Component {
                       Buyer
                     </MenuItem>
                     s{' '}
-                </Menu>
+                </Menu> */}
               </div>
 
             </Toolbar>
@@ -156,6 +146,6 @@ function mapDispatchToProp (dispatch) {
   }
 }
 
-export default compose(withStyles(styles), connect(mapStateToProp, mapDispatchToProp))(
+export default compose(connect(mapStateToProp, mapDispatchToProp),withStyles(styles))(
   DrawerOpenClose
 )

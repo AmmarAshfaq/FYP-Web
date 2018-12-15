@@ -1,31 +1,39 @@
-import React, { Fragment } from 'react'
+import React, { Fragment,Component } from 'react'
 import { connect } from 'react-redux'
 import DrawerOpenClose from '../Container/DrawerOpenClose'
 import FarmerHeader from './Farmer/FarmerHeader'
 import BuyerHeader from './Buyer/BuyerHeader'
 import ExpertHeader from './Expert/ExpertHeader'
 import CompanyHeader from './Company/CompanyHeader'
-// import MessengerNavBar from '../Container/messengerNavbar'
- const ChangeNavbar = props => {
-  // console.log(props.componentValue)
+import AdminHeader from './Admin/AdminHeader'
+ class ChangeNavbar extends Component{
+
+  render(){
+  // let token = 
   return (
     <Fragment>
-      {props.componentValue === 'Main'
-        ? <DrawerOpenClose  />
-        : props.componentValue === 'FarmerHome'
-            ? <FarmerHeader />
-            : props.componentValue === 'BuyerHome'
-                ? <BuyerHeader />
-                : props.componentValue === 'ExpertHome'
-                    ? <ExpertHeader />
-                    : props.componentValue === 'CompanyHome'
-                        ? <CompanyHeader />
-                        : props.componentValue === 'Messenger'
-                        ? null
-                        :null}
+      {localStorage.getItem('token')  ?
+       
+       ( this.props.componentValue === 'FarmerHome' ? (
+          <FarmerHeader />
+        ) :this.props.componentValue === 'BuyerHome' ? (
+          <BuyerHeader />
+        ) : this.props.componentValue === 'ExpertHome' ? (
+          <ExpertHeader />
+        ) : this.props.componentValue === 'CompanyHome' ? (
+          <CompanyHeader />
+        ) : this.props.componentValue === 'AdminHome' ? (
+          <AdminHeader />
+        ) : null
+
+       ) : (this.props.componentValue === 'Main' ? (
+        <DrawerOpenClose />
+      ) : null)
+      }
       {/* {props.componentValue === 'Main' ? <Footer /> : null} */}
     </Fragment>
   )
+}
 }
 
 function mapStateToProps (state) {
@@ -33,4 +41,7 @@ function mapStateToProps (state) {
     componentValue: state.reducer.componentUpdate
   }
 }
-export default connect(mapStateToProps, null)(ChangeNavbar)
+export default connect(
+  mapStateToProps,
+  null
+)(ChangeNavbar)

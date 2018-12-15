@@ -15,12 +15,11 @@ import { withStyles } from '@material-ui/core/styles'
 import AddProblem from './AddProblem'
 import AddCrop from './AddCrop'
 import { connect } from 'react-redux'
-import { openModel, changeNavbar } from '../../Container/store/action/action'
+import { openModel } from '../../Container/store/action/action'
 import { signoutUser } from '../../Container/store/action/authAction'
 import { compose } from 'redux'
 import { browserHistory } from 'react-router'
 import NotificationDialog from '../../Container/NotificationDialog'
-import TableGrid from '../../Container/TableGrid'
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
   titleStyle: { flexDirection: 'column', flexGrow: 1 },
@@ -51,16 +50,21 @@ class FarmerHeader extends Component {
       specificDialog: obj
     }
     this.props.selectValue(objSet)
+  }
+  handleClickAddItem = () => {
     browserHistory.push('/AddedItem')
   }
-
+  openHome = () => {
+    browserHistory.push('/farmermain')
+  }
   handleLogOut = passParam => {
     // browserHistory.push('/login')
-    this.props.ChangeRoute(passParam)
-    this.props.signOutComp()
+    // this.props.ChangeRoute(passParam)
+    console.log(passParam)
+    this.props.signOutComp(passParam)
   }
   messengerApp = passParam => {
-    this.props.ChangeRoute(passParam)
+    // this.props.ChangeRoute(passParam)
     browserHistory.push('/messenger')
   }
   render () {
@@ -72,20 +76,25 @@ class FarmerHeader extends Component {
           position='fixed'
           style={{ flexGrow: 1, backgroundColor: '#00806d' }}
         >
-
           <Toolbar>
             <Avatar
               alt='Logo'
               src={require('../../images/logo2.jpg')}
+              // src={this.props.userIdentity.image_url}
               className={classes.avatarStyle}
             />
             <div className={classes.titleStyle}>
               <Typography variant='title' color='inherit'>
+                {/* {this.props.userIdentity.name} */}
                 Farmer
               </Typography>
             </div>
             <div>
-              <Button color='inherit' className={classes.buttonStyle}>
+              <Button
+                color='inherit'
+                className={classes.buttonStyle}
+                onClick={this.openHome.bind(this)}
+              >
                 Home
               </Button>
 
@@ -107,7 +116,7 @@ class FarmerHeader extends Component {
                 >
                   Notification
                 </Button> */}
-                <NotificationDialog typeSelect="Crop"/>
+                <NotificationDialog typeSelect='Crop' />
               </Badge>
 
               <Button
@@ -131,10 +140,9 @@ class FarmerHeader extends Component {
                 <MenuItem onClick={this.handleClickOpen.bind(this, 'Crops')}>
                   Add Crop
                 </MenuItem>
-                <MenuItem onClick={this.handleClickOpen.bind(this)}>
+                <MenuItem onClick={this.handleClickAddItem.bind(this)}>
                   Added Item
                 </MenuItem>
-
                 <MenuItem onClick={this.handleLogOut.bind(this, 'Main')}>
                   Log Out
                 </MenuItem>
@@ -144,9 +152,7 @@ class FarmerHeader extends Component {
             <AddProblem />
             <AddCrop />
           </Toolbar>
-
         </AppBar>
-
       </Fragment>
     )
   }
@@ -156,16 +162,24 @@ function mapDispatchToProp (dispatch) {
     selectValue: data => {
       dispatch(openModel(data))
     },
-    ChangeRoute: data => {
-      dispatch(changeNavbar(data))
-    },
-    signOutComp: () => {
-      dispatch(signoutUser())
+    // ChangeRoute: data => {
+    //   dispatch(changeNavbar(data))
+    // },
+    signOutComp: data => {
+      dispatch(signoutUser(data))
     }
   }
 }
 
+function mapStateToProps (state) {
+  return {
+    userIdentity: state.authReducer.currentUserData.user
+  }
+}
 export default compose(
   withStyles(styles, { name: 'FarmerHeader' }),
-  connect(null, mapDispatchToProp)
+  connect(
+    mapStateToProps,
+    mapDispatchToProp
+  )
 )(FarmerHeader)

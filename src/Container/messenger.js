@@ -116,13 +116,13 @@ class Messenger extends React.Component {
     mobileMoreAnchorEl: null
   }
 
-  componentWillMount(){
-    console.log(window.document.referrer)
+  // componentWillMount(){
+  //   console.log(window.document.referrer)
     
-  }
-  componentDidMount(){
-    console.log(window.document.referrer)
-  }
+  // }
+  // componentDidMount(){
+  //   console.log(window.document.referrer)
+  // }
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget })
   }
@@ -131,6 +131,7 @@ class Messenger extends React.Component {
     this.setState({ anchorEl: null })
     this.handleMobileMenuClose()
   }
+  
 
   handleMobileMenuOpen = event => {
     this.setState({ mobileMoreAnchorEl: event.currentTarget })
@@ -403,10 +404,8 @@ class Messenger extends React.Component {
               >
                 <TextField
                   id='standard-full-width'
-                  // label="Label"
                   style={{ width: '80%', marginBottom: 0 }}
                   placeholder='Enter Message ....'
-                  // helperText="Full width!"
                   fullWidth
                   margin='normal'
                   InputLabelProps={{

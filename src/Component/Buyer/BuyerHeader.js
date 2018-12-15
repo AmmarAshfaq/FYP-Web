@@ -11,7 +11,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { browserHistory } from 'react-router'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { changeNavbar } from '../../Container/store/action/action'
+// import { changeNavbar } from '../../Container/store/action/action'
 import { signoutUser } from '../../Container/store/action/authAction'
 import NotificationDialog from '../../Container/NotificationDialog'
 // import MenuIcon from '@material-ui/icons/Menu'
@@ -30,12 +30,12 @@ class BuyerHeader extends Component {
     }
   }
   messengerApp = (passParam) => {
-    this.props.changeRoute(passParam);
+    // this.props.changeRoute(passParam);
     browserHistory.push('/messenger')
   }
   onClickLogout = passParam => {
-    this.props.changeRoute(passParam)
-    this.props.signoutUserComp()
+    // this.props.changeRoute(passParam)
+    this.props.signoutUserComp(passParam)
   }
 
   render () {
@@ -96,11 +96,11 @@ class BuyerHeader extends Component {
 
 function mapDispatchToProp (dispatch) {
   return {
-    changeRoute: data => {
-      dispatch(changeNavbar(data))
-    },
-    signoutUserComp: () => {
-      dispatch(signoutUser())
+    // changeRoute: data => {
+    //   dispatch(changeNavbar(data))
+    // },
+    signoutUserComp: (data) => {
+      dispatch(signoutUser(data))
     }
   }
 }

@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { Paper, Typography, Grid, TextField, Button } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 // import Background from '../images/contact.jpg'
+import { changeNavbar } from '../Container/store/action/authAction'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
 const styles = theme => ({
   root: {
     marginTop: 80
@@ -10,6 +13,11 @@ const styles = theme => ({
   paperStyle: {}
 })
 class Contact extends Component {
+  componentWillMount () {
+    localStorage.removeItem('token')
+
+    this.props.changeRoutes('Main')
+  }
   render () {
     const { classes } = this.props
     return (
@@ -45,7 +53,7 @@ class Contact extends Component {
                 gutterBottom
                 style={{ textAlign: 'left', lineHeight: '1em' }}
               >
-                368 Qasimabad,
+                {/* 368 Qasimabad, */}xxxxxxxxxx
               </Typography>
               <Typography
                 variant='subheading'
@@ -56,7 +64,7 @@ class Contact extends Component {
                   marginBottom: 30
                 }}
               >
-                Liaquatabad Karachi
+                {/* Liaquatabad Karachi */} xxxxxxxxxxxxxxxxx
               </Typography>
               <Typography
                 variant='headline'
@@ -91,7 +99,6 @@ class Contact extends Component {
                 smartagricultureservices@gmail.com
               </Typography>
             </div>
-
           </Grid>
           <Grid item xs={6}>
             <Paper style={{ marginRight: 60, padding: 30 }}>
@@ -211,5 +218,17 @@ class Contact extends Component {
     )
   }
 }
-
-export default withStyles(styles)(Contact)
+function mapDispatchToProps (dispatch) {
+  return {
+    changeRoutes: obj => {
+      dispatch(changeNavbar(obj))
+    }
+  }
+}
+export default compose(
+  connect(
+    null,
+    mapDispatchToProps
+  ),
+  withStyles(styles)
+)(Contact)

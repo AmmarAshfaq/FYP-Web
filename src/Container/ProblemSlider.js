@@ -62,7 +62,7 @@ class ProblemSlider extends React.Component {
     super(props)
   }
   componentWillMount () {
-    console.log(this.props.typeSelect)
+    // console.log(this.props.typeSelect)
   }
   goToProblem = () => {
     this.props.typeSelect === 'Crop'
@@ -71,7 +71,7 @@ class ProblemSlider extends React.Component {
   }
   render () {
     const { classes, typeSelect } = this.props
-    console.log(typeSelect)
+    // console.log(typeSelect)
     // console.log(item)
     const settings = {
       // dots: true,
@@ -83,11 +83,15 @@ class ProblemSlider extends React.Component {
       autoplay: true,
       autoplaySpeed: 2000
     }
+    // const info = this.props.infoProblem;
+    // info.concate(this.props.infoCrop)
+
+    
     return (
       <Slider {...settings}>
-        {this.props.info.map((data, ind) => {
-          return (
-            <Card className={classes.card}>
+        {this.props.info.map((data, ind) => 
+          
+            <Card className={classes.card} keys={ind}>
               <CardHeader title={data.title} />
               <CardMedia
                 className={classes.media}
@@ -97,13 +101,13 @@ class ProblemSlider extends React.Component {
               />
               <CardContent>
                 <Typography component='p'>
-                  This common garden problem is often caused by a lack of calcium and/or uneven watering. Learn how to identify, prevent and fix blossom end rot here.
+                 {data.name}
                 </Typography>
               </CardContent>
 
             </Card>
-          )
-        })}
+          
+        )}
 
       </Slider>
     )

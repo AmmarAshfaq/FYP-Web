@@ -8,6 +8,10 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { openModel } from '../../Container/store/action/action'
+import {
+  addCropAction,
+  updateCropAction
+} from '../../Container/store/action/farmerAction'
 import { withStyles } from '@material-ui/core/styles'
 import { compose } from 'redux'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
@@ -34,26 +38,67 @@ class AddCrop extends Component {
   constructor () {
     super()
     this.state = {
-      cropName: '',
-      cropPrice: 0,
-      image: '',
-      cropWeight: 0,
-      completeDate: new Date(),
+      name: '',
+      price: '',
+      image_url: null,
+      wieght: '',
+      date: new Date(),
       transport: false
     }
+    this.handleChange = this.handleChange.bind(this)
   }
   handleClose = () => {
+    const { name, price, image_url, wieght, date, transport } = this.state
+    console.log(this.state)
+    const objData = {
+      name: name,
+      price: price,
+      image_url: image_url,
+      wieght: wieght,
+      date: date,
+      transport: transport,
+      farmerId: this.props.farmerID,
+      selectId: this.props.selectId
+    }
+    if (this.props.selectId && this.props.selectId !== undefined) {
+      this.props.cropDataUpdate(objData)
+    } else {
+      this.props.addCropData(objData)
+    }
     this.props.itemValueFunc(false)
+    this.setState({
+      name: '',
+      price: '',
+      image_url: null,
+      date: new Date(),
+      transport: false
+    })
+  }
+  updateValue = (ev, target) => {
+    let obj = {}
+    obj[target] = ev.target.value
+    this.setState(obj)
+  }
+  updateBol = (ev, target) => {
+    let obj = {}
+    obj[target] = ev.target.checked
+    this.setState(obj)
+  }
+  handleChange = event => {
+    this.setState({
+      image_url: event.target.files[0]
+    })
   }
   render () {
     const { classes } = this.props
     return (
       <div>
-
         <Dialog
           open={
-            !!(this.props.itemValue.reducer.modelOpen === true &&
-              this.props.itemValue.reducer.selectDialog === 'Crops')
+            !!(
+              this.props.itemValue.reducer.modelOpen === true &&
+              this.props.itemValue.reducer.selectDialog === 'Crops'
+            )
           }
           onClose={this.handleClose}
           aria-labelledby='form-dialog-title'
@@ -63,7 +108,6 @@ class AddCrop extends Component {
           </DialogTitle>
           <Divider />
           <DialogContent>
-
             <TextField
               autoFocus
               margin='dense'
@@ -71,6 +115,10 @@ class AddCrop extends Component {
               label='Enter Crop Name'
               type='text'
               fullWidth
+              value={this.state.name}
+              onChange={event => {
+                this.updateValue(event, 'name')
+              }}
             />
             <TextField
               autoFocus
@@ -79,6 +127,10 @@ class AddCrop extends Component {
               label='Enter Crop Weight'
               type='text'
               fullWidth
+              value={this.state.wieght}
+              onChange={event => {
+                this.updateValue(event, 'wieght')
+              }}
             />
             <TextField
               autoFocus
@@ -87,47 +139,46 @@ class AddCrop extends Component {
               label='Enter Crop Price'
               type='text'
               fullWidth
+              value={this.state.price}
+              onChange={event => {
+                this.updateValue(event, 'price')
+              }}
             />
             <TextField
               id='datetime-local'
               label='Select Completion Date'
-              type='datetime-local'
-              defaultValue='2017-05-24T10:30'
+              type='date'
+              defaultValue='2017-05-24'
               className={classes.textField}
               InputLabelProps={{
                 shrink: true
               }}
               fullWidth
+              value={this.state.date}
+              onChange={event => {
+                this.updateValue(event, 'date')
+              }}
             />
 
-            <input
-              accept='image/*'
-              className={classes.input}
-              id='contained-button-file'
-              multiple
+            <TextField
+              onChange={this.handleChange}
+              style={styles.textStyle}
               type='file'
-              // placeholder="choose image"
+              label='Select File'
             />
-            <label htmlFor='contained-button-file'>
-              <Button variant='contained' component='span'>
-                <PhotoCamera />
-                Add Image
-              </Button>
-
-            </label>
             <FormControlLabel
-             label='Transport'
-            style={{float:'right',fontSize:24}}
+              label='Transport'
+              style={{ float: 'right', fontSize: 24 }}
               control={
                 <Checkbox
                   checked={this.state.transport}
-                  onChange={e => this.setState({ transport: e })}
-                  value={false}
+                  onChange={event => {
+                    this.updateBol(event, 'transport')
+                  }}
+                  value='transport'
                 />
               }
-             
             />
-
           </DialogContent>
           <Divider />
           <DialogActions className={classes.pointer}>
@@ -145,20 +196,50 @@ class AddCrop extends Component {
 }
 
 function mapStateToProps (state) {
-  console.log(state)
+  // console.log(state.authReducer.currentUserData.user.id)
   return {
-    itemValue: state
+    itemValue: state,
+    farmerID: state.authReducer.currentUserData.user.id,
+    selectId: state.reducer.selectListId
   }
 }
 function mapDispatchToProps (dispatch) {
   return {
     itemValueFunc: data => {
       dispatch(openModel(data))
+    },
+    addCropData: data => {
+      dispatch(addCropAction(data))
+    },
+    cropDataUpdate: data => {
+      dispatch(updateCropAction(data))
     }
   }
 }
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 )(AddCrop)
+
+{
+  /* <input
+              accept='image/*'
+              className={classes.input}
+              id='contained-button-file'
+              multiple
+              type='file'
+              // placeholder="choose image"
+
+            />
+            <label htmlFor='contained-button-file'>
+              <Button variant='contained' component='span'>
+                <PhotoCamera />
+                Add Image
+              </Button>
+
+            </label> */
+}
