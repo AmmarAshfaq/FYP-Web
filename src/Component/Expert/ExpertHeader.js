@@ -44,7 +44,7 @@ class ExpertHeader extends Component {
   }
 
   messengerApp = passParam => {
-    this.props.changeRoute(passParam)
+    // this.props.changeRoute(passParam)
     browserHistory.push('/messenger')
   }
   render () {

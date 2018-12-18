@@ -12,13 +12,19 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import UpdateIcon from '@material-ui/icons/Update'
 import classNames from 'classnames'
 import Avatar from '@material-ui/core/Avatar'
-import {connect} from 'react-redux';
-import { compose } from 'redux';
+import { connect } from 'react-redux'
+import { compose } from 'redux'
 import IconButton from '@material-ui/core/IconButton'
-import { openModel} from '../Container/store/action/action';
-import AddPesticide from '../Component/Company/AddPesticide';
-import AddMachinery from '../Component/Company/AddMachinery';
-import AddFertilizer from '../Component/Company/AddFertilizer';
+import { openModel } from '../Container/store/action/action'
+import AddPesticide from '../Component/Company/AddPesticide'
+import AddMachinery from '../Component/Company/AddMachinery'
+import AddFertilizer from '../Component/Company/AddFertilizer'
+
+import {
+  deleteMachineryAction,
+  deleteFertilizerAction,
+  deletePesticideAction
+} from '../Container/store/action/companyAction'
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -36,7 +42,7 @@ const styles = theme => ({
   table: {
     // minWidth: ,
     overflowY: 'auto',
-    width:'100%'
+    width: '100%'
   },
   avatar: {
     margin: 10
@@ -63,29 +69,50 @@ const styles = theme => ({
 class TableGrid extends Component {
   constructor (props) {
     super(props)
-    console.log(this.props.data)
+    // console.log(this.props.data)
   }
-  handleClickOpen = (obj) => {
+  handleClickOpen = (obj,index) => {
     let objSet = {
       toggle: true,
-      specificDialog: obj
+      specificDialog: obj,
+      id:index
     }
-    // console.log(objSet)
+    console.log(objSet)
     this.props.selectValue(objSet)
+  }
+  handleDelete = (obj, index, companyIndex) => {
+    // console.log(obj,"Type",'id',index)
+    if (obj === 'Fertilizer') {
+      // console.log(index,companyIndex)
+      let objData = {
+        _id: index
+      }
+      this.props.deleteFertilizer(objData)
+    } else if (obj === 'Machinery') {
+      // console.log(index,companyIndex)
+      let objData = {
+        machineId: index,
+        companyId: companyIndex
+      }
+      this.props.deleteMachinery(objData)
+    } else if (obj === 'Pesticide') {
+      // console.log(index,companyIndex)
+      let objData = {
+        pesticideId: index,
+        companyId: companyIndex
+      }
+      this.props.deletePesticide(objData)
+    }
   }
   render () {
     const { classes, data, typeSelect } = this.props
+    console.log(data)
     let i = 0
     return (
       // console.log(this.props)
-      <div  className={classes.table}>
-        <Table
-        
-       
-        >
-
+      <div className={classes.table}>
+        <Table>
           <TableHead>
-
             <TableRow>
               <TableCell colSpan='8'>
                 <Typography
@@ -102,17 +129,35 @@ class TableGrid extends Component {
                 No.
               </CustomTableCell>
               <CustomTableCell numeric className={classes.columnNo}>
-                {' '}Name
+                {' '}
+                Name
               </CustomTableCell>
               <CustomTableCell numeric className={classes.columnNo}>
                 Price
               </CustomTableCell>
-              <CustomTableCell numeric className={classes.columnWidth}>
-                Description
-              </CustomTableCell>
-              <CustomTableCell numeric className={classes.columnNo}>
+              {typeSelect === 'Machinery' ? (
+                <CustomTableCell numeric className={classes.columnWidth}>
+                  Description
+                </CustomTableCell>
+              ) : null}
+              {typeSelect === 'Pesticide' ? (
+                <CustomTableCell numeric className={classes.columnWidth}>
+                  Description
+                </CustomTableCell>
+              ) : null}
+              {/* <CustomTableCell numeric className={classes.columnNo}>
                 Contact No
-              </CustomTableCell>
+              </CustomTableCell> */}
+              {typeSelect === 'Fertilizer' ? (
+                <CustomTableCell numeric className={classes.columnNo}>
+                  Product
+                </CustomTableCell>
+              ) : null}
+              {typeSelect === 'Fertilizer' ? (
+                <CustomTableCell numeric className={classes.columnNo}>
+                  Application
+                </CustomTableCell>
+              ) : null}
               <CustomTableCell numeric className={classes.columnNo}>
                 Image
               </CustomTableCell>
@@ -122,7 +167,6 @@ class TableGrid extends Component {
               <CustomTableCell numeric className={classes.columnNo}>
                 Update
               </CustomTableCell>
-
             </TableRow>
           </TableHead>
           <TableBody>
@@ -132,21 +176,60 @@ class TableGrid extends Component {
                   <CustomTableCell numeric className={classes.columnNo}>
                     {++i}
                   </CustomTableCell>
-                  <CustomTableCell
-                    numeric
-                    className={classes.columnNo}
-                  >{`${n.name.substring(0, 15)}....`}</CustomTableCell>
+                  {typeSelect === 'Fertilizer' ? (
+                    <CustomTableCell
+                      numeric
+                      className={classes.columnNo}
+                    >{`${n.name.substring(0, 15)}....`}</CustomTableCell>
+                  ) : null}
+                  {typeSelect === 'Machinery' ? (
+                    <CustomTableCell
+                      numeric
+                      className={classes.columnNo}
+                    >{`${n.machineName.substring(0, 15)}....`}</CustomTableCell>
+                  ) : null}
+                  {typeSelect === 'Pesticide' ? (
+                    <CustomTableCell
+                      numeric
+                      className={classes.columnNo}
+                    >{`${n.pesticideName.substring(
+                        0,
+                        15
+                      )}....`}</CustomTableCell>
+                  ) : null}
                   <CustomTableCell numeric className={classes.columnNo}>
-                    {`Rs. ${n.price}`}{' '}
+                    {`Rs. ${n.price.substring(0, 15)}`}{' '}
                   </CustomTableCell>
-
-                  <CustomTableCell
-                    numeric
-                    className={classes.columnWidth}
-                  >{`${n.description.substring(0, 50)}.....`}</CustomTableCell>
-                  <CustomTableCell numeric className={classes.columnNo}>
-                    {n.contactNo}
-                  </CustomTableCell>
+                  {typeSelect === 'Machinery' ? (
+                    <CustomTableCell
+                      numeric
+                      className={classes.columnWidth}
+                    >{`${n.machineDescription.substring(
+                        0,
+                        20
+                      )}.....`}</CustomTableCell>
+                  ) : null}
+                  {typeSelect === 'Pesticide' ? (
+                    <CustomTableCell
+                      numeric
+                      className={classes.columnWidth}
+                    >{`${n.pesticideDescription.substring(
+                        0,
+                        20
+                      )}.....`}</CustomTableCell>
+                  ) : null}
+                  {typeSelect === 'Fertilizer' ? (
+                    <CustomTableCell
+                      numeric
+                      className={classes.columnNo}
+                    >{`${n.product.substring(0, 15)}....`}</CustomTableCell>
+                  ) : null}
+                  {typeSelect === 'Fertilizer' ? (
+                    <CustomTableCell
+                      numeric
+                      className={classes.columnNo}
+                    >{`${n.application.substring(0, 15)}....`}</CustomTableCell>
+                  ) : null}
                   <CustomTableCell numeric className={classes.columnNo}>
                     <Avatar
                       alt='Adelle Charles'
@@ -154,38 +237,62 @@ class TableGrid extends Component {
                       className={classNames(classes.avatar, classes.bigAvatar)}
                     />
                   </CustomTableCell>
-                  <CustomTableCell numeric className={classes.columnNo}>
+                  <CustomTableCell
+                    numeric
+                    className={classes.columnNo}
+                    onClick={this.handleDelete.bind(
+                      this,
+                      typeSelect,
+                      n._id,
+                      n.companyId
+                    )}
+                  >
                     <IconButton aria-label='Delete'>
                       <DeleteIcon fontSize='large' />
                     </IconButton>
                   </CustomTableCell>
-                  <CustomTableCell numeric className={classes.columnNo} onClick={this.handleClickOpen.bind(this,typeSelect)}>
+                  <CustomTableCell
+                    numeric
+                    className={classes.columnNo}
+                    onClick={this.handleClickOpen.bind(this, typeSelect,n._id)}
+                  >
                     <IconButton aria-label='Update'>
-                      <UpdateIcon fontSize='large'  />
+                      <UpdateIcon fontSize='large' />
                     </IconButton>
                   </CustomTableCell>
-
                 </TableRow>
               )
             })}
           </TableBody>
-        
         </Table>
-          <AddPesticide />
-      <AddFertilizer />
-      <AddMachinery />
+        <AddPesticide />
+        <AddFertilizer />
+        <AddMachinery />
       </div>
-      
     )
   }
 }
 
-function mapDipatchToProps(dispatch){
-  return{
+function mapDipatchToProps (dispatch) {
+  return {
     selectValue: data => {
       dispatch(openModel(data))
     },
+    deleteMachinery: data => {
+      dispatch(deleteMachineryAction(data))
+    },
+    deleteFertilizer: data => {
+      dispatch(deleteFertilizerAction(data))
+    },
+    deletePesticide: data => {
+      dispatch(deletePesticideAction(data))
+    }
   }
-  
 }
-export default compose(withStyles(styles),connect(null,mapDipatchToProps))(TableGrid);
+export default compose(
+  withStyles(styles),
+  connect(
+    null,
+    mapDipatchToProps
+  )
+)(TableGrid)

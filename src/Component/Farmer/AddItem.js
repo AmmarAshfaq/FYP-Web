@@ -30,29 +30,32 @@ class AddedItem extends Component {
         <Grid container spacing={24}>
           <Grid item xs={12} >
             <Paper className={classes.paper}>
-              {/* {this.props.cropList ? ( */}
-                 {FarmerProblemData.name?(
-                <CircularProgress className={classes.progress} />
+              {this.props.cropList.problemArray ? (
+                //  {FarmerProblemData.name?(
+                  <TableGrid
+                  // data={FarmerProblemData}
+                    data={this.props.cropList.problemArray}
+                    typeSelect='Problem'
+                  />
               ) : (
-                <TableGrid
-                data={FarmerProblemData}
-                  // data={this.props.cropList.problemArray}
-                  typeSelect='Problem'
-                />
+                <CircularProgress className={classes.progress} />
+               
               )}
             </Paper>
           </Grid>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              {/* {this.props.cropList ? ( */}
-                {FarmerCropData.name?(
-                <CircularProgress className={classes.progress} />
-              ) : (
+              {this.props.cropList.cropArray ? (
+                // {/* {FarmerCropData.name?( */}
                 <TableGrid
-                data={FarmerCropData}
-                  // data={this.props.cropList.cropArray}
+                // data={FarmerCropData}
+                  data={this.props.cropList.cropArray}
                   typeSelect='Crops'
                 />
+              ) : (
+                <CircularProgress className={classes.progress} />
+                
+                
               )}
             </Paper>
           </Grid>

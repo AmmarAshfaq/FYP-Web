@@ -9,6 +9,11 @@ import Typography from '@material-ui/core/Typography'
 import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { openModel } from '../../Container/store/action/action'
+import {
+  addMachineryAction,
+  updateMachineryAction
+} from '../../Container/store/action/companyAction'
+
 import Divider from '@material-ui/core/Divider'
 
 class AddMachinery extends Component {
@@ -17,44 +22,87 @@ class AddMachinery extends Component {
     this.state = {
       name: '',
       description: '',
-      price: 0,
-      image: ''
+      price: '',
+      image: null
     }
   }
   handleClose = () => {
     this.props.itemValueFunc(false)
   }
+  updateValue = (event, target) => {
+    let obj = {}
+    obj[target] = event.target.value
+    this.setState(obj)
+  }
+  updateFile = event => {
+    // let obj = {}
+    // obj[target] = event.target.files[0]
+    this.setState({
+      image: event.target.files[0]
+    })
+  }
+  handleSubmit = () => {
+    const { name, price, description, image } = this.state
+    // console.log(this.state)
+    // console.log(this.state)
+    let obj = {
+      name,
+      price,
+      description,
+      image,
+      companyDetails: {
+        contactEmail: this.props.companyInfo.email,
+        contactNumber: '0000',
+        contactName: this.props.companyInfo.name,
+        location: '368',
+        address: '0000'
+      },
+      companyName: this.props.companyInfo.name,
+      companyId: this.props.companyInfo.id,
+      selectId: this.props.selectId
+    }
+    console.log(obj)
+    if (this.props.selectId && this.props.selectId !== undefined) {
+      // console.log(obj)
+      this.props.updateItem(obj)
+    } else {
+      this.props.addItem(obj)
+    }
+    this.props.itemValueFunc(false)
+    this.setState({
+      name: '',
+      price: '',
+      description: '',
+      image: null
+    })
+  }
   render () {
-//          var obj = this.props.itemValue.reducer.selectDialog;
-//          console.log(obj)
-//       //    obj.props.typeSelect == null && obj.props.typeSelect == undefined ? 
+    //          var obj = this.props.itemValue.reducer.selectDialog;
+    //          console.log(obj)
+    //       //    obj.props.typeSelect == null && obj.props.typeSelect == undefined ?
 
-//       //  null
-//       //    :obj= obj.props.typeSelect;
-//       //    console.log(obj)
-//         //  var objVal = {};
-//         //  objVal["data"]=obj
-//         //  console.log(objVal)
-//         //  console.log(Object.keys(objVal))
-// // var obj = {};
-// // obj["selectValue"] = this.props.itemValue.reducer.selectDialog.props
-// // console.log(obj.selectValue)
-    
-//     // var arr = [];
-//     // arr.push();
-//     // console.log(arr[0].props)
-//     // var obj = {};
-//     // obj
+    //       //  null
+    //       //    :obj= obj.props.typeSelect;
+    //       //    console.log(obj)
+    //         //  var objVal = {};
+    //         //  objVal["data"]=obj
+    //         //  console.log(objVal)
+    //         //  console.log(Object.keys(objVal))
+    // // var obj = {};
+    // // obj["selectValue"] = this.props.itemValue.reducer.selectDialog.props
+    // // console.log(obj.selectValue)
+
+    //     // var arr = [];
+    //     // arr.push();
+    //     // console.log(arr[0].props)
+    //     // var obj = {};
+    //     // obj
     return (
       <div>
- 
-     
-
         <Dialog
           open={
             this.props.itemValue.reducer.modelOpen === true &&
-              this.props.itemValue.reducer.selectDialog === 'Machinery'
-             
+            this.props.itemValue.reducer.selectDialog === 'Machinery'
           }
           onClose={this.handleClose}
           aria-labelledby='form-dialog-title'
@@ -74,6 +122,8 @@ class AddMachinery extends Component {
               label='Machine Name'
               type='text'
               fullWidth
+              value={this.state.name}
+              onChange={event => this.updateValue(event, 'name')}
             />
 
             <TextField
@@ -83,6 +133,8 @@ class AddMachinery extends Component {
               label='Price'
               type='text'
               fullWidth
+              value={this.state.price}
+              onChange={event => this.updateValue(event, 'price')}
             />
             <TextField
               autoFocus
@@ -91,15 +143,17 @@ class AddMachinery extends Component {
               label='Machine Description'
               type='text'
               fullWidth
+              value={this.state.description}
+              onChange={event => this.updateValue(event, 'description')}
             />
 
-          <TextField
+            <TextField
               // onChange={this.handleChange}
               // style={styles.textStyle}
               type='file'
               label='Select File'
+              onChange={this.updateFile}
             />
-
           </DialogContent>
           <Divider />
 
@@ -107,7 +161,7 @@ class AddMachinery extends Component {
             <Button onClick={this.handleClose} color='primary'>
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color='primary'>
+            <Button onClick={this.handleSubmit} color='primary'>
               Submit
             </Button>
           </DialogActions>
@@ -116,22 +170,32 @@ class AddMachinery extends Component {
     )
   }
 }
-var arr = []
 
 function mapStateToProps (state) {
   // console.log(state.reducer.selectDialog)
   // arr.push(state.reducer.selectDialog)
   // console.log(arr[0].props)
   return {
-    itemValue: state
+    itemValue: state,
+    companyInfo: state.authReducer.currentUserData.user,
+    selectId: state.reducer.selectListId
   }
 }
 function mapDispatchToProps (dispatch) {
   return {
     itemValueFunc: data => {
       dispatch(openModel(data))
+    },
+    addItem: data => {
+      dispatch(addMachineryAction(data))
+    },
+    updateItem: data => {
+      dispatch(updateMachineryAction(data))
     }
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddMachinery)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddMachinery)

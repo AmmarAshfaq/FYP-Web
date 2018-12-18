@@ -79,6 +79,7 @@ export function signoutUser (data) {
   console.log(data)
   return dispatch => {
     localStorage.removeItem('token')
+    localStorage.removeItem('state');
     browserHistory.push('/login')
     dispatch(signOut())
     dispatch(changeNavbar(data))

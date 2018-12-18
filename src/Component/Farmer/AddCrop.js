@@ -197,6 +197,7 @@ class AddCrop extends Component {
 
 function mapStateToProps (state) {
   // console.log(state.authReducer.currentUserData.user.id)
+  // console.log(state.reducer.selectListId)
   return {
     itemValue: state,
     farmerID: state.authReducer.currentUserData.user.id,

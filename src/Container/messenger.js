@@ -26,10 +26,13 @@ import ImageIcon from '@material-ui/icons/Image'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import classNames from 'classnames'
+import { ConnectWithSocket } from '../Container/store/action/messageAction'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
 const styles = theme => ({
   root: {
-    width: '100%'
-    // marginTop:100
+    width: '100%',
+    marginTop:20
   },
   grow: {
     flexGrow: 1
@@ -113,16 +116,19 @@ const styles = theme => ({
 class Messenger extends React.Component {
   state = {
     anchorEl: null,
-    mobileMoreAnchorEl: null
+    mobileMoreAnchorEl: null,
+    message: ''
   }
 
   // componentWillMount(){
-  //   console.log(window.document.referrer)
-    
+  //   // console.log(window.document.referrer)
+  //   this.props.connectSocket()
+
   // }
   // componentDidMount(){
   //   console.log(window.document.referrer)
   // }
+
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget })
   }
@@ -131,7 +137,6 @@ class Messenger extends React.Component {
     this.setState({ anchorEl: null })
     this.handleMobileMenuClose()
   }
-  
 
   handleMobileMenuOpen = event => {
     this.setState({ mobileMoreAnchorEl: event.currentTarget })
@@ -141,6 +146,31 @@ class Messenger extends React.Component {
     this.setState({ mobileMoreAnchorEl: null })
   }
 
+  changeValue = (event, target) => {
+    let obj = {}
+    // console.log(event.target.value)
+    obj[target] = event.target.value
+    this.setState(obj)
+  }
+
+  sendMessage = () => {
+    let obj = {
+      receiverInfo: {
+        receiverId: '5c0ed2ea757b4002b4d275dd',
+        receiverType: 'Expert',
+        receiverName: 'Expert'
+      },
+      senderInfo: {
+        senderId: '5c0ffbfa0d758110b0dc94ed',
+        senderName: 'Farmer',
+        senderType: 'Farmer'
+      },
+      message: this.state.message,
+      conversationId: '5c0ffbfa0d758110b0dc94ed5c0ed2ea757b4002b4d275dd'
+    }
+    // console.log(obj)
+    this.props.connectSocket(obj)
+  }
   render () {
     const { anchorEl, mobileMoreAnchorEl } = this.state
     const { classes } = this.props
@@ -149,9 +179,8 @@ class Messenger extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position='static' style={{ backgroundColor: '#00806d'}}>
+        <AppBar position='static' style={{ backgroundColor: '#00806d' }}>
           <Toolbar>
-
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -174,7 +203,6 @@ class Messenger extends React.Component {
             </Typography>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-
               <IconButton
                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                 aria-haspopup='true'
@@ -196,7 +224,6 @@ class Messenger extends React.Component {
           </Toolbar>
         </AppBar>
         <Grid container>
-
           <Grid item xs={3}>
             <Paper>
               <div style={{ height: 560, overflowY: 'auto' }}>
@@ -208,7 +235,6 @@ class Messenger extends React.Component {
                       className={classes.avatar}
                     />
                     <ListItemText primary='Ammar' secondary='Hi .....' />
-
                   </ListItem>
                 </List>
                 <Divider />
@@ -223,7 +249,6 @@ class Messenger extends React.Component {
                       primary='Mobeen'
                       secondary='Give me some infoo....'
                     />
-
                   </ListItem>
                 </List>
                 <Divider />
@@ -235,7 +260,6 @@ class Messenger extends React.Component {
                       className={classes.avatar}
                     />
                     <ListItemText primary='Malik' secondary='Price ...' />
-
                   </ListItem>
                 </List>
                 <Divider />
@@ -247,7 +271,6 @@ class Messenger extends React.Component {
                       className={classes.avatar}
                     />
                     <ListItemText primary='Ammar' secondary='Hi .....' />
-
                   </ListItem>
                 </List>
                 <Divider />
@@ -262,7 +285,6 @@ class Messenger extends React.Component {
                       primary='Mobeen'
                       secondary='Give me some infoo....'
                     />
-
                   </ListItem>
                 </List>
                 <Divider />
@@ -274,7 +296,6 @@ class Messenger extends React.Component {
                       className={classes.avatar}
                     />
                     <ListItemText primary='Malik' secondary='Price ...' />
-
                   </ListItem>
                 </List>
                 <Divider />
@@ -286,7 +307,6 @@ class Messenger extends React.Component {
                       className={classes.avatar}
                     />
                     <ListItemText primary='Ammar' secondary='Hi .....' />
-
                   </ListItem>
                 </List>
                 <Divider />
@@ -301,7 +321,6 @@ class Messenger extends React.Component {
                       primary='Mobeen'
                       secondary='Give me some infoo....'
                     />
-
                   </ListItem>
                 </List>
                 <Divider />
@@ -313,7 +332,6 @@ class Messenger extends React.Component {
                       className={classes.avatar}
                     />
                     <ListItemText primary='Malik' secondary='Price ...' />
-
                   </ListItem>
                 </List>
                 <Divider />
@@ -325,7 +343,6 @@ class Messenger extends React.Component {
                       className={classes.avatar}
                     />
                     <ListItemText primary='Ammar' secondary='Hi .....' />
-
                   </ListItem>
                 </List>
                 <Divider />
@@ -340,7 +357,6 @@ class Messenger extends React.Component {
                       primary='Mobeen'
                       secondary='Give me some infoo....'
                     />
-
                   </ListItem>
                 </List>
                 <Divider />
@@ -352,13 +368,10 @@ class Messenger extends React.Component {
                       className={classes.avatar}
                     />
                     <ListItemText primary='Malik' secondary='Price ...' />
-
                   </ListItem>
                 </List>
                 <Divider />
-
               </div>
-
             </Paper>
           </Grid>
 
@@ -391,7 +404,6 @@ class Messenger extends React.Component {
                     src={require('../images/mobeen.jpg')}
                     className={classNames(classes.avatar, classes.bigAvatar)}
                   />
-
                 </div>
               </div>
               <div
@@ -403,7 +415,7 @@ class Messenger extends React.Component {
                 }}
               >
                 <TextField
-                  id='standard-full-width'
+                  // id='standard-full-width'
                   style={{ width: '80%', marginBottom: 0 }}
                   placeholder='Enter Message ....'
                   fullWidth
@@ -411,21 +423,37 @@ class Messenger extends React.Component {
                   InputLabelProps={{
                     shrink: true
                   }}
+                  value={this.state.message}
+                  onChange={event => this.changeValue(event, 'message')}
                 />
                 <Button
                   color='primary'
                   style={{ width: '20%', fontSize: '24px' }}
+                  onClick={() => this.sendMessage()}
                 >
                   SEND
                 </Button>
               </div>
             </Paper>
           </Grid>
-
         </Grid>
       </div>
     )
   }
 }
 
-export default withStyles(styles)(Messenger)
+function mapDispatchToProps (dispatch) {
+  return {
+    connectSocket: data => {
+      dispatch(ConnectWithSocket(data))
+    }
+  }
+}
+
+export default compose(
+  withStyles(styles),
+  connect(
+    null,
+    mapDispatchToProps
+  )
+)(Messenger)

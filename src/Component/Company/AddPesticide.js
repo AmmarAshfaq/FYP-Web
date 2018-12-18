@@ -6,43 +6,86 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Typography from '@material-ui/core/Typography'
-import { Button } from '@material-ui/core';
-import { connect } from 'react-redux';
-import { openModel } from '../../Container/store/action/action';
-import Divider from '@material-ui/core/Divider';
-
+import { Button } from '@material-ui/core'
+import { connect } from 'react-redux'
+import { openModel } from '../../Container/store/action/action'
+import Divider from '@material-ui/core/Divider'
+import { addPesticideAction,updatePesticideAction } from '../../Container/store/action/companyAction'
 
 class AddPesticide extends Component {
- constructor(){
-   super()
-   this.state ={
-     name:'',
-     description:'',
-     price:0,
-     image:''
-   }
- }
+  constructor () {
+    super()
+    this.state = {
+      name: '',
+      description: '',
+      price: '',
+      image: null
+    }
+  }
   handleClose = () => {
     this.props.itemValueFunc(false)
+  }
+  updateValue = (event, target) => {
+    let obj = {}
+    obj[target] = event.target.value
+    this.setState(obj)
+  }
+  updateFile = event => {
+    // let obj = {}
+    // obj[target] = event.target.files[0]
+    this.setState({
+      image: event.target.files[0]
+    })
+  }
+  handleSubmit = () => {
+    const { name, price, description, image } = this.state
+    let obj = {
+      name,
+      price,
+      description,
+      image,
+      companyDetails: {
+        contactEmail: this.props.companyInfo.email,
+        contactNumber: '0000',
+        contactName: this.props.companyInfo.name,
+        location: '368',
+        address: '0000'
+      },
+      companyName: this.props.companyInfo.name,
+      companyId: this.props.companyInfo.id,
+      selectId: this.props.selectId
+    }
+    console.log(obj)
+    if (this.props.selectId && this.props.selectId !== undefined) {
+this.props.updateItem(obj)
+    } else {
+      this.props.itemAdd(obj)
+    }
+    this.props.itemValueFunc(false)
+    this.setState({
+      name: '',
+      price: '',
+      description: '',
+      image: null
+    })
   }
   render () {
     return (
       <div>
-
         <Dialog
           open={
-            (this.props.itemValue.reducer.modelOpen === true && 
-            this.props.itemValue.reducer.selectDialog === 'Pesticide')}
+            this.props.itemValue.reducer.modelOpen === true &&
+            this.props.itemValue.reducer.selectDialog === 'Pesticide'
+          }
           onClose={this.handleClose}
           aria-labelledby='form-dialog-title'
         >
           <DialogTitle id='form-dialog-title'>
-          <Typography 
-          variant='display1'
-          color='secondry'
-          align='center'>Add Pesticide Detail</Typography>
+            <Typography variant='display1' color='secondry' align='center'>
+              Add Pesticide Detail
+            </Typography>
           </DialogTitle>
-          <Divider/>
+          <Divider />
 
           <DialogContent>
             <TextField
@@ -52,8 +95,10 @@ class AddPesticide extends Component {
               label='Pesticide Name'
               type='text'
               fullWidth
+              value={this.state.name}
+              onChange={event => this.updateValue(event, 'name')}
             />
-            
+
             <TextField
               autoFocus
               margin='dense'
@@ -61,6 +106,8 @@ class AddPesticide extends Component {
               label='Price'
               type='text'
               fullWidth
+              value={this.state.price}
+              onChange={event => this.updateValue(event, 'price')}
             />
             <TextField
               autoFocus
@@ -69,6 +116,8 @@ class AddPesticide extends Component {
               label='Pesticide Description'
               type='text'
               fullWidth
+              value={this.state.description}
+              onChange={event => this.updateValue(event, 'description')}
             />
 
             <TextField
@@ -76,16 +125,16 @@ class AddPesticide extends Component {
               // style={styles.textStyle}
               type='file'
               label='Select File'
+              onChange={this.updateFile}
             />
-
           </DialogContent>
-          <Divider/>
-          
-          <DialogActions style={{alignItems:'center'}}>
+          <Divider />
+
+          <DialogActions style={{ alignItems: 'center' }}>
             <Button onClick={this.handleClose} color='primary'>
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color='primary'>
+            <Button onClick={this.handleSubmit} color='primary'>
               Submit
             </Button>
           </DialogActions>
@@ -96,17 +145,28 @@ class AddPesticide extends Component {
 }
 
 function mapStateToProps (state) {
-  console.log(state)
+  // console.log(state)
   return {
-    itemValue: state
+    itemValue: state,
+    companyInfo: state.authReducer.currentUserData.user,
+    selectId: state.reducer.selectListId
   }
 }
 function mapDispatchToProps (dispatch) {
   return {
     itemValueFunc: data => {
       dispatch(openModel(data))
+    },
+    itemAdd: data => {
+      dispatch(addPesticideAction(data))
+    },
+    updateItem :data =>{
+      dispatch(updatePesticideAction(data))
     }
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddPesticide)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddPesticide)
