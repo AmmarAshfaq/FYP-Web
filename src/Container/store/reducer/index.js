@@ -3,7 +3,8 @@ import authReducer from './authReducer'
 import adminReducer from './adminReducer'
 import farmerReducer from './farmerReducer'
 import companyReducer from './companyReducer'
-
+import messageReducer from './messageReducer'
+import allAddedItemReducer from './allAddedItemReducer'
 import { combineReducers } from 'redux'
 
 export default combineReducers({
@@ -11,5 +12,7 @@ export default combineReducers({
   authReducer,
   adminReducer,
   farmerReducer,
-  companyReducer
+  companyReducer,
+  messageReducer,
+  allAddedItemReducer
 })

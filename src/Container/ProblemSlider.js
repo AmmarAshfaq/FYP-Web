@@ -65,18 +65,23 @@ class ProblemSlider extends React.Component {
     // console.log(this.props.typeSelect)
   }
   goToProblem = () => {
+    // console.log(data)
     this.props.typeSelect === 'Crop'
-      ? browserHistory.push({pathname:'/ProductList',state:{typeCheck:this.props.typeSelect}})
+      ? browserHistory.push({
+        pathname: '/ProductList',
+        state: { typeCheck: this.props.typeSelect, display: this.props.info }
+      })
       : browserHistory.push('/problemSolution')
   }
   render () {
-    const { classes, typeSelect } = this.props
+    const { classes, typeSelect, info } = this.props
+    // console.log(info.length)
     // console.log(typeSelect)
     // console.log(item)
     const settings = {
       // dots: true,
       infinite: true,
-      slidesToShow: 3,
+      slidesToShow: info.length,
       slidesToScroll: 1,
       // nextArrow: <SampleNextArrow />,
       // prevArrow: <SamplePrevArrow />,
@@ -86,29 +91,22 @@ class ProblemSlider extends React.Component {
     // const info = this.props.infoProblem;
     // info.concate(this.props.infoCrop)
 
-    
     return (
       <Slider {...settings}>
-        {this.props.info.map((data, ind) => 
-          
-            <Card className={classes.card} keys={ind}>
-              <CardHeader title={data.title} />
-              <CardMedia
-                className={classes.media}
-                image={data.img}
-                title='Contemplative Reptile'
-                onClick={this.goToProblem.bind(this)}
-              />
-              <CardContent>
-                <Typography component='p'>
-                 {data.name}
-                </Typography>
-              </CardContent>
-
-            </Card>
-          
-        )}
-
+        {this.props.info.map((data, ind) => (
+          <Card className={classes.card} keys={ind}>
+            <CardHeader title={data.title} />
+            <CardMedia
+              className={classes.media}
+              image={data.image_url}
+              title='Contemplative Reptile'
+              onClick={this.goToProblem.bind(this)}
+            />
+            <CardContent>
+              <Typography component='p'>{data.name}</Typography>
+            </CardContent>
+          </Card>
+        ))}
       </Slider>
     )
   }

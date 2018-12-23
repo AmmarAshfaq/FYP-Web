@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -26,13 +26,17 @@ import ImageIcon from '@material-ui/icons/Image'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import classNames from 'classnames'
-import { ConnectWithSocket } from '../Container/store/action/messageAction'
+import {
+  ConnectWithSocket,
+  getAllMessage
+} from '../Container/store/action/messageAction'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import AllUserMessages from './AllUserMessages'
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop:20
+    marginTop: 20
   },
   grow: {
     flexGrow: 1
@@ -120,11 +124,11 @@ class Messenger extends React.Component {
     message: ''
   }
 
-  // componentWillMount(){
-  //   // console.log(window.document.referrer)
-  //   this.props.connectSocket()
-
-  // }
+  componentWillMount () {
+    // console.log(window.document.referrer)
+    // this.props.connectSocket()
+    this.props.getUserMessage(this.props.userId)
+  }
   // componentDidMount(){
   //   console.log(window.document.referrer)
   // }
@@ -161,12 +165,12 @@ class Messenger extends React.Component {
         receiverName: 'Expert'
       },
       senderInfo: {
-        senderId: '5c0ffbfa0d758110b0dc94ed',
+        senderId: '5c0589af4d6c120884796498',
         senderName: 'Farmer',
         senderType: 'Farmer'
       },
       message: this.state.message,
-      conversationId: '5c0ffbfa0d758110b0dc94ed5c0ed2ea757b4002b4d275dd'
+      conversationId: '5c0589af4d6c1208847964985c0ed2ea757b4002b4d275dd'
     }
     // console.log(obj)
     this.props.connectSocket(obj)
@@ -226,152 +230,7 @@ class Messenger extends React.Component {
         <Grid container>
           <Grid item xs={3}>
             <Paper>
-              <div style={{ height: 560, overflowY: 'auto' }}>
-                <List component='nav' className={classes.paddingRemoveList}>
-                  <ListItem button>
-                    <Avatar
-                      alt='Remy Sharp'
-                      src={require('../images/ammar.jpg')}
-                      className={classes.avatar}
-                    />
-                    <ListItemText primary='Ammar' secondary='Hi .....' />
-                  </ListItem>
-                </List>
-                <Divider />
-                <List component='nav'>
-                  <ListItem button>
-                    <Avatar
-                      alt='Remy Sharp'
-                      src={require('../images/mobeen.jpg')}
-                      className={classes.avatar}
-                    />
-                    <ListItemText
-                      primary='Mobeen'
-                      secondary='Give me some infoo....'
-                    />
-                  </ListItem>
-                </List>
-                <Divider />
-                <List component='nav' className={classes.paddingRemoveList}>
-                  <ListItem button>
-                    <Avatar
-                      alt='Remy Sharp'
-                      src={require('../images/malik.jpg')}
-                      className={classes.avatar}
-                    />
-                    <ListItemText primary='Malik' secondary='Price ...' />
-                  </ListItem>
-                </List>
-                <Divider />
-                <List component='nav' className={classes.paddingRemoveList}>
-                  <ListItem button>
-                    <Avatar
-                      alt='Remy Sharp'
-                      src={require('../images/ammar.jpg')}
-                      className={classes.avatar}
-                    />
-                    <ListItemText primary='Ammar' secondary='Hi .....' />
-                  </ListItem>
-                </List>
-                <Divider />
-                <List component='nav'>
-                  <ListItem button>
-                    <Avatar
-                      alt='Remy Sharp'
-                      src={require('../images/mobeen.jpg')}
-                      className={classes.avatar}
-                    />
-                    <ListItemText
-                      primary='Mobeen'
-                      secondary='Give me some infoo....'
-                    />
-                  </ListItem>
-                </List>
-                <Divider />
-                <List component='nav' className={classes.paddingRemoveList}>
-                  <ListItem button>
-                    <Avatar
-                      alt='Remy Sharp'
-                      src={require('../images/malik.jpg')}
-                      className={classes.avatar}
-                    />
-                    <ListItemText primary='Malik' secondary='Price ...' />
-                  </ListItem>
-                </List>
-                <Divider />
-                <List component='nav'>
-                  <ListItem button>
-                    <Avatar
-                      alt='Remy Sharp'
-                      src={require('../images/ammar.jpg')}
-                      className={classes.avatar}
-                    />
-                    <ListItemText primary='Ammar' secondary='Hi .....' />
-                  </ListItem>
-                </List>
-                <Divider />
-                <List component='nav' className={classes.paddingRemoveList}>
-                  <ListItem button>
-                    <Avatar
-                      alt='Remy Sharp'
-                      src={require('../images/mobeen.jpg')}
-                      className={classes.avatar}
-                    />
-                    <ListItemText
-                      primary='Mobeen'
-                      secondary='Give me some infoo....'
-                    />
-                  </ListItem>
-                </List>
-                <Divider />
-                <List component='nav' className={classes.paddingRemoveList}>
-                  <ListItem button>
-                    <Avatar
-                      alt='Remy Sharp'
-                      src={require('../images/malik.jpg')}
-                      className={classes.avatar}
-                    />
-                    <ListItemText primary='Malik' secondary='Price ...' />
-                  </ListItem>
-                </List>
-                <Divider />
-                <List component='nav' className={classes.paddingRemoveList}>
-                  <ListItem button>
-                    <Avatar
-                      alt='Remy Sharp'
-                      src={require('../images/ammar.jpg')}
-                      className={classes.avatar}
-                    />
-                    <ListItemText primary='Ammar' secondary='Hi .....' />
-                  </ListItem>
-                </List>
-                <Divider />
-                <List component='nav' className={classes.paddingRemoveList}>
-                  <ListItem button>
-                    <Avatar
-                      alt='Remy Sharp'
-                      src={require('../images/mobeen.jpg')}
-                      className={classes.avatar}
-                    />
-                    <ListItemText
-                      primary='Mobeen'
-                      secondary='Give me some infoo....'
-                    />
-                  </ListItem>
-                </List>
-                <Divider />
-                <List component='nav' className={classes.paddingRemoveList}>
-                  <ListItem button>
-                    <Avatar
-                      alt='Remy Sharp'
-                      src={require('../images/malik.jpg')}
-                      className={classes.avatar}
-                    />
-                    <ListItemText primary='Malik' secondary='Price ...' />
-                  </ListItem>
-                </List>
-                <Divider />
-              </div>
+              <AllUserMessages />
             </Paper>
           </Grid>
 
@@ -382,30 +241,120 @@ class Messenger extends React.Component {
                   height: 510,
                   backgroundColor: '#8080803b',
                   overflowY: 'auto'
+                  // display:'flex'
                 }}
+                // keys={ind}
               >
-                <div style={{ display: 'flex', float: 'left', width: '100%' }}>
-                  <Avatar
-                    alt='Ammar'
-                    src={require('../images/ammar.jpg')}
-                    className={classNames(classes.avatar, classes.bigAvatar)}
-                  />
-                  <p style={{ display: 'flex', alignItems: 'flex-end' }}>
-                    Assalamualikum Dear!
-                  </p>
-                </div>
-                <div style={{ display: 'flex', float: 'right' }}>
-                  <p style={{ display: 'flex', alignItems: 'flex-end' }}>
-                    Walaikum Assalam!
-                  </p>
+                {this.props.msgList.map((item, ind) => (
+                  <Fragment keys={ind}>
+                    {item.senderInfo.senderId === this.props.userId ? (
+                      <div
+                        style={{
+                          display: 'flex',
+                          float: 'left',
+                          width: '100%'
+                        }}
+                      >
+                        <Avatar
+                          alt='Ammar'
+                          src={require('../images/ammar.jpg')}
+                          className={classNames(
+                            classes.avatar,
+                            classes.bigAvatar
+                          )}
+                        />
+                        <p style={{ height: '100%' }}>
+                          <span
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              marginBottom: 8,
+                              height: '50%',
+                              fontSize: 24
+                            }}
+                          >
+                            {item.receiverInfo.receiverName}
+                            {/* {console.log(item.receiverInfo.receiverName)} */}
+                          </span>
+                          <span
+                            style={{
+                              display: 'flex',
+                              alignItems: 'flex-end',
+                              height: '50%'
+                            }}
+                          >
+                            {item.message}
+                            {/* Walaikum Assalam! */}
+                          </span>
+                        </p>
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          display: 'flex',
+                          float: 'right',
+                          width: '100%',
+                          // alignItems:'flex-end'
+                          justifyContent: 'flex-end'
+                        }}
+                      >
+                        <p style={{ height: '100%' }}>
+                          <span
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'flex-end',
+                              marginBottom: 8,
+                              height: '50%',
+                              fontSize: 24
+                            }}
+                          >
+                            {item.receiverInfo.receiverName}
+                            {/* {console.log(item.receiverInfo.receiverName)} */}
+                          </span>
+                          <span
+                            style={{
+                              display: 'flex',
+                              // alignItems: 'flex-end',
+                              justifyContent: 'flex-start',
+                              height: '50%'
+                            }}
+                          >
+                            {item.message}
+                            {/* Walaikum Assalam! */}
+                          </span>
+                        </p>
 
-                  <Avatar
-                    alt='Ammar'
-                    src={require('../images/mobeen.jpg')}
-                    className={classNames(classes.avatar, classes.bigAvatar)}
-                  />
-                </div>
+                        <Avatar
+                          alt='Ammar'
+                          src={require('../images/mobeen.jpg')}
+                          className={classNames(
+                            classes.avatar,
+                            classes.bigAvatar
+                          )}
+                        />
+                      </div>
+                    )}
+                    {/* {item.receiverInfo.receiverId === this.props.userId ? (
+                      <div style={{ display: 'flex', float: 'right' }}>
+                        <p style={{ display: 'flex', alignItems: 'flex-end' }}>
+                          {item.message}
+                          Walaikum Assalam!
+                        </p>
+
+                        <Avatar
+                          alt='Ammar'
+                          src={require('../images/mobeen.jpg')}
+                          className={classNames(
+                            classes.avatar,
+                            classes.bigAvatar
+                          )}
+                        />
+                      </div>
+                    ) : null} */}
+                  </Fragment>
+                ))}
               </div>
+
               <div
                 style={{
                   height: 50,
@@ -446,14 +395,23 @@ function mapDispatchToProps (dispatch) {
   return {
     connectSocket: data => {
       dispatch(ConnectWithSocket(data))
+    },
+    getUserMessage: data => {
+      dispatch(getAllMessage(data))
     }
   }
 }
 
+function mapStateToProps (state) {
+  return {
+    userId: state.authReducer.currentUserData.user.id,
+    msgList: state.messageReducer.allMsgList
+  }
+}
 export default compose(
   withStyles(styles),
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )
 )(Messenger)

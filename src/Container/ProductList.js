@@ -20,10 +20,11 @@ import allData from '../Component/AllData/MachineryData'
 import classnames from 'classnames'
 import NewList from './ProductSlider'
 import { browserHistory } from 'react-router'
-import {connect} from 'react-redux';
-import {compose} from 'redux';
+import { connect } from 'react-redux'
+import { compose } from 'redux'
 import { openModel } from './store/action/action'
 import PurchaseForm from './PurchaseForm'
+import { getSpecificCrop } from './store/action/allAddItem'
 
 const styles = theme => ({
   root: {
@@ -61,48 +62,47 @@ function FormRow (props) {
 
   return (
     <Fragment>
+      {/* {console.log(item)} */}
       {item.map((value, ind) => (
         <Fragment>
-
           <Grid item xs={3}>
             <Paper className={classes.paper}>
               <Card className={classes.card}>
-                {cardBottomChange === 'Crop'
-                  ? <Fragment>
+                {cardBottomChange === 'Crop' ? (
+                  <Fragment>
                     <CardMedia
                       className={classes.media}
-                      image={value.img}
+                      image={value.image_url}
                       title='Contemplative Reptile'
-                      onClick={props.funcChange}
-                      />
+                      onClick={() => props.funcChange(value._id)}
+                    />
 
                     <CardContent>
                       <Typography
                         gutterBottom
                         variant='headline'
                         component='h2'
-                        >
-                        {value.title}
+                      >
+                        {value.name}
                       </Typography>
-                      <Typography component='p'>
-                        {value.functionTitle1}
-                      </Typography>
+                      <Typography component='p'>{value.price}</Typography>
                     </CardContent>
                   </Fragment>
-                  : <Fragment>
+                ) : (
+                  <Fragment>
                     <CardMedia
                       className={classes.media}
                       image={value.img}
                       title='Contemplative Reptile'
                       onClick={props.funcChange}
-                      />
+                    />
 
                     <CardContent>
                       <Typography
                         gutterBottom
                         variant='headline'
                         component='h2'
-                        >
+                      >
                         {value.title}
                       </Typography>
                       <Typography component='p'>
@@ -110,18 +110,18 @@ function FormRow (props) {
                       </Typography>
                     </CardContent>
                     <CardActions>
-
                       <Button
                         variant='contained'
                         size='large'
                         color='primary'
                         className={classes.button}
                         onClick={props.openForm}
-                        >
-                          Purchase
-                        </Button>
+                      >
+                        Purchase
+                      </Button>
                     </CardActions>
-                  </Fragment>}
+                  </Fragment>
+                )}
               </Card>
             </Paper>{' '}
           </Grid>
@@ -131,25 +131,33 @@ function FormRow (props) {
   )
 }
 class ProductList extends Component {
-  changeScreen = () => {
-    this.props.location.state.typeCheck === "Crop"?
-    browserHistory.push('/specificCrop'):
-    browserHistory.push('/productdata')
+  changeScreen = id => {
+    this.props.location.state.typeCheck === 'Crop'
+      ? this.cropFetch(id)
+      : browserHistory.push('/productdata')
+  }
+  cropFetch = id => {
+    // console.log(id)
+    let obj = {
+      _id: id
+    }
+    this.props.getCrop(obj)
+    browserHistory.push('/specificCrop')
   }
   componentWillMount () {
     // console.log(window.document.referrer)
   }
-  handleClickOpen = (obj) => {
+  handleClickOpen = obj => {
     let objSet = {
       toggle: true,
       specificDialog: obj
     }
-    console.log(objSet)
+    // console.log(objSet)
     this.props.selectValue(objSet)
   }
   render () {
     const { classes } = this.props
-    console.log(this.props.location)
+    // console.log(this.props.location)
     const settings = {
       infinite: true,
       speed: 500,
@@ -167,8 +175,8 @@ class ProductList extends Component {
             <Grid item xs={4}>
               <Paper className={classes.paper}>
                 <div className={classes.textField}>
-                  {this.props.location.state.typeCheck === 'Crop'
-                    ? <FormControl style={{ marginRight: 5, width: '20%' }}>
+                  {this.props.location.state.typeCheck === 'Crop' ? (
+                    <FormControl style={{ marginRight: 5, width: '20%' }}>
                       <NativeSelect name='age'>
                         {/* // onChange={this.handleChange('age')}  */}
                         {/* // value={this.state.age} */}
@@ -178,9 +186,9 @@ class ProductList extends Component {
                         <option value={20}>Fruit</option>
                         {/* <option value={30}>Pesticide</option> */}
                       </NativeSelect>
-
                     </FormControl>
-                    : <FormControl style={{ marginRight: 5, width: '20%' }}>
+                  ) : (
+                    <FormControl style={{ marginRight: 5, width: '20%' }}>
                       <NativeSelect name='age'>
                         {/* // onChange={this.handleChange('age')}  */}
                         {/* // value={this.state.age} */}
@@ -190,25 +198,27 @@ class ProductList extends Component {
                         <option value={20}>Fertilizer</option>
                         <option value={30}>Pesticide</option>
                       </NativeSelect>
-
-                    </FormControl>}
-                  {this.props.location.state.typeCheck === 'Crop'
-                    ? <TextField
+                    </FormControl>
+                  )}
+                  {this.props.location.state.typeCheck === 'Crop' ? (
+                    <TextField
                       id='name'
                       placeholder='Search Product'
-                        //   value={this.state.name}
-                        //   onChange={this.handleChange('name')}
-                        //   margin='normal'
+                      //   value={this.state.name}
+                      //   onChange={this.handleChange('name')}
+                      //   margin='normal'
                       style={{ marginRight: 15, width: '50%' }}
-                      />
-                    : <TextField
+                    />
+                  ) : (
+                    <TextField
                       id='name'
                       placeholder='Search Product'
-                        //   value={this.state.name}
-                        //   onChange={this.handleChange('name')}
-                        //   margin='normal'
+                      //   value={this.state.name}
+                      //   onChange={this.handleChange('name')}
+                      //   margin='normal'
                       style={{ marginRight: 15, width: '50%' }}
-                      />}
+                    />
+                  )}
                   <Button
                     variant='contained'
                     color='primary'
@@ -218,14 +228,13 @@ class ProductList extends Component {
                   </Button>
                 </div>
               </Paper>
-
             </Grid>
             <Grid item xs={4} />
           </Grid>
           <Grid item xs={12} sm={9}>
             <Paper className={classnames(classes.paper, classes.set)}>
-              {this.props.location.state.typeCheck === 'Crop'
-                ? <Slider {...settings}>
+              {this.props.location.state.typeCheck === 'Crop' ? (
+                <Slider {...settings}>
                   {//   console.log(allData)
                     allData.map((item, ind) => {
                       return (
@@ -233,14 +242,16 @@ class ProductList extends Component {
                       )
                     })}
                 </Slider>
-                : <Slider {...settings}>
+              ) : (
+                <Slider {...settings}>
                   {//   console.log(allData)
                     allData.map((item, ind) => {
                       return (
                         <img alt='loading ...' src={item.img} height='350px' />
                       )
                     })}
-                </Slider>}
+                </Slider>
+              )}
             </Paper>
           </Grid>
           <Grid item xs={12} sm={3}>
@@ -250,35 +261,44 @@ class ProductList extends Component {
 
         <Grid container spacing={8} style={{ marginLeft: 10 }}>
           <Grid item xs={12} container spacing={24}>
-            {this.props.location.state.typeCheck === 'Crop'
-              ? <FormRow
+            {this.props.location.state.typeCheck === 'Crop' ? (
+              <FormRow
+                classes={classes}
+                item={this.props.location.state.display}
+                funcChange={this.changeScreen}
+                cardBottomChange={this.props.location.state.typeCheck}
+              />
+            ) : (
+              <FormRow
                 classes={classes}
                 item={allData}
                 funcChange={this.changeScreen}
                 cardBottomChange={this.props.location.state.typeCheck}
-                
-                />
-              : <FormRow
-                classes={classes}
-                item={allData}
-                funcChange={this.changeScreen}
-                cardBottomChange={this.props.location.state.typeCheck}
-                openForm={this.handleClickOpen.bind(this,'ContactCompany')}
-                />}
+                openForm={this.handleClickOpen.bind(this, 'ContactCompany')}
+              />
+            )}
           </Grid>
-
         </Grid>
-        <PurchaseForm/>
+        <PurchaseForm />
       </div>
     )
   }
 }
 
-function mapDispatchToProps(dispatch){
-return {
-  selectValue: data => {
-    dispatch(openModel(data))
+function mapDispatchToProps (dispatch) {
+  return {
+    selectValue: data => {
+      dispatch(openModel(data))
+    },
+    getCrop: data => {
+      dispatch(getSpecificCrop(data))
+    }
   }
 }
-}
-export default compose(withStyles(styles),connect(null,mapDispatchToProps))(ProductList)
+export default compose(
+  withStyles(styles),
+  connect(
+    null,
+    mapDispatchToProps
+  )
+)(ProductList)

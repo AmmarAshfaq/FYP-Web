@@ -21,13 +21,16 @@ class NotificationDialog extends React.Component {
   }
 
   handleClose = () => {
-    this.props.typeSelect === 'Crop'
-      ? browserHistory.push('/specificCrop')
-      : this.props.typeSelect === 'Problem'
-        ? browserHistory.push('/problemSolution')
-        : browserHistory.push('/notificationpanel')
+   
 
     this.setState({ anchorEl: null })
+  }
+  handleSelect= ()=>{
+    this.props.typeSelect === 'Crop'
+    ? browserHistory.push('/specificCrop')
+    : this.props.typeSelect === 'Problem'
+      ? browserHistory.push('/problemSolution')
+      : browserHistory.push('/notificationpanel')
   }
 
   render () {
@@ -63,8 +66,8 @@ class NotificationDialog extends React.Component {
           {options.map(option => (
             <MenuItem
               key={option}
-              selected={option === 'Pyxis'}
-              onClick={this.handleClose}
+              // selected={option === 'Pyxis'}
+              onClick={() => this.handleSelect()}
             >
               <Avatar
                 alt='Remy Sharp'

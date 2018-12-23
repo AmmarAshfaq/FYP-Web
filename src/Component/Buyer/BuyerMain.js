@@ -33,6 +33,7 @@ import { compose } from 'redux'
 import FormControl from '@material-ui/core/FormControl'
 import NativeSelect from '@material-ui/core/NativeSelect'
 import MachinerData from '../AllData/MachineryDataCompany'
+import { getAllCropAction } from '../../Container/store/action/allAddItem'
 // import {changeNavbar} from '../../Container/store/action/action'
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -101,6 +102,9 @@ class BuyerMain extends Component {
     //   // this.props.fetchMessageMain()
     //   this.props.changeAppBar('FarmerHome')
     this.props.requestWeather()
+  }
+  componentDidMount () {
+    this.props.getCropData()
   }
   handleClose = () => {
     this.setState({ anchorEl: null })
@@ -205,7 +209,8 @@ class BuyerMain extends Component {
 
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <ProblemSlider info={FarmerCropData} typeSelect='Crop' />
+              <ProblemSlider info={this.props.cropArr} typeSelect='Crop' />
+              {/* {console.log()} */}
             </Paper>
           </Grid>
         </Grid>
@@ -214,8 +219,10 @@ class BuyerMain extends Component {
   }
 }
 function mapStateToProps (state) {
+  console.log(state.allAddedItemReducer.cropData)
   return {
-    weatherDetail: state.reducer.weatherData
+    weatherDetail: state.reducer.weatherData,
+    cropArr: state.allAddedItemReducer.cropData
     // cropData: state.farmReducer.cropArray,
     // problemData:state.farmReducer.problemArray,
     // farmerId: state.authReducer.currentUserData.user.id,
@@ -228,6 +235,9 @@ function mapDispatchToProps (dispatch) {
     // }
     requestWeather: () => {
       dispatch(weatherData())
+    },
+    getCropData: () => {
+      dispatch(getAllCropAction())
     }
   }
 }

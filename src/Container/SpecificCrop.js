@@ -3,6 +3,8 @@ import Hidden, { Grid, Paper, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 import CommentBox from '../Component/Farmer/CommentBox'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
 
 const styles = theme => ({
   root: {
@@ -18,7 +20,7 @@ const styles = theme => ({
   textCenter: {
     textAlign: 'center',
     margin: 10,
-    padding:7
+    padding: 7
   },
   imgSize: {
     width: '100%',
@@ -32,7 +34,7 @@ const styles = theme => ({
 })
 class SpecificCrop extends Component {
   render () {
-    const { classes } = this.props
+    const { classes,cropData } = this.props
     return (
       <div className={classes.root}>
         <Grid container spacing={8}>
@@ -40,8 +42,8 @@ class SpecificCrop extends Component {
             <Grid item xs={4} />
             <Grid item xs={4} zeroMinWidth>
               <Paper className={classNames(classes.paper, classes.textCenter)}>
-                <Typography variant='headline' gutterBottom noWrap >
-                CROP DATA
+                <Typography variant='headline' gutterBottom noWrap>
+                  CROP DATA
                 </Typography>
               </Paper>
             </Grid>
@@ -61,80 +63,83 @@ class SpecificCrop extends Component {
                     variant='display1'
                     gutterBottom
                     noWrap
-                    className={classNames(classes.paddingText,classes.textCenter)}
+                    className={classNames(
+                      classes.paddingText,
+                      classes.textCenter
+                    )}
                   >
-                    Potatoe's
+                    {cropData.name}
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <img
                     src={
-                      'https://www.abcscapes.com/wp-content/uploads/common-plant-diseases.jpg'
+                      cropData.image_url
                     }
                     alt=''
                     className={classes.imgSize}
                   />
                 </Grid>
                 <Grid item xs={12} container>
-                <Grid item xs={8} >
-                <Typography
-                    variant='title'
-                    gutterBottom
-                    className={classes.paddingText}
-                  >
-                  Price: 1200
-                  </Typography>
-            
-                </Grid>
-                <Grid item xs={4}>
-                <Typography
-                    variant='title'
-                    gutterBottom
-                    className={classes.paddingText}
-                  >
-                  Weight: 200 kg
-                  </Typography>
-            
-                </Grid>
+                  <Grid item xs={8}>
+                    <Typography
+                      variant='title'
+                      gutterBottom
+                      className={classes.paddingText}
+                    >
+                      Price: {cropData.price}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography
+                      variant='title'
+                      gutterBottom
+                      className={classes.paddingText}
+                    >
+                      Weight: {cropData.wieght}
+                    </Typography>
+                  </Grid>
                 </Grid>
                 <Grid item xs={12} container>
-                <Grid item xs={8} >
-                <Typography
-                    variant='title'
-                    gutterBottom
-                    className={classes.paddingText}
-                  >
-                Crop Completion Date : Mon Dec 24 2018 10:33:30
-                  </Typography>
-            
+                  <Grid item xs={8}>
+                    <Typography
+                      variant='title'
+                      gutterBottom
+                      className={classes.paddingText}
+                    >
+                      Crop Completion Date : {cropData.date}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography
+                      variant='title'
+                      gutterBottom
+                      className={classes.paddingText}
+                    >
+                      Transport: {cropData.transport? "Yes" :"No"}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                <Typography
-                    variant='title'
-                    gutterBottom
-                    className={classes.paddingText}
-                  >
-                  Transport: false
-                  </Typography>
-            
-                </Grid>
-                </Grid>
-                
-
               </Paper>
-
             </Grid>
-            <Grid item xs={4}>
-            </Grid>
+            <Grid item xs={4} />
           </Grid>
-          <CommentBox/>
-         
+          <CommentBox />
         </Grid>
-       
-        
       </div>
     )
   }
 }
 
-export default withStyles(styles)(SpecificCrop);
+function mapStateToProps(state){
+  return{
+    cropData:state.allAddedItemReducer.specificCrop
+  }
+}
+export default compose(
+  withStyles(styles),
+  connect(
+    mapStateToProps,
+    null
+  )
+)(SpecificCrop)
