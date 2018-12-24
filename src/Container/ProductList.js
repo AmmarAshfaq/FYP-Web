@@ -92,9 +92,9 @@ function FormRow (props) {
                   <Fragment>
                     <CardMedia
                       className={classes.media}
-                      image={value.img}
+                      image={value.image_url}
                       title='Contemplative Reptile'
-                      onClick={props.funcChange}
+                      onClick={()=>props.funcChange(value._id)}
                     />
 
                     <CardContent>
@@ -103,10 +103,17 @@ function FormRow (props) {
                         variant='headline'
                         component='h2'
                       >
-                        {value.title}
+                        {/* {value.title} */}
+                        {value.pesticideName
+                          ? value.pesticideName.substring(0, 15)
+                          : value.machineName
+                            ? value.machineName.substring(0, 15)
+                            : value.name
+                              ? value.name.substring(0, 15)
+                              : null}
                       </Typography>
                       <Typography component='p'>
-                        {value.functionTitle1}
+                        {value.price.substring(0, 15)}
                       </Typography>
                     </CardContent>
                     <CardActions>
@@ -132,6 +139,7 @@ function FormRow (props) {
 }
 class ProductList extends Component {
   changeScreen = id => {
+    // console.log(id)
     this.props.location.state.typeCheck === 'Crop'
       ? this.cropFetch(id)
       : browserHistory.push('/productdata')
@@ -166,7 +174,7 @@ class ProductList extends Component {
       autoplay: true,
       autoplaySpeed: 2000
     }
-
+    console.log(this.props.location.state.display)
     return (
       <div className={classes.root}>
         <Grid container spacing={8}>
@@ -271,7 +279,7 @@ class ProductList extends Component {
             ) : (
               <FormRow
                 classes={classes}
-                item={allData}
+                item={this.props.location.state.display}
                 funcChange={this.changeScreen}
                 cardBottomChange={this.props.location.state.typeCheck}
                 openForm={this.handleClickOpen.bind(this, 'ContactCompany')}

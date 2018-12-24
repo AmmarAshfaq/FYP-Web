@@ -3,7 +3,9 @@ import Hidden, { Grid, Paper, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 import CommentBox from '../Component/Farmer/CommentBox'
-
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import { getSpecificProblem } from './store/action/allAddItem'
 const styles = theme => ({
   root: {
     marginTop: 80,
@@ -30,6 +32,14 @@ const styles = theme => ({
   }
 })
 class ProblemSolution extends Component {
+  constructor () {
+    super()
+    // this.props.location.state.selectId
+  }
+  componentWillMount () {
+    // console.log("chal")
+    this.props.getProblemDetail(this.props.location.state.selectId)
+  }
   render () {
     const { classes } = this.props
     return (
@@ -60,15 +70,19 @@ class ProblemSolution extends Component {
                     variant='display1'
                     gutterBottom
                     noWrap
-                    className={classNames(classes.paddingText,classes.textCenter)}
+                    className={classNames(
+                      classes.paddingText,
+                      classes.textCenter
+                    )}
                   >
-                    Title
+                    {/* {this.} */}
+                    {this.props.problemData.name}
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <img
                     src={
-                      'https://www.abcscapes.com/wp-content/uploads/common-plant-diseases.jpg'
+                      this.props.problemData.image_url
                     }
                     alt=''
                     className={classes.imgSize}
@@ -83,13 +97,9 @@ class ProblemSolution extends Component {
                     <audio
                       id='t-rex-roar'
                       controls
-                      src='http://soundbible.com/mp3/Tyrannosaurus%20Rex%20Roar-SoundBible.com-807702404.mp3'
-                      
+                      src={this.props.problemData.audio_url}
                     >
-                      Your browser does not support the
-                      {' '}
-                      <code>audio</code>
-                      {' '}
+                      Your browser does not support the <code>audio</code>{' '}
                       element.
                     </audio>
                   </Typography>
@@ -101,25 +111,39 @@ class ProblemSolution extends Component {
                   >
                     Desciption:{' '}
                     <ul>
-                      <li>A paragraph is a self-contained unit of a discourse in writing dealing with a particular <br/>point or idea. A paragraph consists of one or more sentences</li>
-                      </ul>
+                      <li>
+                       {this.props.problemData.description}
+                      </li>
+                    </ul>
                   </Typography>
                 </Grid>
-
               </Paper>
-
             </Grid>
-            <Grid item xs={4}>
-            </Grid>
+            <Grid item xs={4} />
           </Grid>
-          <CommentBox/>
-         
+          <CommentBox dataArr={this.props.problemData.comments} typeCheck="problem"/>
         </Grid>
-       
-        
       </div>
     )
   }
 }
 
-export default withStyles(styles)(ProblemSolution)
+function mapStateToProps (state) {
+  return {
+    problemData:state.allAddedItemReducer.specificProblem
+  }
+}
+function mapDispatchToProps (dispatch) {
+  return {
+    getProblemDetail: obj => {
+      dispatch(getSpecificProblem(obj))
+    }
+  }
+}
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
+  withStyles(styles)
+)(ProblemSolution)

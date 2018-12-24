@@ -44,9 +44,59 @@ export function getSpecificCrop (obj) {
   }
 }
 
-function getCropByID(getData){
-return{
-    type:ActionTypes.SPECIFIC_CROP,
-    payload:getData
+function getCropByID (getData) {
+  return {
+    type: ActionTypes.SPECIFIC_CROP,
+    payload: getData
+  }
 }
+
+export function getSpecificProblem (obj) {
+  getToken = localStorage.getItem('token')
+  // console.log(obj)
+  let objData = {
+    _id: obj
+  }
+  console.log(objData)
+  return async dispatch => {
+    const result = await fetch(`${ROOT_URL}/problem/specific`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        authorization: getToken
+      },
+      body: JSON.stringify(objData)
+    })
+    const getData = await result.json()
+    // console.log(getData.problemDetail)
+    dispatch(getProblemById(getData.problemDetail))
+  }
+}
+export function getAllProblemAction () {
+  // console.log(obj)
+  getToken = localStorage.getItem('token')
+  return async dispatch => {
+    const result = await fetch(`${ROOT_URL}/problem/all`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        authorization: getToken
+      }
+    })
+    const getData = await result.json()
+    // console.log(getData)
+    dispatch(getProblem(getData.problems))
+  }
+}
+function getProblem (obj) {
+  return {
+    type: ActionTypes.GET_ALL_PROBLEM,
+    payload: obj
+  }
+}
+function getProblemById (obj) {
+  return {
+    type: ActionTypes.SPECIFIC_PROBLEM,
+    payload: obj
+  }
 }

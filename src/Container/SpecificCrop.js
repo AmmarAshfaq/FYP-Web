@@ -124,7 +124,7 @@ class SpecificCrop extends Component {
             </Grid>
             <Grid item xs={4} />
           </Grid>
-          <CommentBox />
+          <CommentBox dataArr={cropData.comments} typeCheck="crop"/>
         </Grid>
       </div>
     )

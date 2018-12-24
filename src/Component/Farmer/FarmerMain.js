@@ -16,6 +16,13 @@ import FormHelperText from '@material-ui/core/FormHelperText'
 import FormControl from '@material-ui/core/FormControl'
 import NativeSelect from '@material-ui/core/NativeSelect'
 import Weather from '../../Container/Weather'
+import CircularProgress from '@material-ui/core/CircularProgress'
+
+import {
+  getAllFertilizerAction,
+  getAllPesticideAction,
+  getAllMachineryAction
+} from '../../Container/store/action/companyAction'
 // import { geolocated } from 'react-geolocated'
 import {
   getCropAddData,
@@ -95,6 +102,12 @@ const styles = theme => ({
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2
+  },
+  progress: {
+    margin: theme.spacing.unit * 2
+  },
+  marginTopIncrease: {
+    marginTop: 130
   }
 })
 class FarmerMain extends Component {
@@ -107,7 +120,12 @@ class FarmerMain extends Component {
   componentWillMount () {
     //   // this.props.fetchMessageMain()
     //   this.props.changeAppBar('FarmerHome')
+    this.props.getAddedCrop(this.props.farmerId)
+    this.props.getAddedProblem(this.props.farmerId)
     this.props.requestWeather()
+    this.props.getFertilizer()
+    this.props.getPesticide()
+    this.props.getMachinery()
   }
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget })
@@ -164,13 +182,11 @@ class FarmerMain extends Component {
                             name='Select City'
                             className={classes.selectEmpty}
                           >
-                            {/* <option value=''>Select City</option> */}
                             <option value={'Karachi'}>Karachi</option>
                             <option value={'Lahore'}>Lahore</option>
                             <option value={'Hyderabad'}>Hyderabad</option>
                           </NativeSelect>
                         </FormControl>
-                        {/* // yahn sy hataya */}
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -211,20 +227,43 @@ class FarmerMain extends Component {
             <Grid item xs container direction='column'>
               <Grid item xs>
                 <Paper className={classNames(classes.paper)}>
-                  <MachinerySlider info={ImgData} />
+                  {this.props.allCompanyData.allMachineryData ? (
+                    <MachinerySlider
+                      info={this.props.allCompanyData.allMachineryData}
+                      allDataMac={this.props.allCompanyData.allMachineryData}
+                      
+                    />
+                  ) : (
+                    <CircularProgress className={classes.progress} />
+                  )}
                 </Paper>
                 <Paper className={classNames(classes.paper)}>
-                  <MachinerySlider info={FertilizerData} />
+                  {this.props.allCompanyData.allFertilizerData ? (
+                    <MachinerySlider
+                      info={this.props.allCompanyData.allFertilizerData}
+                      allDataFer={this.props.allCompanyData.allFertilizerData}
+                    />
+                  ) : (
+                    <CircularProgress className={classes.progress} />
+                  )}
                 </Paper>
                 <Paper className={classNames(classes.paper)}>
-                  <MachinerySlider info={PesticideData} />
+                  {this.props.allCompanyData.allPesticideData ? (
+                    <MachinerySlider
+                      info={this.props.allCompanyData.allPesticideData}
+                      allDataPes={this.props.allCompanyData.allPesticideData}
+                      
+                    />
+                  ) : (
+                    <CircularProgress className={classes.progress} />
+                  )}
                 </Paper>
               </Grid>
             </Grid>
           </Grid>
 
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
+            <Paper className={[classes.paper, classes.marginTopIncrease]}>
               <ProblemSlider
                 info={ProblemData}
 
@@ -238,24 +277,35 @@ class FarmerMain extends Component {
   }
 }
 function mapStateToProps (state) {
+  console.log(state.authReducer.currentUserData.user.id)
   return {
-    weatherDetail: state.reducer.weatherData
+    weatherDetail: state.reducer.weatherData,
     // cropData: state.farmReducer.cropArray,
     // problemData:state.farmReducer.problemArray,
-    // farmerId: state.authReducer.currentUserData.user.id,
+    farmerId: state.authReducer.currentUserData.user.id,
+    allCompanyData: state.companyReducer
   }
 }
 function mapDispatchToProps (dispatch) {
   return {
     requestWeather: () => {
       dispatch(weatherData())
+    },
+    getAddedCrop: obj => {
+      dispatch(getCropAddData(obj))
+    },
+    getAddedProblem: obj => {
+      dispatch(getProblemAddData(obj))
+    },
+    getFertilizer: () => {
+      dispatch(getAllFertilizerAction())
+    },
+    getMachinery: () => {
+      dispatch(getAllMachineryAction())
+    },
+    getPesticide: () => {
+      dispatch(getAllPesticideAction())
     }
-    // getAddedCrop: obj => {
-    //   dispatch(getCropAddData(obj))
-    // },
-    // getAddedProblem:obj=>{
-    //   dispatch(getProblemAddData(obj))
-    // }
   }
 }
 

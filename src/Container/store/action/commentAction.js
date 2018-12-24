@@ -2,7 +2,7 @@ import ActionTypes from '../constant/commentConstant'
 const ROOT_URL = 'http://localhost:8080'
 let getToken
 export function addCommentAction (obj) {
-  //   console.log(obj)
+    console.log(obj)
   getToken = localStorage.getItem('token')
 
   return async dispatch => {
@@ -15,13 +15,15 @@ export function addCommentAction (obj) {
       body: JSON.stringify(obj)
     })
     const getData = await result.json()
-    // console.log(getData)
-    dispatch(addComment(getData.comments))
+    console.log(getData)
+    dispatch(addComment(getData.comments,obj.type))
   }
 }
 
 export function deleteCommentAction (obj) {
   console.log(obj)
+  getToken = localStorage.getItem('token')
+  
   return async dispatch => {
     const result = await fetch(`${ROOT_URL}/comment/delete`, {
       method: 'DELETE',
@@ -32,7 +34,8 @@ export function deleteCommentAction (obj) {
       body: JSON.stringify(obj)
     })
     const getData = await result.json()
-    console.log(getData)
+    // console.log(getData)
+    dispatch(deleteComment(getData.comments,obj.type))
   }
 }
 export function updateCommentAction (obj) {
@@ -50,7 +53,7 @@ export function updateCommentAction (obj) {
     })
     const getData = await result.json()
     //   console.log(getData)
-    dispatch(updateComment(getData.comments))
+    dispatch(updateComment(getData.comments,obj.type))
   }
 }
 export function selectCommentId (obj) {
@@ -62,16 +65,26 @@ export function selectCommentId (obj) {
     })
   }
 }
-function addComment (obj) {
+function addComment (obj,typeCheck) {
+  // console.log(typeCheck,obj)
   return {
     type: ActionTypes.ADD_COMMENT,
-    payload: obj
+    payload: obj,
+    typeCheck:typeCheck
   }
 }
 
-function updateComment (obj) {
+function updateComment (obj,typeCheck) {
   return {
     type: ActionTypes.UPDATE_COMMENT,
-    payload: obj
+    payload: obj,
+    typeCheck:typeCheck
+  }
+}
+function deleteComment (obj,typeCheck) {
+  return {
+    type: ActionTypes.DELETE_COMMENT,
+    payload: obj,
+    typeCheck:typeCheck
   }
 }

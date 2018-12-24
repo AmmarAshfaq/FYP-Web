@@ -233,7 +233,7 @@ class TableGrid extends Component {
                   <CustomTableCell numeric className={classes.columnNo}>
                     <Avatar
                       alt='Adelle Charles'
-                      src={require('../images/Machinery/tractor.jpg')}
+                      src={n.image_url}
                       className={classNames(classes.avatar, classes.bigAvatar)}
                     />
                   </CustomTableCell>

@@ -3,8 +3,10 @@ import ActionComment from '../constant/commentConstant'
 const INITIAL_STATE = {
   cropData: [],
   specificCrop: {},
-  commentID: undefined
+  commentID: undefined,
   // comments:[]
+  problemData: [],
+  specificProblem: {}
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -15,15 +17,27 @@ export default (state = INITIAL_STATE, action) => {
     case ActionTypes.SPECIFIC_CROP:
       return { ...state, specificCrop: action.payload }
       break
+    case ActionTypes.SPECIFIC_PROBLEM:
+      return { ...state, specificProblem: action.payload }
+      break
     case ActionComment.ADD_COMMENT:
       //  var commentsReplace = state.specificCrop.cropDetail.comments;
       //  comm
-
-      return {
-        ...state,
-        specificCrop: {
-          ...state.specificCrop,
-          comments: action.payload
+      if (action.typeCheck === 'crop') {
+        return {
+          ...state,
+          specificCrop: {
+            ...state.specificCrop,
+            comments: action.payload
+          }
+        }
+      } else {
+        return {
+          ...state,
+          specificProblem: {
+            ...state.specificProblem,
+            comments: action.payload
+          }
         }
       }
       break
@@ -36,10 +50,10 @@ export default (state = INITIAL_STATE, action) => {
         commentID: action.payload
       }
       break
-      case ActionComment.UPDATE_COMMENT:
-        //  var commentsReplace = state.specificCrop.cropDetail.comments;
-        //  comm
-  
+    case ActionComment.UPDATE_COMMENT:
+      //  var commentsReplace = state.specificCrop.cropDetail.comments;
+      //  comm
+      if (action.typeCheck === 'crop') {
         return {
           ...state,
           specificCrop: {
@@ -47,6 +61,39 @@ export default (state = INITIAL_STATE, action) => {
             comments: action.payload
           }
         }
+      } else {
+        return {
+          ...state,
+          specificProblem: {
+            ...state.specificProblem,
+            comments: action.payload
+          }
+        }
+      }
+      break
+    case ActionComment.DELETE_COMMENT:
+      //  var commentsReplace = state.specificCrop.cropDetail.comments;
+      //  comm
+if(action.typeCheck === 'crop'){
+      return {
+        ...state,
+        specificCrop: {
+          ...state.specificCrop,
+          comments: action.payload
+        }
+      }
+    }else{
+      return {
+        ...state,
+        specificProblem: {
+          ...state.specificProblem,
+          comments: action.payload
+        }
+      }
+    }
+      break
+    case ActionTypes.GET_ALL_PROBLEM:
+      return { ...state, problemData: action.payload }
     default:
       return state
   }

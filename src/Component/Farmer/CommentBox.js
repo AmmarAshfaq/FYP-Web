@@ -59,23 +59,46 @@ class CommentBox extends Component {
   }
   deleteComment = commentId => {
     // console.log(commentId,postId)
-    let obj = {
+    let obj = {};
+    if(this.props.typeCheck === 'crop'){
+    obj = {
       _id: this.props.cropDetail._id,
       comment_id: commentId,
-      type: 'crop'
+      type: this.props.typeCheck
     }
+  }else{
     // console.log(obj)
+    obj = {
+      _id: this.props.problemDetail._id,
+      comment_id: commentId,
+      type: this.props.typeCheck
+    }
+  }
     this.props.commentDelete(obj)
   }
   submitComment = () => {
-    let obj = {
+    let obj = {};
+    if( this.props.typeCheck === 'crop'){
+     obj = {
       _id: this.props.cropDetail._id,
       comment: this.state.comment,
       user_id: this.props.userImage.id,
       user_name: this.props.userImage.name,
-      type: 'crop',
+      type: this.props.typeCheck,
       comment_id: this.props.selectId
     }
+  }else{
+    obj = {
+      _id: this.props.problemDetail._id,
+      comment: this.state.comment,
+      user_id: this.props.userImage.id,
+      user_name: this.props.userImage.name,
+      type: this.props.typeCheck,
+      comment_id: this.props.selectId,
+      // ammar:''
+    }
+  }
+  // console.log(obj)
     // console.log(obj)
     if (this.props.selectId && this.props.selectId !== undefined) {
       this.props.commentUpdate(obj)
@@ -121,7 +144,7 @@ class CommentBox extends Component {
               </Button>
             </Grid>
           </Grid>
-          {this.props.cropDetail.comments.map((item, ind) => (
+          {this.props.dataArr.map((item, ind) => (
             <Grid item xs={12} keys={ind}>
               <Grid container spacing={16}>
                 <Grid item>
@@ -179,11 +202,14 @@ class CommentBox extends Component {
 }
 function mapStateToProps (state) {
   // console.log(state.allAddedItemReducer.commentID)
-  console.log(state.allAddedItemReducer.specificCrop.comments)
+  // console.log(state.allAddedItemReducer.specificCrop.comments)
   return {
     userImage: state.authReducer.currentUserData.user,
     cropDetail: state.allAddedItemReducer.specificCrop,
-    selectId: state.allAddedItemReducer.commentID
+    selectId: state.allAddedItemReducer.commentID,
+    problemDetail: state.allAddedItemReducer.specificProblem,
+    
+
   }
 }
 function mapDispatchToProps (dispatch) {

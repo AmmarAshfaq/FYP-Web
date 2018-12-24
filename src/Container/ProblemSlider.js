@@ -64,14 +64,19 @@ class ProblemSlider extends React.Component {
   componentWillMount () {
     // console.log(this.props.typeSelect)
   }
-  goToProblem = () => {
-    // console.log(data)
+  goToProblem = selectId => {
+    console.log(selectId)
     this.props.typeSelect === 'Crop'
       ? browserHistory.push({
         pathname: '/ProductList',
         state: { typeCheck: this.props.typeSelect, display: this.props.info }
       })
-      : browserHistory.push('/problemSolution')
+      : this.props.typeSelect === 'Problem'
+        ? browserHistory.push({
+          pathname: '/problemSolution',
+          state: { typeCheck: this.props.typeSelect, selectId: selectId }
+        })
+        : null
   }
   render () {
     const { classes, typeSelect, info } = this.props
@@ -81,7 +86,7 @@ class ProblemSlider extends React.Component {
     const settings = {
       // dots: true,
       infinite: true,
-      slidesToShow: info.length,
+      slidesToShow: info.length > 2 ? 3 : 0,
       slidesToScroll: 1,
       // nextArrow: <SampleNextArrow />,
       // prevArrow: <SamplePrevArrow />,
@@ -100,7 +105,7 @@ class ProblemSlider extends React.Component {
               className={classes.media}
               image={data.image_url}
               title='Contemplative Reptile'
-              onClick={this.goToProblem.bind(this)}
+              onClick={this.goToProblem.bind(this, data._id)}
             />
             <CardContent>
               <Typography component='p'>{data.name}</Typography>

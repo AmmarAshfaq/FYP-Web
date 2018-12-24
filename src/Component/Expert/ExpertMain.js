@@ -8,13 +8,12 @@ import ImgData from '../AllData/MachineryData'
 import FertilizerData from '../AllData/FertilizerData'
 import PesticideData from '../AllData/PesticideData'
 import ProblemSlider from '../../Container/ProblemSlider'
-import {connect} from 'react-redux';
-import {compose} from 'redux';
+import { connect } from 'react-redux'
+import { compose } from 'redux'
 import FormControl from '@material-ui/core/FormControl'
 import NativeSelect from '@material-ui/core/NativeSelect'
 import MachinerData from '../AllData/MachineryDataCompany'
-
-// import { changeNavbar } from '../../Container/store/action/action'
+import { getAllProblemAction } from '../../Container/store/action/allAddItem'
 import classNames from 'classnames'
 import {
   Button,
@@ -55,7 +54,7 @@ const styles = theme => ({
   },
   papper: {
     padding: theme.spacing.unit * 2,
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   rootTable: {
     width: '100%',
@@ -93,9 +92,10 @@ class ExpertMain extends Component {
     city: '',
     anchorEl: null
   }
-//   componentWillMount(){
-// this.props.changeAppBar('ExpertHome')
-//   }
+  componentWillMount () {
+    // this.props.changeAppBar('ExpertHome')
+    this.props.getProblemData()
+  }
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget })
   }
@@ -109,27 +109,11 @@ class ExpertMain extends Component {
       [name]: event.target.value
     })
   }
-  // onSelect = name => {
-  //   this.setState({
-  //     city: name
-  //   })
-  // }
-  // onSubmit = () => {
-  //   this.setState({
-  //     selectList: croprates.filter(
-  //       item =>
-  //         item.category === this.state.search || item.city === this.state.city
-  //     )
-  //   })
-  // }
+
   onChange = event => {
     this.setState({
       city: event.target.value,
-      selectList: croprates.filter(
-        item =>
-          // item.category === this.state.search || item.city === this.state.city
-          item.city === this.state.city
-      )
+      selectList: croprates.filter(item => item.city === this.state.city)
     })
   }
 
@@ -142,73 +126,58 @@ class ExpertMain extends Component {
         <Grid container spacing={24}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-            <Table>
+              <Table>
                 <TableHead>
                   <TableRow>
                     <TableCell className={classes.tableCellIncrease}>
-
                       <span>
                         <p>MON</p>
                         <i className='wi wi-day-lightning' />
                         <p>26'C</p>
                       </span>
-
                     </TableCell>
                     <TableCell className={classes.tableCellIncrease}>
-
                       <span>
                         <p>TUE</p>
                         <i className='wi wi-day-cloudy-windy' />
                         <p>24'C</p>
                       </span>
-
                     </TableCell>
                     <TableCell className={classes.tableCellIncrease}>
-
                       <span>
                         <p>WED</p>
                         <i className='wi wi-day-cloudy-windy' />
                         <p>34'C</p>
                       </span>
-
                     </TableCell>
                     <TableCell className={classes.tableCellIncrease}>
-
                       <span>
                         <p>THU</p>
                         <i className='wi wi-day-hail' />
                         <p>30'C</p>
                       </span>
-
                     </TableCell>
                     <TableCell className={classes.tableCellIncrease}>
-
                       <span>
                         <p>FRI</p>
                         <i className='wi wi-day-thunderstorm' />
                         <p>10'C</p>
                       </span>
-
                     </TableCell>
                     <TableCell className={classes.tableCellIncrease}>
-
                       <span>
                         <p>SAT</p>
                         <i className='wi wi-day-sunny-overcast' />
                         <p>30'C</p>
                       </span>
-
                     </TableCell>
                     <TableCell className={classes.tableCellIncrease}>
-
                       <span>
                         <p>SUN</p>
                         <i className='wi wi-day-cloudy-windy' />
                         <p>20'C</p>
                       </span>
-
                     </TableCell>
-
                   </TableRow>
                 </TableHead>
               </Table>
@@ -219,87 +188,19 @@ class ExpertMain extends Component {
             <Paper className={classes.paper}>
               <Paper className={classes.rootTable}>
                 <Table className={classes.table}>
-
                   <TableHead>
                     <TableRow>
                       <TableCell colSpan='3'>
-                        <Typography variant='headline' gutterBottom    style={{ fontSize: 32 }}> 
+                        <Typography
+                          variant='headline'
+                          gutterBottom
+                          style={{ fontSize: 32 }}
+                        >
                           Crop Rates
                         </Typography>
                       </TableCell>
-                        {/* <button
-                          onClick={this.onSubmit}
-                          style={{ float: 'right' }}
-                        >
-                          Submit
-                        </button> */}
 
-                        {/* <Button
-                          variant='contained'
-                          color='default'
-                          onClick={this.onSubmit}
-                          style={{ float: 'right', padding: 10 }}
-                        >
-                          Submit
-                        </Button>
-                        <Button
-                          style={{
-                            position: 'relative',
-                            float: 'right',
-                            marginRight: 5
-                          }}
-                          aria-owns={anchorEl ? 'simple-menu' : null}
-                          aria-haspopup='true'
-                          onClick={this.handleClick}
-                          color='default'
-                          variant='contained'
-                        >
-                          Select
-                          <KeyBoardArrow />
-                        </Button> */}
-                        {/* <Menu
-                          style={{ position: 'absolute', top: 40 }}
-                          id='simple-menu'
-                          anchorEl={anchorEl}
-                          open={Boolean(anchorEl)}
-                          onClose={this.handleClose}
-                        >
-                          <MenuItem
-                            onClick={this.onSelect.bind(this, 'Karachi')}
-                          >
-                            Karachi
-                          </MenuItem>
-                          <MenuItem
-                            onClick={this.onSelect.bind(this, 'Hyderabad')}
-                          >
-                            Hyderabad
-                          </MenuItem>
-                          <MenuItem
-                            onClick={this.onSelect.bind(this, 'Lahore')}
-                          >
-                            Lahore
-                          </MenuItem>
-
-                          s{' '}
-                        </Menu> */}
-
-{/*                      
-                        <TextField
-                          className={classes.margin}
-                          id='input-with-icon-textfield'
-                          onChange={this.onChange.bind(this, 'search')}
-                          // label="Search"
-                          value={search}
-                          style={{ float: 'right' }}
-                          InputProps={{
-                            startAdornment: (
-                              <InputAdornment position='start'>
-                                <Search />
-                              </InputAdornment>
-                            )
-                          }}
-                        /> */}
-                           <TableCell colSpan='1'>
+                      <TableCell colSpan='1'>
                         <FormControl className={classes.formControl}>
                           <NativeSelect
                             value={this.state.city}
@@ -338,9 +239,7 @@ class ExpertMain extends Component {
                     {selectList.map((n, key) => {
                       return (
                         <TableRow className={classes.row} key={n.name}>
-                          <CustomTableCell numeric>
-                            {++i}
-                          </CustomTableCell>
+                          <CustomTableCell numeric>{++i}</CustomTableCell>
                           <CustomTableCell numeric>{n.name}</CustomTableCell>
                           <CustomTableCell numeric>{n.price}</CustomTableCell>
                           <CustomTableCell numeric>{n.weight}</CustomTableCell>
@@ -351,39 +250,53 @@ class ExpertMain extends Component {
                 </Table>
               </Paper>
             </Paper>
-
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction='column'>
               <Grid item xs>
-                <Paper className={classNames(classes.paper)}><MachinerySlider info={MachinerData}/></Paper>
-                <Paper className={classNames(classes.paper)}><MachinerySlider info={FertilizerData}/></Paper>
-                <Paper className={classNames(classes.paper)}><MachinerySlider info={PesticideData}/></Paper>
-                
-
+                <Paper className={classNames(classes.paper)}>
+                  <MachinerySlider info={MachinerData} />
+                </Paper>
+                <Paper className={classNames(classes.paper)}>
+                  <MachinerySlider info={FertilizerData} />
+                </Paper>
+                <Paper className={classNames(classes.paper)}>
+                  <MachinerySlider info={PesticideData} />
+                </Paper>
               </Grid>
-
             </Grid>
-
           </Grid>
 
           <Grid item xs={12}>
-            <Paper className={classes.paper}><ProblemSlider info={FarmerProblem}/></Paper>
+            <Paper className={classes.paper}>
+              <ProblemSlider info={this.props.allProblem} typeSelect="Problem" />
+            </Paper>
           </Grid>
         </Grid>
-
       </div>
     )
   }
 }
 
+function mapStateToProps (state) {
+  return {
+    allProblem: state.allAddedItemReducer.problemData
+  }
+}
 function mapDispatchToProps (dispatch) {
   return {
-   
     // changeAppBar:(obj)=>{
     //   dispatch(changeNavbar(obj))
     // }
-   
+    getProblemData: () => {
+      dispatch(getAllProblemAction())
+    }
   }
 }
-export default compose(withStyles(styles),connect(null,mapDispatchToProps))(ExpertMain)
+export default compose(
+  withStyles(styles),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(ExpertMain)

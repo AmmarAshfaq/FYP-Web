@@ -3,7 +3,10 @@ import ActionTypes from '../constant/companyConstant'
 const INITIAL_STATE = {
   fertilizerArray: [],
   machineryArray: [],
-  pesticideArray: []
+  pesticideArray: [],
+  allFertilizerData:[],
+  allPesticideData:[],
+  allMachineryData:[]
 }
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -102,6 +105,27 @@ export default (state = INITIAL_STATE, action) => {
             return data
           })
         }
+        break
+      case ActionTypes.GET_ALL_FERTILIZER:
+        return {
+          ...state,
+          allFertilizerData:action.payload
+          
+        }
+        break
+        case ActionTypes.GET_ALL_MACHINERY:
+          return {
+            ...state,
+            allMachineryData:action.payload
+            
+          }
+          break
+          case ActionTypes.GET_ALL_PESTICIDE:
+            return {
+              ...state,
+              allPesticideData:action.payload
+              
+            }
     default:
       return state
   }

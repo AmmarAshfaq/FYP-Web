@@ -329,6 +329,57 @@ export function updatePesticideAction (obj) {
     dispatch(updatePesticide(getData.data))
   }
 }
+export function getAllFertilizerAction () {
+  getToken = localStorage.getItem('token')
+
+  return async dispatch => {
+    const result = await fetch(`${ROOT_URL}/fertilizer/all`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        authorization: getToken
+      }
+    })
+
+    const getData = await result.json()
+    console.log(getData.fertilizers)
+    dispatch(getAllFertilizer(getData.fertilizers))
+  }
+}
+export function getAllPesticideAction () {
+  getToken = localStorage.getItem('token')
+
+  return async dispatch => {
+    const result = await fetch(`${ROOT_URL}/pesticide/all`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        authorization: getToken
+      }
+    })
+
+    const getData = await result.json()
+    console.log(getData.pesticides)
+    dispatch(getAllPesticide(getData.pesticides))
+  }
+}
+export function getAllMachineryAction () {
+  getToken = localStorage.getItem('token')
+
+  return async dispatch => {
+    const result = await fetch(`${ROOT_URL}/machine/all`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        authorization: getToken
+      }
+    })
+
+    const getData = await result.json()
+    console.log(getData.machines)
+    dispatch(getAllMachinery(getData.machines))
+  }
+}
 function getFertilizer (data) {
   return {
     type: ActionTypes.GET_FERTILIZER,
@@ -381,6 +432,24 @@ function updateMachinery (data) {
 function updatePesticide (data) {
   return {
     type: ActionTypes.UPDATE_PESTICIDE,
+    payload: data
+  }
+}
+function getAllFertilizer (data) {
+  return {
+    type: ActionTypes.GET_ALL_FERTILIZER,
+    payload: data
+  }
+}
+function getAllMachinery (data) {
+  return {
+    type: ActionTypes.GET_ALL_MACHINERY,
+    payload: data
+  }
+}
+function getAllPesticide (data) {
+  return {
+    type: ActionTypes.GET_ALL_PESTICIDE,
     payload: data
   }
 }
