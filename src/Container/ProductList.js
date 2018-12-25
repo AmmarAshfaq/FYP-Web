@@ -25,6 +25,11 @@ import { compose } from 'redux'
 import { openModel } from './store/action/action'
 import PurchaseForm from './PurchaseForm'
 import { getSpecificCrop } from './store/action/allAddItem'
+import {
+  getFertilizerIdAction,
+  getMachineryIdAction,
+  getPesticideIdAction
+} from './store/action/companyAction'
 
 const styles = theme => ({
   root: {
@@ -58,11 +63,9 @@ const styles = theme => ({
 })
 function FormRow (props) {
   const { classes, item, cardBottomChange } = props
-  // console.log(props)
 
   return (
     <Fragment>
-      {/* {console.log(item)} */}
       {item.map((value, ind) => (
         <Fragment>
           <Grid item xs={3}>
@@ -94,7 +97,7 @@ function FormRow (props) {
                       className={classes.media}
                       image={value.image_url}
                       title='Contemplative Reptile'
-                      onClick={()=>props.funcChange(value._id)}
+                      onClick={() => props.funcChange(value._id, value)}
                     />
 
                     <CardContent>
@@ -122,7 +125,7 @@ function FormRow (props) {
                         size='large'
                         color='primary'
                         className={classes.button}
-                        onClick={props.openForm}
+                        onClick={() => props.openForm(value)}
                       >
                         Purchase
                       </Button>
@@ -138,34 +141,40 @@ function FormRow (props) {
   )
 }
 class ProductList extends Component {
-  changeScreen = id => {
-    // console.log(id)
+  changeScreen = (id, data) => {
     this.props.location.state.typeCheck === 'Crop'
       ? this.cropFetch(id)
-      : browserHistory.push('/productdata')
+      : this.companyFetch(id, data)
   }
   cropFetch = id => {
-    // console.log(id)
     let obj = {
       _id: id
     }
     this.props.getCrop(obj)
-    browserHistory.push('/specificCrop')
+    // browserHistory.push('/specificCrop')
   }
-  componentWillMount () {
-    // console.log(window.document.referrer)
+  companyFetch = (id, data) => {
+    if (data.name) {
+      this.props.getFertilizerProduct(data)
+    } else if (data.machineName) {
+      this.props.getMachineryProduct(data)
+    } else if (data.pesticideName) {
+      this.props.getPesticideProduct(data)
+    }
+    browserHistory.push('/productdata')
   }
-  handleClickOpen = obj => {
+
+  handleClickOpen = (obj, productDetail) => {
+    // console.log(obj, id)
     let objSet = {
       toggle: true,
-      specificDialog: obj
+      specificDialog: obj,
+      selectId: productDetail
     }
-    // console.log(objSet)
     this.props.selectValue(objSet)
   }
   render () {
     const { classes } = this.props
-    // console.log(this.props.location)
     const settings = {
       infinite: true,
       speed: 500,
@@ -174,7 +183,6 @@ class ProductList extends Component {
       autoplay: true,
       autoplaySpeed: 2000
     }
-    console.log(this.props.location.state.display)
     return (
       <div className={classes.root}>
         <Grid container spacing={8}>
@@ -300,6 +308,15 @@ function mapDispatchToProps (dispatch) {
     },
     getCrop: data => {
       dispatch(getSpecificCrop(data))
+    },
+    getFertilizerProduct: data => {
+      dispatch(getFertilizerIdAction(data))
+    },
+    getMachineryProduct: data => {
+      dispatch(getMachineryIdAction(data))
+    },
+    getPesticideProduct: data => {
+      dispatch(getPesticideIdAction(data))
     }
   }
 }

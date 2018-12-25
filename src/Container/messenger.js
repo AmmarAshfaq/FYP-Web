@@ -127,7 +127,7 @@ class Messenger extends React.Component {
   componentWillMount () {
     // console.log(window.document.referrer)
     // this.props.connectSocket()
-    this.props.getUserMessage(this.props.userId)
+    this.props.getUserMessage(this.props.userId.id)
   }
   // componentDidMount(){
   //   console.log(window.document.referrer)
@@ -158,19 +158,172 @@ class Messenger extends React.Component {
   }
 
   sendMessage = () => {
-    let obj = {
-      receiverInfo: {
-        receiverId: '5c0ed2ea757b4002b4d275dd',
-        receiverType: 'Expert',
-        receiverName: 'Expert'
-      },
-      senderInfo: {
-        senderId: '5c0589af4d6c120884796498',
-        senderName: 'Farmer',
-        senderType: 'Farmer'
-      },
-      message: this.state.message,
-      conversationId: '5c0589af4d6c1208847964985c0ed2ea757b4002b4d275dd'
+    let obj = {}
+    if (this.props.userId.userType === 'Farmer') {
+      obj = {
+        // fe
+        // fc
+        // fb
+        receiverInfo: {
+          receiverId: this.props.getConnect.user_id,
+          receiverType: this.props.getConnect.userType,
+          receiverName: this.props.getConnect.user_name
+        },
+        senderInfo: {
+          senderId: this.props.userId.id,
+          senderName: this.props.userId.name,
+          senderType: this.props.userId.userType
+        },
+        message: this.state.message,
+        conversationId: `${this.props.userId.id}${
+          this.props.getConnect.user_id
+        }`
+      }
+      console.log(obj)
+    } else if (this.props.userId.userType === 'Expert') {
+      if (this.props.getConnect.userType === 'Farmer') {
+        obj = {
+          // ce
+          // fe
+          receiverInfo: {
+            receiverId: this.props.getConnect.user_id,
+            receiverType: this.props.getConnect.userType,
+            receiverName: this.props.getConnect.user_name
+          },
+          senderInfo: {
+            senderId: this.props.userId.id,
+            senderName: this.props.userId.name,
+            senderType: this.props.userId.userType
+          },
+          message: this.state.message,
+          conversationId: `${this.props.getConnect.user_id}${
+            this.props.userId.id
+          }`
+        }
+      } else if (this.props.getConnect.userType === 'Company') {
+        obj = {
+          // ce
+          // fe
+          receiverInfo: {
+            receiverId: this.props.getConnect.user_id,
+            receiverType: this.props.getConnect.userType,
+            receiverName: this.props.getConnect.user_name
+          },
+          senderInfo: {
+            senderId: this.props.userId.id,
+            senderName: this.props.userId.name,
+            senderType: this.props.userId.userType
+          },
+          message: this.state.message,
+          conversationId: `${this.props.getConnect.user_id}${
+            this.props.userId.id
+          }`
+        }
+      }
+    } else if (this.props.userId.userType === 'Buyer') {
+      if (this.props.getConnect.userType === 'Farmer') {
+        obj = {
+          // cb
+          // fb
+
+          receiverInfo: {
+            receiverId: this.props.getConnect.user_id,
+            receiverType: this.props.getConnect.userType,
+            receiverName: this.props.getConnect.user_name
+          },
+          senderInfo: {
+            senderId: this.props.userId.id,
+            senderName: this.props.userId.name,
+            senderType: this.props.userId.userType
+          },
+          message: this.state.message,
+          conversationId: `${this.props.getConnect.user_id}${
+            this.props.userId.id
+          }`
+        }
+      } else if (this.props.getConnect.userType === 'Company') {
+        obj = {
+          // cb
+          // fb
+
+          receiverInfo: {
+            receiverId: this.props.getConnect.user_id,
+            receiverType: this.props.getConnect.userType,
+            receiverName: this.props.getConnect.user_name
+          },
+          senderInfo: {
+            senderId: this.props.userId.id,
+            senderName: this.props.userId.name,
+            senderType: this.props.userId.userType
+          },
+          message: this.state.message,
+          conversationId: `${this.props.getConnect.user_id}${
+            this.props.userId.id
+          }`
+        }
+      }
+    } else if (this.props.userId.userType === 'Company') {
+      if (this.props.getConnect === 'Farmer') {
+        obj = {
+          // fc
+          // bc
+          // ec
+          receiverInfo: {
+            receiverId: this.props.getConnect.user_id,
+            receiverType: this.props.getConnect.userType,
+            receiverName: this.props.getConnect.user_name
+          },
+          senderInfo: {
+            senderId: this.props.userId.id,
+            senderName: this.props.userId.name,
+            senderType: this.props.userId.userType
+          },
+          message: this.state.message,
+          conversationId: `${this.props.getConnect.user_id}${
+            this.props.userId.id
+          }`
+        }
+      } else if (this.props.getConnect === 'Expert') {
+        obj = {
+          // cb
+          // fb
+
+          receiverInfo: {
+            receiverId: this.props.getConnect.user_id,
+            receiverType: this.props.getConnect.userType,
+            receiverName: this.props.getConnect.user_name
+          },
+          senderInfo: {
+            senderId: this.props.userId.id,
+            senderName: this.props.userId.name,
+            senderType: this.props.userId.userType
+          },
+          message: this.state.message,
+          conversationId: `${this.props.userId.id}${
+            this.props.getConnect.user_id
+          }`
+        }
+      } else if (this.props.getConnect === 'Buyer') {
+        obj = {
+          // cb
+          // fb
+
+          receiverInfo: {
+            receiverId: this.props.getConnect.user_id,
+            receiverType: this.props.getConnect.userType,
+            receiverName: this.props.getConnect.user_name
+          },
+          senderInfo: {
+            senderId: this.props.userId.id,
+            senderName: this.props.userId.name,
+            senderType: this.props.userId.userType
+          },
+          message: this.state.message,
+          conversationId: `${this.props.userId.id}${
+            this.props.getConnect.user_id
+          }`
+        }
+      }
     }
     // console.log(obj)
     this.props.connectSocket(obj)
@@ -273,8 +426,8 @@ class Messenger extends React.Component {
                               fontSize: 24
                             }}
                           >
-                            {item.receiverInfo.receiverName}
-                            {/* {console.log(item.receiverInfo.receiverName)} */}
+                            {item.senderInfo.senderName}
+                            {console.log(item.receiverInfo.receiverName)}
                           </span>
                           <span
                             style={{
@@ -334,23 +487,6 @@ class Messenger extends React.Component {
                         />
                       </div>
                     )}
-                    {/* {item.receiverInfo.receiverId === this.props.userId ? (
-                      <div style={{ display: 'flex', float: 'right' }}>
-                        <p style={{ display: 'flex', alignItems: 'flex-end' }}>
-                          {item.message}
-                          Walaikum Assalam!
-                        </p>
-
-                        <Avatar
-                          alt='Ammar'
-                          src={require('../images/mobeen.jpg')}
-                          className={classNames(
-                            classes.avatar,
-                            classes.bigAvatar
-                          )}
-                        />
-                      </div>
-                    ) : null} */}
                   </Fragment>
                 ))}
               </div>
@@ -404,8 +540,9 @@ function mapDispatchToProps (dispatch) {
 
 function mapStateToProps (state) {
   return {
-    userId: state.authReducer.currentUserData.user.id,
-    msgList: state.messageReducer.allMsgList
+    userId: state.authReducer.currentUserData.user,
+    msgList: state.messageReducer.allMsgList,
+    getConnect: state.messageReducer.userSelect
   }
 }
 export default compose(

@@ -6,6 +6,10 @@ import CommentBox from '../Component/Farmer/CommentBox'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { getSpecificProblem } from './store/action/allAddItem'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { loaderProcessDone } from '../Container/store/action/allAddItem'
+
+
 const styles = theme => ({
   root: {
     marginTop: 80,
@@ -39,6 +43,11 @@ class ProblemSolution extends Component {
   componentWillMount () {
     // console.log("chal")
     this.props.getProblemDetail(this.props.location.state.selectId)
+  }
+  componentDidMount(){
+    setTimeout(()=>{
+this.props.doneProcess()
+    },2000)
   }
   render () {
     const { classes } = this.props
@@ -121,7 +130,12 @@ class ProblemSolution extends Component {
             </Grid>
             <Grid item xs={4} />
           </Grid>
-          <CommentBox dataArr={this.props.problemData.comments} typeCheck="problem"/>
+          {
+this.props.loader ?
+<CircularProgress className={classes.progress} />
+
+:          <CommentBox dataArr={this.props.problemData.comments} typeCheck="problem"/>
+          }
         </Grid>
       </div>
     )
@@ -130,13 +144,17 @@ class ProblemSolution extends Component {
 
 function mapStateToProps (state) {
   return {
-    problemData:state.allAddedItemReducer.specificProblem
+    problemData:state.allAddedItemReducer.specificProblem,
+    loader:state.allAddedItemReducer.loader
   }
 }
 function mapDispatchToProps (dispatch) {
   return {
     getProblemDetail: obj => {
       dispatch(getSpecificProblem(obj))
+    },
+    doneProcess: () => {
+      dispatch(loaderProcessDone())
     }
   }
 }

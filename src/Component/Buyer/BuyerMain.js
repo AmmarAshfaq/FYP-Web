@@ -34,7 +34,14 @@ import FormControl from '@material-ui/core/FormControl'
 import NativeSelect from '@material-ui/core/NativeSelect'
 import MachinerData from '../AllData/MachineryDataCompany'
 import { getAllCropAction } from '../../Container/store/action/allAddItem'
-// import {changeNavbar} from '../../Container/store/action/action'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { loaderOffProcess } from '../../Container/store/action/authAction'
+
+import {
+  getAllFertilizerAction,
+  getAllPesticideAction,
+  getAllMachineryAction
+} from '../../Container/store/action/companyAction'
 const CustomTableCell = withStyles(theme => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -99,12 +106,16 @@ class BuyerMain extends Component {
     this.setState({ anchorEl: event.currentTarget })
   }
   componentWillMount () {
-    //   // this.props.fetchMessageMain()
-    //   this.props.changeAppBar('FarmerHome')
     this.props.requestWeather()
+    this.props.getFertilizer()
+    this.props.getPesticide()
+    this.props.getMachinery()
   }
   componentDidMount () {
     this.props.getCropData()
+    setTimeout(() => {
+      this.props.loaderOff()
+    }, 2000)
   }
   handleClose = () => {
     this.setState({ anchorEl: null })
@@ -114,7 +125,6 @@ class BuyerMain extends Component {
       city: event.target.value,
       selectList: croprates.filter(
         item =>
-          // item.category === this.state.search || item.city === this.state.city
           item.city === this.state.city
       )
     })
@@ -195,13 +205,37 @@ class BuyerMain extends Component {
             <Grid item xs container direction='column'>
               <Grid item xs>
                 <Paper className={classNames(classes.paper)}>
-                  <MachinerySlider info={MachinerData} typeSelect='' />
+                  {!this.props.loader ? (
+                    <MachinerySlider
+                      info={this.props.allCompanyData.allMachineryData}
+                      allDataMac={this.props.allCompanyData.allMachineryData}
+                      typeSelect='Machinery'
+                    />
+                  ) : (
+                    <CircularProgress className={classes.progress} />
+                  )}
                 </Paper>
                 <Paper className={classNames(classes.paper)}>
-                  <MachinerySlider info={FertilizerData} typeSelect='' />
+                  {!this.props.loader ? (
+                    <MachinerySlider
+                      info={this.props.allCompanyData.allFertilizerData}
+                      allDataFer={this.props.allCompanyData.allFertilizerData}
+                      typeSelect='Fertilizer'
+                    />
+                  ) : (
+                    <CircularProgress className={classes.progress} />
+                  )}
                 </Paper>
                 <Paper className={classNames(classes.paper)}>
-                  <MachinerySlider info={PesticideData} typeSelect='' />
+                  {!this.props.loader ? (
+                    <MachinerySlider
+                      info={this.props.allCompanyData.allPesticideData}
+                      allDataPes={this.props.allCompanyData.allPesticideData}
+                      typeSelect='Pesticide'
+                    />
+                  ) : (
+                    <CircularProgress className={classes.progress} />
+                  )}
                 </Paper>
               </Grid>
             </Grid>
@@ -209,8 +243,11 @@ class BuyerMain extends Component {
 
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <ProblemSlider info={this.props.cropArr} typeSelect='Crop' />
-              {/* {console.log()} */}
+              {!this.props.loader ? (
+                <ProblemSlider info={this.props.cropArr} typeSelect='Crop' />
+              ) : (
+                <CircularProgress className={classes.progress} />
+              )}
             </Paper>
           </Grid>
         </Grid>
@@ -222,22 +259,31 @@ function mapStateToProps (state) {
   console.log(state.allAddedItemReducer.cropData)
   return {
     weatherDetail: state.reducer.weatherData,
-    cropArr: state.allAddedItemReducer.cropData
-    // cropData: state.farmReducer.cropArray,
-    // problemData:state.farmReducer.problemArray,
-    // farmerId: state.authReducer.currentUserData.user.id,
+    cropArr: state.allAddedItemReducer.cropData,
+    allCompanyData: state.companyReducer,
+    loader: state.authReducer.authenticated
+
   }
 }
 function mapDispatchToProps (dispatch) {
   return {
-    // changeAppBar:(obj)=>{
-    //   dispatch(changeNavbar(obj))
-    // }
     requestWeather: () => {
       dispatch(weatherData())
     },
     getCropData: () => {
       dispatch(getAllCropAction())
+    },
+    getFertilizer: () => {
+      dispatch(getAllFertilizerAction())
+    },
+    getMachinery: () => {
+      dispatch(getAllMachineryAction())
+    },
+    getPesticide: () => {
+      dispatch(getAllPesticideAction())
+    },
+    loaderOff: () => {
+      dispatch(loaderOffProcess())
     }
   }
 }
@@ -248,106 +294,3 @@ export default compose(
   ),
   withStyles(styles)
 )(BuyerMain)
-
-// onChange = (name, event) => {
-//   this.setState({
-//     [name]: event.target.value
-//   })
-// }
-// onSelect = name => {
-//   this.setState({
-//     city: name
-//   })
-// }
-// onSubmit = () => {
-//   this.setState({
-//     selectList: croprates.filter(
-//       item =>
-//         item.category === this.state.search || item.city === this.state.city
-//     )
-//   })
-// }
-// componentWillMount(){
-//   this.props.changeAppBar('BuyerHome')
-// } {/* <button
-// onClick={this.onSubmit}
-// style={{ float: 'right' }}
-// >
-// Submit
-// </button> */}
-
-{
-  /* <Button
-variant='contained'
-color='default'
-onClick={this.onSubmit}
-style={{ float: 'right', padding: 10 }}
->
-Submit
-</Button> */
-}
-{
-  /* <Button
-style={{
-  position: 'relative',
-  float: 'right',
-  marginRight: 5
-}}
-aria-owns={anchorEl ? 'simple-menu' : null}
-aria-haspopup='true'
-onClick={this.handleClick}
-color='default'
-variant='contained'
->
-Select
-<KeyBoardArrow />
-</Button>
-<Menu
-style={{ position: 'absolute', top: 40 }}
-id='simple-menu'
-anchorEl={anchorEl}
-open={Boolean(anchorEl)}
-onClose={this.handleClose}
->
-<MenuItem
-  onClick={this.onSelect.bind(this, 'Karachi')}
->
-  Karachi
-</MenuItem>
-<MenuItem
-  onClick={this.onSelect.bind(this, 'Hyderabad')}
->
-  Hyderabad
-</MenuItem>
-<MenuItem
-  onClick={this.onSelect.bind(this, 'Lahore')}
->
-  Lahore
-</MenuItem>
-
-s{' '}
-</Menu> */
-}
-
-{
-  /* <input
-type='text'
-/> */
-}
-{
-  /* <TextField
-className={classes.margin}
-id='input-with-icon-textfield'
-onChange={this.onChange.bind(this, 'search')}
-// label="Search"
-value={search}
-style={{ float: 'right' }}
-InputProps={{
-  startAdornment: (
-    <InputAdornment position='start'>
-      <Search />
-    </InputAdornment>
-  )
-}}
-/> */
-}

@@ -4,9 +4,9 @@ const INITIAL_STATE = {
   item: '',
   componentUpdate: 'Main',
   modelOpen: false,
-  selectDialog:'',
-  weatherData:[]
-
+  selectDialog: '',
+  weatherData: [],
+  addId: undefined,
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -14,17 +14,24 @@ export default (state = INITIAL_STATE, action) => {
     case ActionTypes.MENU:
       return { ...state, item: action.itemSelect }
 
-      break;
+      break
     case ActionTypes.CHANGE:
       return { ...state, componentUpdate: action.componentList }
 
-      break;
-      case ActionTypes.OPEN:
-      return { ...state, modelOpen: action.itemSelect.toggle,selectDialog:action.itemSelect.specificDialog,selectListId:action.itemSelect.id }
+      break
+    case ActionTypes.OPEN:
+      return {
+        ...state,
+        modelOpen: action.itemSelect.toggle,
+        selectDialog: action.itemSelect.specificDialog,
+        selectListId: action.itemSelect.id,
+        addId: action.itemSelect.selectId
+      }
 
-      break;
-      case ActionTypes.WEATHER_GET:
-      return {...state,weatherData:action.payload}
+      break
+    case ActionTypes.WEATHER_GET:
+      return { ...state, weatherData: action.payload }
+    
     default:
       return state
   }

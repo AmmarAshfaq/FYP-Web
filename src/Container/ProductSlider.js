@@ -91,7 +91,7 @@ class MachinerySlider extends React.Component {
   render () {
     const { classes, info } = this.props
     const item = info[this.state.currentImageIndex]
-    console.log(item.img)
+    console.log(this.props.typeSelect)
 
     return (
       <div>

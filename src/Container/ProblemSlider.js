@@ -10,38 +10,6 @@ import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 import { browserHistory } from 'react-router'
 
-// const item = [
-//   {
-//     title: "Fertilizer's",
-//     functionTitle1: 'All Types Of Diseases Information Related To Agriculture',
-//     img: 'http://www.ffc.com.pk/wp-content/uploads/Sona-Urea-P-1.jpg'
-//   },
-//   {
-//     title: "Fertilizer's",
-//     functionTitle1: 'Crop Rates,Purchase Crops,Sell Crops',
-
-//     img: 'http://www.ffc.com.pk/wp-content/uploads/FFC-DAP.jpg'
-//   },
-//   {
-//     title: "Fertilizer's",
-//     functionTitle1: 'All Types Of Technologies Related to Agriculture',
-
-//     img: 'http://www.ffc.com.pk/wp-content/uploads/FFC-SOP-1.jpg'
-//   },
-//   {
-//     title: "Fertilizer's",
-//     functionTitle1: 'All Types Of Fertilizers Related to Agriculture',
-
-//     img: 'http://www.ffc.com.pk/wp-content/uploads/MOP-Murate.jpg'
-//   },
-//   {
-//     title: "Fertilizer's",
-//     functionTitle1: 'All Types Of Pesticide Related to Agriculture',
-
-//     img: 'http://www.ffc.com.pk/wp-content/uploads/Sona-Boron-1.jpg'
-//   }
-// ]
-
 const styles = theme => ({
   card: {
     maxWidth: 400,
@@ -61,9 +29,7 @@ class ProblemSlider extends React.Component {
   constructor (props) {
     super(props)
   }
-  componentWillMount () {
-    // console.log(this.props.typeSelect)
-  }
+
   goToProblem = selectId => {
     console.log(selectId)
     this.props.typeSelect === 'Crop'
@@ -80,22 +46,18 @@ class ProblemSlider extends React.Component {
   }
   render () {
     const { classes, typeSelect, info } = this.props
-    // console.log(info.length)
-    // console.log(typeSelect)
-    // console.log(item)
+
     const settings = {
       // dots: true,
       infinite: true,
-      slidesToShow: info.length > 2 ? 3 : 0,
+      slidesToShow: info.length > 2 ? 3 : info.length,
       slidesToScroll: 1,
       // nextArrow: <SampleNextArrow />,
       // prevArrow: <SamplePrevArrow />,
       autoplay: true,
       autoplaySpeed: 2000
     }
-    // const info = this.props.infoProblem;
-    // info.concate(this.props.infoCrop)
-
+console.log(this.props.info)
     return (
       <Slider {...settings}>
         {this.props.info.map((data, ind) => (

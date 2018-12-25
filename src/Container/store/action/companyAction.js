@@ -1,6 +1,57 @@
 import ActionTypes from '../constant/companyConstant'
 const ROOT_URL = 'http://localhost:8080'
 let getToken
+export function responseAddFertilizerAction (obj) {
+  getToken = localStorage.getItem('token')
+
+  console.log(obj)
+  return async dispatch => {
+    const result = await fetch(`${ROOT_URL}/fertilizer/response/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        authorization: getToken
+      },
+      body: JSON.stringify(obj)
+    })
+    const getData = await result.json()
+    console.log(getData)
+  }
+}
+export function responseAddMachineryAction (obj) {
+  getToken = localStorage.getItem('token')
+
+  console.log(obj)
+  return async dispatch => {
+    const result = await fetch(`${ROOT_URL}/machine/response/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        authorization: getToken
+      },
+      body: JSON.stringify(obj)
+    })
+    const getData = await result.json()
+    console.log(getData)
+  }
+}
+export function responseAddPesticideAction (obj) {
+  getToken = localStorage.getItem('token')
+
+  console.log(obj)
+  return async dispatch => {
+    const result = await fetch(`${ROOT_URL}/pesticide/response/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        authorization: getToken
+      },
+      body: JSON.stringify(obj)
+    })
+    const getData = await result.json()
+    console.log(getData)
+  }
+}
 export function getFertilizerAction (obj) {
   getToken = localStorage.getItem('token')
 
@@ -231,7 +282,33 @@ export function deletePesticideAction (obj) {
     console.log(getData)
   }
 }
-
+export function getFertilizerIdAction (obj) {
+  console.log(obj)
+  return async dispatch => {
+    dispatch({
+      type: ActionTypes.GET_SPECIFIC_FERTILIZER,
+      payload: obj
+    })
+  }
+}
+export function getPesticideIdAction (obj) {
+  console.log(obj)
+  return async dispatch => {
+    dispatch({
+      type: ActionTypes.GET_SPECIFIC_FERTILIZER,
+      payload: obj
+    })
+  }
+}
+export function getMachineryIdAction (obj) {
+  console.log(obj)
+  return async dispatch => {
+    dispatch({
+      type: ActionTypes.GET_SPECIFIC_FERTILIZER,
+      payload: obj
+    })
+  }
+}
 export function updateFetilizerAction (obj) {
   console.log(obj)
   getToken = localStorage.getItem('token')
@@ -453,4 +530,3 @@ function getAllPesticide (data) {
     payload: data
   }
 }
-// function deleteMachinery () {}

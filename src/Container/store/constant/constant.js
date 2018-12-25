@@ -9,7 +9,9 @@ const ActionTypes = {
     AUTH_PROCESS:'AUTH_PROCESS',
     WEATHER_GET:'WEATHER_GET',
     LOAD_STORE_STATE:'LOAD_STORE_STATE',
-    GET_CONNECT:'GET_CONNECT'
+    GET_CONNECT:'GET_CONNECT',
+    UN_AUTH_PROCESS:'UN_AUTH_PROCESS',
+  
   }
   
   export default ActionTypes;

@@ -6,7 +6,8 @@ const INITIAL_STATE = {
   commentID: undefined,
   // comments:[]
   problemData: [],
-  specificProblem: {}
+  specificProblem: {},
+  loader: false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -74,26 +75,32 @@ export default (state = INITIAL_STATE, action) => {
     case ActionComment.DELETE_COMMENT:
       //  var commentsReplace = state.specificCrop.cropDetail.comments;
       //  comm
-if(action.typeCheck === 'crop'){
-      return {
-        ...state,
-        specificCrop: {
-          ...state.specificCrop,
-          comments: action.payload
+      if (action.typeCheck === 'crop') {
+        return {
+          ...state,
+          specificCrop: {
+            ...state.specificCrop,
+            comments: action.payload
+          }
+        }
+      } else {
+        return {
+          ...state,
+          specificProblem: {
+            ...state.specificProblem,
+            comments: action.payload
+          }
         }
       }
-    }else{
-      return {
-        ...state,
-        specificProblem: {
-          ...state.specificProblem,
-          comments: action.payload
-        }
-      }
-    }
       break
     case ActionTypes.GET_ALL_PROBLEM:
       return { ...state, problemData: action.payload }
+      break
+    case ActionTypes.LOADER_PROCESS:
+      return { ...state, loader: true }
+      break
+    case ActionTypes.LOADER_UN_PROCESS:
+      return { ...state, loader: false }
     default:
       return state
   }

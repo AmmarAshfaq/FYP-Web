@@ -5,6 +5,8 @@ import classNames from 'classnames'
 import CommentBox from '../Component/Farmer/CommentBox'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { loaderProcessDone } from '../Container/store/action/allAddItem'
 
 const styles = theme => ({
   root: {
@@ -33,9 +35,15 @@ const styles = theme => ({
   }
 })
 class SpecificCrop extends Component {
+  componentDidMount () {
+    setTimeout(() => {
+      this.props.doneProcess()
+    }, 2000)
+  }
   render () {
-    const { classes,cropData } = this.props
+    const { classes, cropData } = this.props
     return (
+      // <div>{console.log(this.props.cropData)}</div>
       <div className={classes.root}>
         <Grid container spacing={8}>
           <Grid item xs={12} container spacing={24}>
@@ -73,9 +81,7 @@ class SpecificCrop extends Component {
                 </Grid>
                 <Grid item xs={12}>
                   <img
-                    src={
-                      cropData.image_url
-                    }
+                    src={cropData.image_url}
                     alt=''
                     className={classes.imgSize}
                   />
@@ -116,7 +122,7 @@ class SpecificCrop extends Component {
                       gutterBottom
                       className={classes.paddingText}
                     >
-                      Transport: {cropData.transport? "Yes" :"No"}
+                      Transport: {cropData.transport ? 'Yes' : 'No'}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -124,22 +130,34 @@ class SpecificCrop extends Component {
             </Grid>
             <Grid item xs={4} />
           </Grid>
-          <CommentBox dataArr={cropData.comments} typeCheck="crop"/>
+          {this.props.loader ? (
+            <CircularProgress className={classes.progress} />
+          ) : (
+            <CommentBox dataArr={cropData.comments} typeCheck='crop' />
+          )}
         </Grid>
       </div>
     )
   }
 }
 
-function mapStateToProps(state){
-  return{
-    cropData:state.allAddedItemReducer.specificCrop
+function mapStateToProps (state) {
+  return {
+    cropData: state.allAddedItemReducer.specificCrop,
+    loader: state.allAddedItemReducer.loader
+  }
+}
+function mapDispatchToProps (dispatch) {
+  return {
+    doneProcess: () => {
+      dispatch(loaderProcessDone())
+    }
   }
 }
 export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
   )
 )(SpecificCrop)

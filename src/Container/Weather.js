@@ -76,7 +76,10 @@ class Weather extends Component {
                   <TableCell className={classes.tableCellIncrease} keys={index}>
                     <span>
                       <p>{item.days.days}</p>
-                      {this.renderWeatherIcons(item.rain.icon)}
+                      <p style={{ fontSize: 28 }}>
+                        {' '}
+                        {this.renderWeatherIcons(item.rain.icon)}
+                      </p>
                       <p style={{ textAlign: 'center' }}>
                         <span>{`${item.temperature.max.toFixed()}'C `}</span>
                       </p>

@@ -10,10 +10,17 @@ import PesticideData from '../AllData/PesticideData'
 import ProblemSlider from '../../Container/ProblemSlider'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import 'weather-icons/css/weather-icons.css'
+import { weatherData } from '../../Container/store/action/weatherAction'
+import Weather from '../../Container/Weather'
+
 import FormControl from '@material-ui/core/FormControl'
 import NativeSelect from '@material-ui/core/NativeSelect'
 import MachinerData from '../AllData/MachineryDataCompany'
 import { getAllProblemAction } from '../../Container/store/action/allAddItem'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { loaderOffProcess } from '../../Container/store/action/authAction'
+
 import classNames from 'classnames'
 import {
   Button,
@@ -31,6 +38,11 @@ import {
   InputAdornment
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
+import {
+  getAllFertilizerAction,
+  getAllPesticideAction,
+  getAllMachineryAction
+} from '../../Container/store/action/companyAction'
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -83,7 +95,11 @@ const styles = theme => ({
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2
-  }
+  },
+  progress: {
+    margin: theme.spacing.unit * 2,
+    textAlign:'center'
+  },
 })
 class ExpertMain extends Component {
   state = {
@@ -93,11 +109,19 @@ class ExpertMain extends Component {
     anchorEl: null
   }
   componentWillMount () {
-    // this.props.changeAppBar('ExpertHome')
     this.props.getProblemData()
+    this.props.getFertilizer()
+    this.props.getPesticide()
+    this.props.getMachinery()
+    this.props.requestWeather()
   }
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget })
+  }
+  componentDidMount () {
+    setTimeout(() => {
+      this.props.loaderOff()
+    }, 2000)
   }
 
   handleClose = () => {
@@ -126,61 +150,7 @@ class ExpertMain extends Component {
         <Grid container spacing={24}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell className={classes.tableCellIncrease}>
-                      <span>
-                        <p>MON</p>
-                        <i className='wi wi-day-lightning' />
-                        <p>26'C</p>
-                      </span>
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-                      <span>
-                        <p>TUE</p>
-                        <i className='wi wi-day-cloudy-windy' />
-                        <p>24'C</p>
-                      </span>
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-                      <span>
-                        <p>WED</p>
-                        <i className='wi wi-day-cloudy-windy' />
-                        <p>34'C</p>
-                      </span>
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-                      <span>
-                        <p>THU</p>
-                        <i className='wi wi-day-hail' />
-                        <p>30'C</p>
-                      </span>
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-                      <span>
-                        <p>FRI</p>
-                        <i className='wi wi-day-thunderstorm' />
-                        <p>10'C</p>
-                      </span>
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-                      <span>
-                        <p>SAT</p>
-                        <i className='wi wi-day-sunny-overcast' />
-                        <p>30'C</p>
-                      </span>
-                    </TableCell>
-                    <TableCell className={classes.tableCellIncrease}>
-                      <span>
-                        <p>SUN</p>
-                        <i className='wi wi-day-cloudy-windy' />
-                        <p>20'C</p>
-                      </span>
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-              </Table>
+              <Weather data={this.props.weatherDetail} />
             </Paper>
           </Grid>
 
@@ -214,7 +184,6 @@ class ExpertMain extends Component {
                             <option value={'Hyderabad'}>Hyderabad</option>
                           </NativeSelect>
                         </FormControl>
-                        {/* // yahn sy hataya */}
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -255,13 +224,37 @@ class ExpertMain extends Component {
             <Grid item xs container direction='column'>
               <Grid item xs>
                 <Paper className={classNames(classes.paper)}>
-                  <MachinerySlider info={MachinerData} />
+                  {!this.props.loader ? (
+                    <MachinerySlider
+                      info={this.props.allCompanyData.allMachineryData}
+                      allDataMac={this.props.allCompanyData.allMachineryData}
+                      typeSelect='Machinery'
+                    />
+                  ) : (
+                    <CircularProgress className={classes.progress} />
+                  )}
                 </Paper>
                 <Paper className={classNames(classes.paper)}>
-                  <MachinerySlider info={FertilizerData} />
+                  {!this.props.loader ? (
+                    <MachinerySlider
+                      info={this.props.allCompanyData.allFertilizerData}
+                      allDataFer={this.props.allCompanyData.allFertilizerData}
+                      typeSelect='Fertilizer'
+                    />
+                  ) : (
+                    <CircularProgress className={classes.progress} />
+                  )}
                 </Paper>
                 <Paper className={classNames(classes.paper)}>
-                  <MachinerySlider info={PesticideData} />
+                  {!this.props.loader ? (
+                    <MachinerySlider
+                      info={this.props.allCompanyData.allPesticideData}
+                      allDataPes={this.props.allCompanyData.allPesticideData}
+                      typeSelect='Pesticide'
+                    />
+                  ) : (
+                    <CircularProgress className={classes.progress} />
+                  )}
                 </Paper>
               </Grid>
             </Grid>
@@ -269,7 +262,14 @@ class ExpertMain extends Component {
 
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <ProblemSlider info={this.props.allProblem} typeSelect="Problem" />
+              {!this.props.loader ? (
+                <ProblemSlider
+                  info={this.props.allProblem}
+                  typeSelect='Problem'
+                />
+              ) : (
+                <CircularProgress className={classes.progress} />
+              )}
             </Paper>
           </Grid>
         </Grid>
@@ -280,16 +280,32 @@ class ExpertMain extends Component {
 
 function mapStateToProps (state) {
   return {
-    allProblem: state.allAddedItemReducer.problemData
+    allProblem: state.allAddedItemReducer.problemData,
+    allCompanyData: state.companyReducer,
+    weatherDetail: state.reducer.weatherData,
+    loader: state.authReducer.authenticated
   }
 }
 function mapDispatchToProps (dispatch) {
   return {
-    // changeAppBar:(obj)=>{
-    //   dispatch(changeNavbar(obj))
-    // }
+    requestWeather: () => {
+      dispatch(weatherData())
+    },
+
     getProblemData: () => {
       dispatch(getAllProblemAction())
+    },
+    getFertilizer: () => {
+      dispatch(getAllFertilizerAction())
+    },
+    getMachinery: () => {
+      dispatch(getAllMachineryAction())
+    },
+    getPesticide: () => {
+      dispatch(getAllPesticideAction())
+    },
+    loaderOff: () => {
+      dispatch(loaderOffProcess())
     }
   }
 }

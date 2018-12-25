@@ -1,7 +1,23 @@
 import ActionTypes from '../constant/allCropConstant'
-const ROOT_URL = 'http://localhost:8080'
+import {browserHistory} from 'react-router'
 
+const ROOT_URL = 'http://localhost:8080'
 let getToken
+// function requestProcess(){
+//   return dispatch =>{
+//     dispatch({
+//       type:ActionTypes.LOADER_PROCESS,
+
+//     })
+//   }
+// }
+export function loaderProcessDone(){
+  return dispatch =>{
+    dispatch({
+      type:ActionTypes.LOADER_UN_PROCESS
+    })
+  }
+}
 export function getAllCropAction () {
   getToken = localStorage.getItem('token')
 
@@ -28,7 +44,7 @@ function getCrop (obj) {
 
 export function getSpecificCrop (obj) {
   getToken = localStorage.getItem('token')
-
+  
   return async dispatch => {
     const result = await fetch(`${ROOT_URL}/crop/specific`, {
       method: 'POST',
@@ -40,7 +56,12 @@ export function getSpecificCrop (obj) {
     })
     const getData = await result.json()
     // console.log(getData)
+    dispatch({
+      type: ActionTypes.LOADER_PROCESS
+    })
     dispatch(getCropByID(getData.cropDetail))
+    browserHistory.push('/specificCrop')
+    
   }
 }
 
@@ -69,6 +90,9 @@ export function getSpecificProblem (obj) {
     })
     const getData = await result.json()
     // console.log(getData.problemDetail)
+    dispatch({
+      type: ActionTypes.LOADER_PROCESS
+    })
     dispatch(getProblemById(getData.problemDetail))
   }
 }

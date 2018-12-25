@@ -1,7 +1,7 @@
 import ActionTypes from '../constant/farmerConstant'
 
 const ROOT_URL = 'http://localhost:8080'
-let getToken
+let getToken;
 export function addCropAction (obj) {
   getToken = localStorage.getItem('token')
   let data = new FormData()

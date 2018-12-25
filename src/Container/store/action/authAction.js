@@ -8,7 +8,10 @@ export function signinUser (obj) {
     email: obj.email,
     password: obj.password
   }
+
   return async dispatch => {
+    dispatch(signupRequest())
+
     const result = await fetch(`${ROOT_URL}/signin`, {
       method: 'POST',
       headers: {
@@ -27,6 +30,7 @@ export function signinUser (obj) {
     // },2000)
 
     // console.log(getData)
+
     if (getData.user) {
       if (getData.user.userType === 'Company') {
         localStorage.setItem('token', getData.token)
@@ -35,7 +39,7 @@ export function signinUser (obj) {
         browserHistory.push('/companymain')
 
         dispatch(changeNavbar(`${getData.user.userType}Home`))
-        dispatch(signupSucced(getData))
+        // dispatch(signupSucced(getData))
       } else if (getData.user.userType === 'Farmer') {
         localStorage.setItem('token', getData.token)
         dispatch(signupSucced(getData))
@@ -74,12 +78,19 @@ export function signinUser (obj) {
     }
   }
 }
+export function loaderOffProcess () {
+  return dispatch => {
+    dispatch({
+      type: ActionTypes.UN_AUTH_PROCESS
+    })
+  }
+}
 // here we change when logout
 export function signoutUser (data) {
   console.log(data)
   return dispatch => {
     localStorage.removeItem('token')
-    localStorage.removeItem('state');
+    localStorage.removeItem('state')
     browserHistory.push('/login')
     dispatch(signOut())
     dispatch(changeNavbar(data))
@@ -96,7 +107,7 @@ export function signupUser (obj) {
 
   return async dispatch => {
     dispatch(signupRequest())
-    try {
+    
       const result = await fetch(`${ROOT_URL}/signup`, {
         method: 'POST',
         headers: {
@@ -108,17 +119,60 @@ export function signupUser (obj) {
       const getData = await result.json()
       console.log(getData)
 
-      localStorage.setItem('token', getData.token)
       if (getData.user) {
-        browserHistory.push('/login')
-        dispatch(signupSucced(getData))
+        if (getData.user.userType === 'Company') {
+          localStorage.setItem('token', getData.token)
+          dispatch(signupSucced(getData))
+  
+          browserHistory.push('/companymain')
+  
+          dispatch(changeNavbar(`${getData.user.userType}Home`))
+          // dispatch(signupSucced(getData))
+        } else if (getData.user.userType === 'Farmer') {
+          localStorage.setItem('token', getData.token)
+          dispatch(signupSucced(getData))
+  
+          browserHistory.push('/farmermain')
+          dispatch(changeNavbar(`${getData.user.userType}Home`))
+        } else if (getData.user.userType === 'Expert') {
+          localStorage.setItem('token', getData.token)
+          dispatch(signupSucced(getData))
+  
+          browserHistory.push('/expertmain')
+          dispatch(changeNavbar(`${getData.user.userType}Home`))
+        } else if (getData.user.userType === 'Buyer') {
+          localStorage.setItem('token', getData.token)
+          dispatch(signupSucced(getData))
+          browserHistory.push('/buyermain')
+          dispatch(changeNavbar(`${getData.user.userType}Home`))
+        } else {
+          // dispatch(authError('Please Select Service'))
+          browserHistory.push('/login')
+        }
+        // if (obj.authenticate === undefined) {
+        //   dispatch(authError('Please Select Service'))
+        //   browserHistory.push('/login')
+        // } else {
+        //   console.log(getData)
+        //   dispatch(signupSucced(getData))
+  
+        //   localStorage.setItem('token', getData.token)
+        //   browserHistory.push(`/${obj.authenticate}`)
+        //   dispatch(changeNavbar(`${getData.user.userType}Home`))
+        // }
       } else if (getData.error) {
-        browserHistory.push('/signup')
+        browserHistory.push('/login')
         dispatch(authError(getData))
       }
-    } catch (err) {
-      dispatch(authError(err))
-    }
+      // localStorage.setItem('token', getData.token)
+      // if (getData.user) {
+      //   browserHistory.push('/login')
+      //   dispatch(signupSucced(getData))
+      // } else if (getData.error) {
+      //   browserHistory.push('/signup')
+      //   dispatch(authError(getData))
+      // }
+   
   }
 }
 

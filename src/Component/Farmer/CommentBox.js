@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Grid, Paper, Typography, ButtonBase } from '@material-ui/core'
 import classNames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
@@ -6,6 +6,8 @@ import ProblemSolution from '../../Container/ProblemSlider'
 import TextField from '@material-ui/core/TextField'
 import Avatar from '@material-ui/core/Avatar'
 import { compose } from 'redux'
+import { browserHistory } from 'react-router'
+
 import {
   addCommentAction,
   selectCommentId,
@@ -19,7 +21,7 @@ import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
 import MessageIcon from '@material-ui/icons/Message'
 import UpdateIcon from '@material-ui/icons/Update'
-
+import { startMessage } from '../../Container/store/action/messageAction'
 const styles = theme => ({
   leftMargin: {
     marginLeft: 10,
@@ -57,48 +59,56 @@ class CommentBox extends Component {
     })
     this.props.commentId(idSelect)
   }
+  startMessage = obj => {
+    console.log(obj)
+    this.props.messageStart(obj)
+    browserHistory.push('/messenger')
+  }
   deleteComment = commentId => {
     // console.log(commentId,postId)
-    let obj = {};
-    if(this.props.typeCheck === 'crop'){
-    obj = {
-      _id: this.props.cropDetail._id,
-      comment_id: commentId,
-      type: this.props.typeCheck
+    let obj = {}
+    if (this.props.typeCheck === 'crop') {
+      obj = {
+        _id: this.props.cropDetail._id,
+        comment_id: commentId,
+        type: this.props.typeCheck
+      }
+    } else {
+      // console.log(obj)
+      obj = {
+        _id: this.props.problemDetail._id,
+        comment_id: commentId,
+        type: this.props.typeCheck
+      }
     }
-  }else{
-    // console.log(obj)
-    obj = {
-      _id: this.props.problemDetail._id,
-      comment_id: commentId,
-      type: this.props.typeCheck
-    }
-  }
     this.props.commentDelete(obj)
   }
   submitComment = () => {
-    let obj = {};
-    if( this.props.typeCheck === 'crop'){
-     obj = {
-      _id: this.props.cropDetail._id,
-      comment: this.state.comment,
-      user_id: this.props.userImage.id,
-      user_name: this.props.userImage.name,
-      type: this.props.typeCheck,
-      comment_id: this.props.selectId
+    let obj = {}
+    if (this.props.typeCheck === 'crop') {
+      obj = {
+        _id: this.props.cropDetail._id,
+        comment: this.state.comment,
+        user_id: this.props.userImage.id,
+        user_name: this.props.userImage.name,
+        type: this.props.typeCheck,
+        comment_id: this.props.selectId,
+        userType: this.props.userImage.userType
+      }
+    } else {
+      obj = {
+        _id: this.props.problemDetail._id,
+        comment: this.state.comment,
+        user_id: this.props.userImage.id,
+        user_name: this.props.userImage.name,
+        type: this.props.typeCheck,
+        comment_id: this.props.selectId,
+        userType: this.props.userImage.userType
+
+        // ammar:''
+      }
     }
-  }else{
-    obj = {
-      _id: this.props.problemDetail._id,
-      comment: this.state.comment,
-      user_id: this.props.userImage.id,
-      user_name: this.props.userImage.name,
-      type: this.props.typeCheck,
-      comment_id: this.props.selectId,
-      // ammar:''
-    }
-  }
-  // console.log(obj)
+    // console.log(obj)
     // console.log(obj)
     if (this.props.selectId && this.props.selectId !== undefined) {
       this.props.commentUpdate(obj)
@@ -170,26 +180,35 @@ class CommentBox extends Component {
                       </Typography>
                     </Grid>
                   </Grid>
-                  <IconButton
-                    aria-label='Update'
-                    className={classes.butonPosition}
-                    onClick={() => this.updateComment(item.comment, item._id)}
-                  >
-                    <UpdateIcon />
-                  </IconButton>
-                  <IconButton
-                    aria-label='Delete'
-                    className={classes.butonPosition}
-                    onClick={() => this.deleteComment(item._id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                  <IconButton
-                    aria-label='Message'
-                    className={classes.butonPosition}
-                  >
-                    <MessageIcon />
-                  </IconButton>
+                  {item.user_id === this.props.userImage.id ? (
+                    <Fragment>
+                      <IconButton
+                        aria-label='Update'
+                        className={classes.butonPosition}
+                        onClick={() =>
+                          this.updateComment(item.comment, item._id)
+                        }
+                      >
+                        <UpdateIcon />
+                      </IconButton>
+                      <IconButton
+                        aria-label='Delete'
+                        className={classes.butonPosition}
+                        onClick={() => this.deleteComment(item._id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Fragment>
+                  ) : null}
+                  {item.user_id !== this.props.userImage.id ? (
+                    <IconButton
+                      aria-label='Message'
+                      className={classes.butonPosition}
+                      onClick={() => this.startMessage(item)}
+                    >
+                      <MessageIcon />
+                    </IconButton>
+                  ) : null}
                 </Grid>
               </Grid>
             </Grid>
@@ -207,9 +226,7 @@ function mapStateToProps (state) {
     userImage: state.authReducer.currentUserData.user,
     cropDetail: state.allAddedItemReducer.specificCrop,
     selectId: state.allAddedItemReducer.commentID,
-    problemDetail: state.allAddedItemReducer.specificProblem,
-    
-
+    problemDetail: state.allAddedItemReducer.specificProblem
   }
 }
 function mapDispatchToProps (dispatch) {
@@ -223,8 +240,11 @@ function mapDispatchToProps (dispatch) {
     commentUpdate: obj => {
       dispatch(updateCommentAction(obj))
     },
-    commentDelete:obj=>{
+    commentDelete: obj => {
       dispatch(deleteCommentAction(obj))
+    },
+    messageStart: obj => {
+      dispatch(startMessage(obj))
     }
   }
 }

@@ -13,11 +13,16 @@ export default (state = INITIAL_STATE, action) => {
     case ActionTypes.AUTH_USER:
       return {
         ...state,
-        authenticated: false,
+        authenticated: true,
         currentUserData: action.currentUser
       }
 
       break
+      case ActionTypes.UN_AUTH_PROCESS:
+      return {
+        ...state,
+        authenticated:false
+      }
     case ActionTypes.UNAUTH_USER:
       return { ...state, authenticated: false }
       break

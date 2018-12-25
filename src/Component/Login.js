@@ -2,7 +2,6 @@ import React from 'react'
 import { TextField, Button } from '@material-ui/core'
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
-// import { changeNavbar } from '../Container/store/action/authAction'
 import { signinUser, authError } from '../Container/store/action/authAction'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import NativeSelect from '@material-ui/core/NativeSelect'
@@ -66,8 +65,7 @@ class Login extends React.Component {
     const { email, password } = this.state
 
     this.props.siginUserForm({ email, password, authenticate })
-    // this.props.componentList(itemList)
-    // }
+  
   }
 
   render () {
@@ -106,67 +104,7 @@ class Login extends React.Component {
             LOGIN
           </Button>
 
-          {/* {this.state.userType === 'Farmer' ? (
-            <Button
-              onClick={this.signIn.bind(
-                this,
-                this.state.userType + 'Home',
-                'farmermain'
-              )}
-              style={style.button}
-            >
-              LOGIN
-            </Button>
-          ) : this.state.userType === 'Company' ? (
-            <Button
-              onClick={this.signIn.bind(
-                this,
-                this.state.userType + 'Home',
-                'companymain'
-              )}
-              style={style.button}
-            >
-              LOGIN
-            </Button>
-          ) : this.state.userType === 'Expert' ? (
-            <Button
-              onClick={this.signIn.bind(
-                this,
-                this.state.userType + 'Home',
-                'expertmain'
-              )}
-              style={style.button}
-            >
-              LOGIN
-            </Button>
-          ) : this.state.userType === 'Buyer' ? (
-            <Button
-              onClick={this.signIn.bind(
-                this,
-                this.state.userType + 'Home',
-                'buyermain'
-              )}
-              style={style.button}
-            >
-              LOGIN
-            </Button>
-          ) :
-          this.state.userType === 'Admin' ? (
-            <Button
-              onClick={this.signIn.bind(
-                this,
-                this.state.userType + 'Home',
-                'adminmain'
-              )}
-              style={style.button}
-            >
-              LOGIN
-            </Button>
-          ) :(
-            <Button onClick={this.signIn} style={style.button}>
-              LOGIN
-            </Button>
-          )} */}
+         
           <Button onClick={this.register} style={style.button}>
             Register
           </Button>
@@ -183,16 +121,12 @@ function mapStateToProps (state) {
 }
 function mapDispatchToProps (dispatch) {
   return {
-    // componentList: componentValue => {
-    //   dispatch(changeNavbar(componentValue))
-
-    // },
+    
     siginUserForm: obj => dispatch(signinUser(obj)),
     errorLogin: err => dispatch(authError(err))
   }
 }
 
-// export default Login;
 export default connect(
   mapStateToProps,
   mapDispatchToProps

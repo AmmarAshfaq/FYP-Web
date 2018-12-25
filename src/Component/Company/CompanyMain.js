@@ -3,7 +3,6 @@ import { Grid, Paper } from '@material-ui/core'
 import { browserHistory } from 'react-router'
 import TableGrid from '../../Container/TableGrid'
 import { withStyles } from '@material-ui/core/styles'
-// import { changeNavbar } from '../../Container/store/action/action'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import MachineryDataCompany from '../AllData/MachineryDataCompany'
@@ -19,24 +18,22 @@ import {
 
 class CompanyMain extends Component {
   componentWillMount () {
-    // this.props.changeAppbar('CompanyHome')
     this.props.getFertilizerData(this.props.companyID.id)
     this.props.getMachineryData(this.props.companyID.id)
     this.props.getPesticideData(this.props.companyID.id)
   }
   render () {
-    // console.log(MachineryDataCompany,"Machinery");
     const { classes } = this.props
     return (
-      <div
-        className={classes.root}
-        // style={{ marginTop: 100 }}
-      >
+      <div className={classes.root}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               {this.props.companyAddList.machineryArray ? (
-                <TableGrid data={this.props.companyAddList.machineryArray} typeSelect='Machinery' />
+                <TableGrid
+                  data={this.props.companyAddList.machineryArray}
+                  typeSelect='Machinery'
+                />
               ) : (
                 <CircularProgress className={classes.progress} />
               )}
@@ -57,14 +54,15 @@ class CompanyMain extends Component {
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               {this.props.companyAddList.pesticideArray ? (
-                <TableGrid 
-                data={this.props.companyAddList.pesticideArray} 
-                typeSelect='Pesticide' />
+                <TableGrid
+                  data={this.props.companyAddList.pesticideArray}
+                  typeSelect='Pesticide'
+                />
               ) : (
                 <CircularProgress className={classes.progress} />
               )}
             </Paper>
-          </Grid> 
+          </Grid>
         </Grid>
       </div>
     )
@@ -87,9 +85,6 @@ const styles = theme => ({
 })
 function mapDispatchToProps (dispatch) {
   return {
-    // changeAppbar: (obj) => {
-    //   dispatch(changeNavbar(obj))
-    // }
     getFertilizerData: data => {
       dispatch(getFertilizerAction(data))
     },
@@ -105,8 +100,6 @@ function mapStateToProps (state) {
   return {
     companyID: state.authReducer.currentUserData.user,
     companyAddList: state.companyReducer
-    // machineryData:state.companyReducer.machineryArray,
-    // pesticideData:state.companyReducer.pesticideArray
   }
 }
 export default compose(

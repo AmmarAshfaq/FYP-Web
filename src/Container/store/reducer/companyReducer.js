@@ -4,9 +4,12 @@ const INITIAL_STATE = {
   fertilizerArray: [],
   machineryArray: [],
   pesticideArray: [],
-  allFertilizerData:[],
-  allPesticideData:[],
-  allMachineryData:[]
+  allFertilizerData: [],
+  allPesticideData: [],
+  allMachineryData: [],
+  fertilizerProduct: {},
+  // machineryProduct: {},
+  // pesticideProduct: {}
 }
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -95,37 +98,52 @@ export default (state = INITIAL_STATE, action) => {
         })
       }
       break
-      case ActionTypes.UPDATE_PESTICIDE:
-        return {
-          ...state,
-          pesticideArray: state.pesticideArray.map((data, ind) => {
-            if (data._id === action.payload._id) {
-              return action.payload
-            }
-            return data
-          })
-        }
-        break
-      case ActionTypes.GET_ALL_FERTILIZER:
-        return {
-          ...state,
-          allFertilizerData:action.payload
-          
-        }
-        break
-        case ActionTypes.GET_ALL_MACHINERY:
-          return {
-            ...state,
-            allMachineryData:action.payload
-            
+    case ActionTypes.UPDATE_PESTICIDE:
+      return {
+        ...state,
+        pesticideArray: state.pesticideArray.map((data, ind) => {
+          if (data._id === action.payload._id) {
+            return action.payload
           }
-          break
-          case ActionTypes.GET_ALL_PESTICIDE:
-            return {
-              ...state,
-              allPesticideData:action.payload
-              
-            }
+          return data
+        })
+      }
+      break
+    case ActionTypes.GET_ALL_FERTILIZER:
+      return {
+        ...state,
+        allFertilizerData: action.payload
+      }
+      break
+    case ActionTypes.GET_ALL_MACHINERY:
+      return {
+        ...state,
+        allMachineryData: action.payload
+      }
+      break
+    case ActionTypes.GET_ALL_PESTICIDE:
+      return {
+        ...state,
+        allPesticideData: action.payload
+      }
+      break
+    case ActionTypes.GET_SPECIFIC_FERTILIZER:
+      return {
+        ...state,
+        fertilizerProduct: action.payload
+      }
+      break
+    case ActionTypes.GET_SPECIFIC_FERTILIZER:
+      return {
+        ...state,
+        fertilizerProduct: action.payload
+      }
+      break
+    case ActionTypes.GET_SPECIFIC_FERTILIZER:
+      return {
+        ...state,
+        fertilizerProduct: action.payload
+      }
     default:
       return state
   }
