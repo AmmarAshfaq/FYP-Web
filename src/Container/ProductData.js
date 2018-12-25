@@ -61,7 +61,9 @@ class ProductData extends Component {
         expectedPrice: price,
         qty: quantity,
         _id: this.props.allSpecificData.fertilizerProduct._id,
-        senderId: this.props.userId
+        senderId: this.props.userId,
+        userType: this.props.userId.userType
+
         // type:
       }
     } else if (this.props.allSpecificData.fertilizerProduct.machineName) {
@@ -71,7 +73,8 @@ class ProductData extends Component {
         expectedPrice: price,
         qty: quantity,
         machineId: this.props.allSpecificData.fertilizerProduct._id,
-        senderId: this.props.userId
+        senderId: this.props.userId,
+        userType: this.props.userId.userType
       }
     } else if (this.props.allSpecificData.fertilizerProduct.pesticideName) {
       // console.log(obj)
@@ -81,7 +84,8 @@ class ProductData extends Component {
         expectedPrice: price,
         qty: quantity,
         pesticideId: this.props.allSpecificData.fertilizerProduct._id,
-        senderId: this.props.userId
+        senderId: this.props.userId,
+        userType: this.props.userId.userType
       }
     }
     if (this.props.allSpecificData.fertilizerProduct.name) {
@@ -266,7 +270,8 @@ class ProductData extends Component {
 function mapStateToProps (state) {
   return {
     allSpecificData: state.companyReducer,
-    userId: state.authReducer.currentUserData.user.id
+    userId: state.authReducer.currentUserData.user.id,
+    userType: state.authReducer.currentUserData.user
   }
 }
 function mapDispatchToProps (dispatch) {

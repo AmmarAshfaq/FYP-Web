@@ -19,48 +19,52 @@ import Messenger from './Container/messenger'
 import AuthReducer from './Container/RequireAuth'
 import AddItem from './Component/Farmer/AddItem'
 import NotificationPanel from './Container/NotificationPanel'
-import SpecificCrop from './Container/SpecificCrop';
+import SpecificCrop from './Container/SpecificCrop'
 import AdminMain from './Component/Admin/AdminMain'
 import AdminBuyer from './Component/Admin/AdminBuyer'
 import AdminCompany from './Component/Admin/AdminCompany'
 import AdminExpert from './Component/Admin/AdminExpert'
 import AdminFarmer from './Component/Admin/AdminFarmer'
+import CompanyResponse from './Component/Company/CompanyResponse'
 export default class Routers extends Component {
   render () {
     return (
       <Router history={browserHistory}>
-          <Route exact path='/' component={Main} />
-          <Route path='/login' component={Login} />
-          <Route path='/signup' component={SignUp} />
-          <Route path='/buyermain' component={BuyerMain} />
-          <Route path='/expertmain' component={ExpertMain} />
-          <Route path='/farmermain' component={FarmerMain} />
-          <Route path='/companymain' component={CompanyMain} />
-          <Route path='/adminmain' component={AuthReducer(AdminMain)}/>
-          <Route path='/adminmain/company' component={AuthReducer(AdminCompany)}/>
-          <Route path='/adminmain/expert' component={AuthReducer(AdminExpert)}/>
-          <Route path='/adminmain/buyer' component={AuthReducer(AdminBuyer)}/>
-          <Route path='/adminmain/farmer' component={AuthReducer(AdminFarmer)}/>
-          
-          <Route path='/addpesticide' component={AuthReducer(AddPesticide)} />
-          <Route path='/addmachinery' component={AuthReducer(AddMachinery)} />
-          <Route path='/addfertilizer' component={AuthReducer(AddFertilizer)} />
-          <Route path='/about' component={About} />
-          <Route path='/contact' component={Contact} />
-          <Route path='/productList' component={AuthReducer(ProductList)} />
-          <Route
-            path='/problemSolution'
-            component={AuthReducer(ProblemSolution)}
-          />
-          <Route
-            path='/specificCrop'
-            component={AuthReducer(SpecificCrop)}
-          />
-          <Route path='/productdata' component={AuthReducer(ProductData)} />
-          <Route path='/messenger' component={AuthReducer(Messenger)} />
-          <Route path='/addedItem' component={AddItem}/>
-          <Route path='/notificationpanel' component={AuthReducer(NotificationPanel)}/>
+        <Route exact path='/' component={Main} />
+        <Route path='/login' component={Login} />
+        <Route path='/signup' component={SignUp} />
+        <Route path='/buyermain' component={AuthReducer(BuyerMain)} />
+        <Route path='/expertmain' component={AuthReducer(ExpertMain)} />
+        <Route path='/farmermain' component={AuthReducer(FarmerMain)} />
+        <Route path='/companymain' component={AuthReducer(CompanyMain)} />
+        <Route path='/adminmain' component={AuthReducer(AdminMain)} />
+        <Route
+          path='/adminmain/company'
+          component={AuthReducer(AdminCompany)}
+        />
+        <Route path='/adminmain/expert' component={AuthReducer(AdminExpert)} />
+        <Route path='/adminmain/buyer' component={AuthReducer(AdminBuyer)} />
+        <Route path='/adminmain/farmer' component={AuthReducer(AdminFarmer)} />
 
+        <Route path='/addpesticide' component={AuthReducer(AddPesticide)} />
+        <Route path='/addmachinery' component={AuthReducer(AddMachinery)} />
+        <Route path='/addfertilizer' component={AuthReducer(AddFertilizer)} />
+        <Route path='/about' component={About} />
+        <Route path='/contact' component={Contact} />
+        <Route path='/productList' component={AuthReducer(ProductList)} />
+        <Route
+          path='/problemSolution'
+          component={AuthReducer(ProblemSolution)}
+        />
+        <Route path='/specificCrop' component={AuthReducer(SpecificCrop)} />
+        <Route path='/productdata' component={AuthReducer(ProductData)} />
+        <Route path='/messenger' component={AuthReducer(Messenger)} />
+        <Route path='/addedItem' component={AuthReducer(AddItem)} />
+        <Route path='/allResponse' component={AuthReducer(CompanyResponse)}/>
+        <Route
+          path='/notificationpanel'
+          component={AuthReducer(NotificationPanel)}
+        />
       </Router>
     )
   }

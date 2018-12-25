@@ -263,15 +263,15 @@ class Messenger extends React.Component {
         }
       }
     } else if (this.props.userId.userType === 'Company') {
-      if (this.props.getConnect === 'Farmer') {
+      if (this.props.storeMessage.userType === 'Farmer') {
         obj = {
           // fc
           // bc
           // ec
           receiverInfo: {
-            receiverId: this.props.getConnect.user_id,
-            receiverType: this.props.getConnect.userType,
-            receiverName: this.props.getConnect.user_name
+            receiverId: this.props.storeMessage.senderId,
+            receiverType: this.props.storeMessage.userType,
+            receiverName: this.props.storeMessage.name
           },
           senderInfo: {
             senderId: this.props.userId.id,
@@ -279,19 +279,19 @@ class Messenger extends React.Component {
             senderType: this.props.userId.userType
           },
           message: this.state.message,
-          conversationId: `${this.props.getConnect.user_id}${
+          conversationId: `${this.props.storeMessage.senderId}${
             this.props.userId.id
           }`
         }
-      } else if (this.props.getConnect === 'Expert') {
+      } else if (this.props.storeMessage.userType === 'Expert') {
         obj = {
           // cb
           // fb
 
           receiverInfo: {
-            receiverId: this.props.getConnect.user_id,
-            receiverType: this.props.getConnect.userType,
-            receiverName: this.props.getConnect.user_name
+            receiverId: this.props.storeMessage.senderId,
+            receiverType: this.props.storeMessage.userType,
+            receiverName: this.props.storeMessage.name
           },
           senderInfo: {
             senderId: this.props.userId.id,
@@ -300,18 +300,18 @@ class Messenger extends React.Component {
           },
           message: this.state.message,
           conversationId: `${this.props.userId.id}${
-            this.props.getConnect.user_id
+            this.props.storeMessage.senderId
           }`
         }
-      } else if (this.props.getConnect === 'Buyer') {
+      } else if (this.props.storeMessage.userType === 'Buyer') {
         obj = {
           // cb
           // fb
 
           receiverInfo: {
-            receiverId: this.props.getConnect.user_id,
-            receiverType: this.props.getConnect.userType,
-            receiverName: this.props.getConnect.user_name
+            receiverId: this.props.storeMessage.senderId,
+            receiverType: this.props.storeMessage.userType,
+            receiverName: this.props.storeMessage.name
           },
           senderInfo: {
             senderId: this.props.userId.id,
@@ -320,7 +320,7 @@ class Messenger extends React.Component {
           },
           message: this.state.message,
           conversationId: `${this.props.userId.id}${
-            this.props.getConnect.user_id
+            this.props.storeMessage.senderId
           }`
         }
       }
@@ -539,10 +539,12 @@ function mapDispatchToProps (dispatch) {
 }
 
 function mapStateToProps (state) {
+  console.log(state.companyReducer.connectMsg)
   return {
     userId: state.authReducer.currentUserData.user,
     msgList: state.messageReducer.allMsgList,
-    getConnect: state.messageReducer.userSelect
+    getConnect: state.messageReducer.userSelect,
+    storeMessage:state.companyReducer.connectMsg
   }
 }
 export default compose(

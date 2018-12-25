@@ -52,10 +52,10 @@ class AddMachinery extends Component {
       image,
       companyDetails: {
         contactEmail: this.props.companyInfo.email,
-        contactNumber: '0000',
+        contactNumber: '00000000000000000000000000000000000000000',
         contactName: this.props.companyInfo.name,
-        location: '368',
-        address: '0000'
+        location: '368000000000000000000000000000000000',
+        address: '000000000000000000000000000000000000000000'
       },
       companyName: this.props.companyInfo.name,
       companyId: this.props.companyInfo.id,

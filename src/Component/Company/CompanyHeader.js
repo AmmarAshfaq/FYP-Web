@@ -42,7 +42,7 @@ class CompanyHeader extends Component {
     this.setState({ anchorEl: null })
   }
 
-  handleClickOpen = (obj) => {
+  handleClickOpen = obj => {
     let objSet = {
       toggle: true,
       specificDialog: obj
@@ -50,22 +50,31 @@ class CompanyHeader extends Component {
     console.log(objSet)
     this.props.selectValue(objSet)
   }
- 
+
   handleLogOut = passParam => {
     // this.props.changeRoute(passParam)
     this.props.signoutUserComp(passParam)
   }
-  messengerApp = (passParam) => {
+  messengerApp = passParam => {
     // this.props.changeRoute(passParam);
-    browserHistory.push('/messenger')
+    if (passParam === 'Messenger') {
+      browserHistory.push('/messenger');
+    } else {
+      browserHistory.push('/allResponse');
+    }
+  }
+  openHome = () => {
+    browserHistory.push('/companymain')
   }
   render () {
     const { classes } = this.props
     const { anchorEl } = this.state
     return (
       <Fragment>
-        <AppBar position='fixed' style={{ flexGrow: 1 , backgroundColor: '#00806d'}}>
-
+        <AppBar
+          position='fixed'
+          style={{ flexGrow: 1, backgroundColor: '#00806d' }}
+        >
           <Toolbar>
             <Avatar
               alt='Logo'
@@ -74,26 +83,29 @@ class CompanyHeader extends Component {
             />
             <div className={classes.titleStyle}>
               <Typography variant='title' color='inherit'>
-
                 Company Panel
               </Typography>
-
             </div>
             <div>
               <Button //   onClick={this.changeScreen.bind(this, 'Main')}
-                color='inherit'>
+                color='inherit'
+                onClick={this.openHome.bind(this)}
+                
+              >
                 Home
               </Button>
               <Badge color='secondary' badgeContent={4}>
-                <Button color='inherit' className={classes.buttonStyle}
-                 onClick={this.messengerApp.bind(this,'Messenger')}
+                <Button
+                  color='inherit'
+                  className={classes.buttonStyle}
+                  onClick={this.messengerApp.bind(this, 'Messenger')}
                 >
                   Messege
                 </Button>
               </Badge>
 
               <Badge color='secondary' badgeContent={6}>
-               <NotificationDialog typeSelect=""/>
+                <NotificationDialog typeSelect='' />
               </Badge>
               <Button
                 aria-owns={anchorEl ? 'simple-menu' : null}
@@ -101,7 +113,8 @@ class CompanyHeader extends Component {
                 onClick={this.handleClick}
                 color='inherit'
               >
-                More Option<DownArrow />
+                More Option
+                <DownArrow />
               </Button>
               <Menu
                 id='simple-menu'
@@ -112,30 +125,31 @@ class CompanyHeader extends Component {
               >
                 <MenuItem
                   //   onClick={this.changeScreen.bind(this, 'Farmer')}
-                  onClick={this.handleClickOpen.bind(this,'Fertilizer')}
+                  onClick={this.handleClickOpen.bind(this, 'Fertilizer')}
                 >
                   Add Fertilizer
                 </MenuItem>
                 <MenuItem
                   //   onClick={this.changeScreen.bind(this, 'Company')}
-                  onClick={this.handleClickOpen.bind(this,'Machinery')}
+                  onClick={this.handleClickOpen.bind(this, 'Machinery')}
                 >
                   Add Machinery
                 </MenuItem>
-
-                <MenuItem onClick={this.handleClickOpen.bind(this,'Pesticide')}>
+                <MenuItem
+                  onClick={this.handleClickOpen.bind(this, 'Pesticide')}
+                >
                   Add Pesticide
                 </MenuItem>
-
+                <MenuItem onClick={this.messengerApp.bind(this, 'Response')}>
+                  All Response
+                </MenuItem>
                 <MenuItem onClick={this.handleLogOut.bind(this, 'Main')}>
                   Log Out
                 </MenuItem>
                 s{' '}
               </Menu>
             </div>
-
           </Toolbar>
-
         </AppBar>
         <AddPesticide />
         <AddFertilizer />
@@ -153,7 +167,7 @@ function mapDispatchToProp (dispatch) {
     // changeRoute: passParam => {
     //   dispatch(changeNavbar(passParam))
     // },
-    signoutUserComp: (data) => {
+    signoutUserComp: data => {
       dispatch(signoutUser(data))
     }
   }
@@ -161,5 +175,8 @@ function mapDispatchToProp (dispatch) {
 
 export default compose(
   withStyles(styles, { name: 'CompanyHeader' }),
-  connect(null, mapDispatchToProp)
+  connect(
+    null,
+    mapDispatchToProp
+  )
 )(CompanyHeader)

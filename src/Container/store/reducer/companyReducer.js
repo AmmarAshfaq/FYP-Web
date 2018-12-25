@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   allPesticideData: [],
   allMachineryData: [],
   fertilizerProduct: {},
+  connectMsg:{}
   // machineryProduct: {},
   // pesticideProduct: {}
 }
@@ -144,6 +145,12 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         fertilizerProduct: action.payload
       }
+      break
+      case ActionTypes.STORE_FOR_MSG:
+        return {
+          ...state,
+          connectMsg: action.payload
+        }
     default:
       return state
   }

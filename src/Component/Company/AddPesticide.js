@@ -46,10 +46,10 @@ class AddPesticide extends Component {
       image,
       companyDetails: {
         contactEmail: this.props.companyInfo.email,
-        contactNumber: '0000',
+        contactNumber: '000000000000000000000000000000',
         contactName: this.props.companyInfo.name,
-        location: '368',
-        address: '0000'
+        location: '36800000000000000000000000000000',
+        address: '0000000000000000000000000000000000000'
       },
       companyName: this.props.companyInfo.name,
       companyId: this.props.companyInfo.id,

@@ -123,7 +123,7 @@ export function getMachineryAction (obj) {
 }
 export function addFertilizerAction (obj) {
   getToken = localStorage.getItem('token')
-  // console.log(obj.image_url)
+  console.log(obj)
   let data = new FormData()
   data.append('companyName', obj.companyName)
   data.append('companyId', obj.companyId)
@@ -153,7 +153,7 @@ export function addFertilizerAction (obj) {
     })
 
     const getData = await result.json()
-    // console.log(getData)
+    console.log(getData)
     dispatch(addFertilizer(getData.data))
   }
 }
@@ -188,7 +188,7 @@ export function addPesticideAction (obj) {
     })
 
     const getData = await result.json()
-    // console.log(getData)
+    console.log(getData)
     dispatch(addPesticide(getData.data))
   }
 }
@@ -224,7 +224,7 @@ export function addMachineryAction (obj) {
     })
 
     const getData = await result.json()
-    // console.log(getData)
+    console.log(getData)
     dispatch(addMachinery(getData.data))
   }
 }
@@ -528,5 +528,14 @@ function getAllPesticide (data) {
   return {
     type: ActionTypes.GET_ALL_PESTICIDE,
     payload: data
+  }
+}
+
+export function storeDataForMsg(data){
+  return dispatch =>{
+    dispatch({
+      type:ActionTypes.STORE_FOR_MSG,
+      payload:data
+    })
   }
 }

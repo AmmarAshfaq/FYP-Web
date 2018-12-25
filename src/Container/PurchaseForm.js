@@ -44,7 +44,10 @@ class PurchaseForm extends Component {
         expectedPrice: price,
         qty: quantity,
         machineId: this.props.itemValue.reducer.addId._id,
-        senderId: this.props.userId
+        senderId: this.props.userId,
+        userType: this.props.userType.userType
+        
+        
       }
     } else if (this.props.itemValue.reducer.addId.name) {
       obj = {
@@ -53,7 +56,9 @@ class PurchaseForm extends Component {
         expectedPrice: price,
         qty: quantity,
         _id: this.props.itemValue.reducer.addId._id,
-        senderId: this.props.userId
+        senderId: this.props.userId,
+        userType: this.props.userType.userType
+        
       }
     } else if (this.props.itemValue.reducer.addId.pesticideName) {
       obj = {
@@ -62,9 +67,11 @@ class PurchaseForm extends Component {
         expectedPrice: price,
         qty: quantity,
         pesticideId: this.props.itemValue.reducer.addId._id,
-        senderId: this.props.userId
+        senderId: this.props.userId,
+        userType: this.props.userType.userType
       }
     }
+    console.log(obj)
     if (this.props.itemValue.reducer.addId.machineName) {
       this.props.addMachineryResponse(obj)
     } else if (this.props.itemValue.reducer.addId.name) {
@@ -159,7 +166,8 @@ function mapStateToProps (state) {
   console.log(state)
   return {
     itemValue: state,
-    userId: state.authReducer.currentUserData.user.id
+    userId: state.authReducer.currentUserData.user.id,
+    userType: state.authReducer.currentUserData.user
   }
 }
 function mapDispatchToProps (dispatch) {
