@@ -15,9 +15,7 @@ import FarmerProblemData from '../AllData/FarmerProblemData'
 import FarmerCropData from '../AllData/FarmerCropData'
 class AddedItem extends Component {
   componentWillMount () {
-    // this.props.getAddedCrop(this.props.farmerId,localStorage.getItem('token'))
-    // this.props.getAddedProblem(this.props.farmerId,localStorage.getItem('token'))
-  // console.log(this.props.farmerId)
+   
     this.props.getAddedCrop(this.props.farmerId)
     this.props.getAddedProblem(this.props.farmerId)
   }
@@ -27,13 +25,11 @@ class AddedItem extends Component {
     const { classes } = this.props
     return (
       <div style={{ marginTop: 100 ,flexGrow:1 }}>
-        <Grid container spacing={24}>
+        <Grid container spacing={0}>
           <Grid item xs={12} >
             <Paper className={classes.paper}>
               {this.props.cropList.problemArray ? (
-                //  {FarmerProblemData.name?(
                   <TableGrid
-                  // data={FarmerProblemData}
                     data={this.props.cropList.problemArray}
                     typeSelect='Problem'
                   />
@@ -46,9 +42,7 @@ class AddedItem extends Component {
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               {this.props.cropList.cropArray ? (
-                // {/* {FarmerCropData.name?( */}
                 <TableGrid
-                // data={FarmerCropData}
                   data={this.props.cropList.cropArray}
                   typeSelect='Crops'
                 />
@@ -77,7 +71,6 @@ const styles = theme => ({
 })
 
 function mapStateToProps (state) {
-  // console.log(state)
   return {
     farmerId: state.authReducer.currentUserData.user.id,
     cropList: state.farmerReducer

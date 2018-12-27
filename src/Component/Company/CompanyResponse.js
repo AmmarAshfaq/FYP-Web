@@ -15,20 +15,17 @@ const styles = theme => ({
   },
   paper: {
     padding: theme.spacing.unit * 2,
-    // textAlign: 'center',
     color: theme.palette.text.secondary,
     marginBottom: 20
   }
 })
 class CompanyResponse extends Component {
   submitData = data => {
-    // console.log(data)
     this.props.storeMsg(data)
     browserHistory.push('/messenger')
     
   }
   render () {
-    //   {console.log(this.props.allCompanyResponse)}
     let arrMerge1 = this.props.allCompanyResponse.pesticideArray.concat(
       this.props.allCompanyResponse.machineryArray
     )
@@ -41,12 +38,10 @@ class CompanyResponse extends Component {
         if (value._id) {
           arrSort.push(item)
         } else {
-          // console.log('error')
           console.log('No record ')
         }
       })
     })
-    // console.log(arrSort)
     let unique = [...new Set(arrSort)]
     console.log(unique)
 
@@ -79,11 +74,9 @@ class CompanyResponse extends Component {
                       <Typography gutterBottom>
                         {`Price: ${item.price.substring(0, 15)}`}
                       </Typography>
-                      {/* <Typography color='textSecondary'>ID: 1030114</Typography> */}
                     </Grid>
                     <Grid item>
                       <Typography style={{ cursor: 'pointer' }}>
-                        {/* Remove */}
                       </Typography>
                     </Grid>
                     <Grid item xs container direction='column' spacing={16}>
@@ -130,7 +123,6 @@ class CompanyResponse extends Component {
                     </Grid>
                     <Grid item>
                       <Typography style={{ cursor: 'pointer' }}>
-                        {/* Remove */}
                       </Typography>
                     </Grid>
                   </Grid>

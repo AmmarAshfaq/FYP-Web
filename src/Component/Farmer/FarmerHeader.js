@@ -58,13 +58,11 @@ class FarmerHeader extends Component {
     browserHistory.push('/farmermain')
   }
   handleLogOut = passParam => {
-    // browserHistory.push('/login')
-    // this.props.ChangeRoute(passParam)
+  
     console.log(passParam)
     this.props.signOutComp(passParam)
   }
   messengerApp = passParam => {
-    // this.props.ChangeRoute(passParam)
     browserHistory.push('/messenger')
   }
   render () {
@@ -80,12 +78,10 @@ class FarmerHeader extends Component {
             <Avatar
               alt='Logo'
               src={require('../../images/logo2.jpg')}
-              // src={this.props.userIdentity.image_url}
               className={classes.avatarStyle}
             />
             <div className={classes.titleStyle}>
               <Typography variant='title' color='inherit'>
-                {/* {this.props.userIdentity.name} */}
                 Farmer
               </Typography>
             </div>
@@ -109,13 +105,7 @@ class FarmerHeader extends Component {
               </Badge>
 
               <Badge color='secondary' badgeContent={6}>
-                {/* <Button
-                  color='inherit'
-                  className={classes.buttonStyle}
-                  onClick={this.handleClickNoti}
-                >
-                  Notification
-                </Button> */}
+               
                 <NotificationDialog typeSelect='Crop' />
               </Badge>
 
@@ -162,9 +152,7 @@ function mapDispatchToProp (dispatch) {
     selectValue: data => {
       dispatch(openModel(data))
     },
-    // ChangeRoute: data => {
-    //   dispatch(changeNavbar(data))
-    // },
+   
     signOutComp: data => {
       dispatch(signoutUser(data))
     }

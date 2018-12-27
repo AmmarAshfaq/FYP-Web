@@ -137,11 +137,7 @@ export function addFertilizerAction (obj) {
   data.append('contactDetails[contactNumber]', obj.companyDetails.contactNumber)
   data.append('contactDetails[location]', obj.companyDetails.location)
   data.append('contactDetails[address]', obj.companyDetails.address)
-  //   console.log(data)
-
-  //   for(var pair of data.entries()){
-  //       console.log(pair[0]+','+pair[1]);
-  //   }
+  
   return async dispatch => {
     const result = await fetch(`${ROOT_URL}/fertilizer/add`, {
       method: 'POST',

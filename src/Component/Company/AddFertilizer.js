@@ -35,7 +35,6 @@ class AddFertilizer extends Component {
   }
   handleSubmit = () => {
     const { name, price, productName, application, image_url } = this.state
-    // console.log(this.state)
     let obj = {
       name,
       price,
@@ -53,7 +52,6 @@ class AddFertilizer extends Component {
       companyId: this.props.companyInfo.id,
       selectId: this.props.selectId
     }
-    // console.log(obj)
     if (this.props.selectId && this.props.selectId !== undefined) {
       this.props.updateItem(obj)
     } else {
@@ -69,8 +67,7 @@ class AddFertilizer extends Component {
     })
   }
   updateFile = event => {
-    // let obj = {}
-    // obj[target] = event.target.files[0]
+    
     this.setState({
       image_url: event.target.files[0]
     })
@@ -133,12 +130,10 @@ class AddFertilizer extends Component {
               value={this.state.price}
             />
             <TextField
-              // onChange={this.handleChange}
-              // style={styles.textStyle}
+          
               type='file'
               label='Select File'
               onChange={this.updateFile}
-              // value={this.state.image}
             />
           </DialogContent>
           <DialogActions>
@@ -156,7 +151,6 @@ class AddFertilizer extends Component {
 }
 
 function mapStateToProps (state) {
-  // console.log(state.authReducer.currentUserData.user)
   console.log(state.reducer.selectListId)
   return {
     itemValue: state,

@@ -305,8 +305,6 @@ class Messenger extends React.Component {
         }
       } else if (this.props.storeMessage.userType === 'Buyer') {
         obj = {
-          // cb
-          // fb
 
           receiverInfo: {
             receiverId: this.props.storeMessage.senderId,
@@ -325,7 +323,6 @@ class Messenger extends React.Component {
         }
       }
     }
-    // console.log(obj)
     this.props.connectSocket(obj)
   }
   render () {
@@ -394,9 +391,7 @@ class Messenger extends React.Component {
                   height: 510,
                   backgroundColor: '#8080803b',
                   overflowY: 'auto'
-                  // display:'flex'
                 }}
-                // keys={ind}
               >
                 {this.props.msgList.map((item, ind) => (
                   <Fragment keys={ind}>
@@ -437,7 +432,6 @@ class Messenger extends React.Component {
                             }}
                           >
                             {item.message}
-                            {/* Walaikum Assalam! */}
                           </span>
                         </p>
                       </div>
@@ -447,7 +441,6 @@ class Messenger extends React.Component {
                           display: 'flex',
                           float: 'right',
                           width: '100%',
-                          // alignItems:'flex-end'
                           justifyContent: 'flex-end'
                         }}
                       >

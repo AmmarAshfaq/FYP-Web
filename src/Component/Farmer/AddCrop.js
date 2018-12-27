@@ -226,21 +226,3 @@ export default compose(
   )
 )(AddCrop)
 
-{
-  /* <input
-              accept='image/*'
-              className={classes.input}
-              id='contained-button-file'
-              multiple
-              type='file'
-              // placeholder="choose image"
-
-            />
-            <label htmlFor='contained-button-file'>
-              <Button variant='contained' component='span'>
-                <PhotoCamera />
-                Add Image
-              </Button>
-
-            </label> */
-}

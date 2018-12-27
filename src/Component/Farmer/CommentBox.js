@@ -65,7 +65,6 @@ class CommentBox extends Component {
     browserHistory.push('/messenger')
   }
   deleteComment = commentId => {
-    // console.log(commentId,postId)
     let obj = {}
     if (this.props.typeCheck === 'crop') {
       obj = {
@@ -74,7 +73,6 @@ class CommentBox extends Component {
         type: this.props.typeCheck
       }
     } else {
-      // console.log(obj)
       obj = {
         _id: this.props.problemDetail._id,
         comment_id: commentId,
@@ -105,11 +103,9 @@ class CommentBox extends Component {
         comment_id: this.props.selectId,
         userType: this.props.userImage.userType
 
-        // ammar:''
       }
     }
-    // console.log(obj)
-    // console.log(obj)
+  
     if (this.props.selectId && this.props.selectId !== undefined) {
       this.props.commentUpdate(obj)
       this.props.commentId(undefined)
@@ -220,8 +216,7 @@ class CommentBox extends Component {
   }
 }
 function mapStateToProps (state) {
-  // console.log(state.allAddedItemReducer.commentID)
-  // console.log(state.allAddedItemReducer.specificCrop.comments)
+ 
   return {
     userImage: state.authReducer.currentUserData.user,
     cropDetail: state.allAddedItemReducer.specificCrop,

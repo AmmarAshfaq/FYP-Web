@@ -31,8 +31,7 @@ class AddPesticide extends Component {
     this.setState(obj)
   }
   updateFile = event => {
-    // let obj = {}
-    // obj[target] = event.target.files[0]
+    
     this.setState({
       image: event.target.files[0]
     })
@@ -145,7 +144,6 @@ this.props.updateItem(obj)
 }
 
 function mapStateToProps (state) {
-  // console.log(state)
   return {
     itemValue: state,
     companyInfo: state.authReducer.currentUserData.user,

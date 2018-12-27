@@ -17,13 +17,12 @@ import FormControl from '@material-ui/core/FormControl'
 import NativeSelect from '@material-ui/core/NativeSelect'
 import Weather from '../../Container/Weather'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import {loaderOffProcess} from '../../Container/store/action/authAction'
+import { loaderOffProcess } from '../../Container/store/action/authAction'
 import {
   getAllFertilizerAction,
   getAllPesticideAction,
   getAllMachineryAction
 } from '../../Container/store/action/companyAction'
-// import { geolocated } from 'react-geolocated'
 import {
   getCropAddData,
   getProblemAddData
@@ -118,22 +117,19 @@ class FarmerMain extends Component {
     anchorEl: null
   }
   componentWillMount () {
-    //   // this.props.fetchMessageMain()
-    //   this.props.changeAppBar('FarmerHome')
+    
     this.props.getAddedCrop(this.props.farmerId)
     this.props.getAddedProblem(this.props.farmerId)
     this.props.requestWeather()
     this.props.getFertilizer()
     this.props.getPesticide()
     this.props.getMachinery()
-    // this.props.loaderOff()
-  }
-  componentDidMount(){
-    setTimeout(()=>{
-      this.props.loaderOff()
-
-    },2000)
     
+  }
+  componentDidMount () {
+    setTimeout(() => {
+      this.props.loaderOff()
+    }, 2000)
   }
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget })
@@ -156,136 +152,132 @@ class FarmerMain extends Component {
     let i = 0
     return (
       <div className={classes.root}>
-        {/* {this.props.loader ? (
-          <CircularProgress className={classes.progress} />
-        ) : ( */}
-          <Grid container spacing={24}>
-            <Weather data={this.props.weatherDetail} />
+      
+        <Grid container spacing={24}>
+          <Weather data={this.props.weatherDetail} />
 
-            <Grid item xs={12} sm={9}>
-              <Paper className={classes.paper}>
-                <Paper className={classes.rootTable}>
-                  <Table className={classes.table}>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell colSpan='3'>
-                          <Typography
-                            variant='headline'
-                            gutterBottom
-                            style={{ fontSize: 32 }}
+          <Grid item xs={12} sm={9}>
+            <Paper className={classes.paper}>
+              <Paper className={classes.rootTable}>
+                <Table className={classes.table}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell colSpan='3'>
+                        <Typography
+                          variant='headline'
+                          gutterBottom
+                          style={{ fontSize: 32 }}
+                        >
+                          Crop Rates
+                        </Typography>
+                      </TableCell>
+                      <TableCell colSpan='1'>
+                        <FormControl className={classes.formControl}>
+                          <NativeSelect
+                            value={this.state.city}
+                            onChange={this.onChange}
+                            name='Select City'
+                            className={classes.selectEmpty}
                           >
-                            Crop Rates
-                          </Typography>
-                        </TableCell>
-                        <TableCell colSpan='1'>
-                          <FormControl className={classes.formControl}>
-                            <NativeSelect
-                              value={this.state.city}
-                              onChange={this.onChange}
-                              name='Select City'
-                              className={classes.selectEmpty}
-                            >
-                              <option value={'Karachi'}>Karachi</option>
-                              <option value={'Lahore'}>Lahore</option>
-                              <option value={'Hyderabad'}>Hyderabad</option>
-                            </NativeSelect>
-                          </FormControl>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell colSpan='4'>
-                          <Typography
-                            variant='headline'
-                            gutterBottom
-                            style={{ textAlign: 'center' }}
-                          >
-                            {this.state.city} Market Rate's
-                          </Typography>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow className={classes.row}>
-                        <CustomTableCell numeric>No.</CustomTableCell>
-                        <CustomTableCell numeric>Name</CustomTableCell>
-                        <CustomTableCell numeric>Price</CustomTableCell>
-                        <CustomTableCell numeric>Weight</CustomTableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {selectList.map((n, key) => {
-                        return (
-                          <TableRow className={classes.row} key={n.name}>
-                            <CustomTableCell numeric>{++i}</CustomTableCell>
-                            <CustomTableCell numeric>{n.name}</CustomTableCell>
-                            <CustomTableCell numeric>{n.price}</CustomTableCell>
-                            <CustomTableCell numeric>
-                              {n.weight}
-                            </CustomTableCell>
-                          </TableRow>
-                        )
-                      })}
-                    </TableBody>
-                  </Table>
-                </Paper>
+                            <option value={'Karachi'}>Karachi</option>
+                            <option value={'Lahore'}>Lahore</option>
+                            <option value={'Hyderabad'}>Hyderabad</option>
+                          </NativeSelect>
+                        </FormControl>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell colSpan='4'>
+                        <Typography
+                          variant='headline'
+                          gutterBottom
+                          style={{ textAlign: 'center' }}
+                        >
+                          {this.state.city} Market Rate's
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow className={classes.row}>
+                      <CustomTableCell numeric>No.</CustomTableCell>
+                      <CustomTableCell numeric>Name</CustomTableCell>
+                      <CustomTableCell numeric>Price</CustomTableCell>
+                      <CustomTableCell numeric>Weight</CustomTableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {selectList.map((n, key) => {
+                      return (
+                        <TableRow className={classes.row} key={n.name}>
+                          <CustomTableCell numeric>{++i}</CustomTableCell>
+                          <CustomTableCell numeric>{n.name}</CustomTableCell>
+                          <CustomTableCell numeric>{n.price}</CustomTableCell>
+                          <CustomTableCell numeric>{n.weight}</CustomTableCell>
+                        </TableRow>
+                      )
+                    })}
+                  </TableBody>
+                </Table>
               </Paper>
-            </Grid>
-            <Grid item xs={12} sm container>
-              <Grid item xs container direction='column'>
-                <Grid item xs>
-                  <Paper className={classNames(classes.paper)}>
-                    {!this.props.loader ? (
-                      <MachinerySlider
-                        info={this.props.allCompanyData.allMachineryData}
-                        allDataMac={this.props.allCompanyData.allMachineryData}
-                        typeSelect='Machinery'
-                      />
-                    ) : (
-                      <CircularProgress className={classes.progress} />
-                    )}
-                  </Paper>
-                  <Paper className={classNames(classes.paper)}>
-                    {!this.props.loader ? (
-                      <MachinerySlider
-                        info={this.props.allCompanyData.allFertilizerData}
-                        allDataFer={this.props.allCompanyData.allFertilizerData}
-                        typeSelect='Fertilizer'
-                      />
-                    ) : (
-                      <CircularProgress className={classes.progress} />
-                    )}
-                  </Paper>
-                  <Paper className={classNames(classes.paper)}>
-                    {!this.props.loader ? (
-                      <MachinerySlider
-                        info={this.props.allCompanyData.allPesticideData}
-                        allDataPes={this.props.allCompanyData.allPesticideData}
-                        typeSelect='Pesticide'
-                      />
-                    ) : (
-                      <CircularProgress className={classes.progress} />
-                    )}
-                  </Paper>
-                </Grid>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm container>
+            <Grid item xs container direction='column'>
+              <Grid item xs>
+                <Paper className={classNames(classes.paper)}>
+                  {!this.props.loader ? (
+                    <MachinerySlider
+                      info={this.props.allCompanyData.allMachineryData}
+                      allDataMac={this.props.allCompanyData.allMachineryData}
+                      typeSelect='Machinery'
+                    />
+                  ) : (
+                    <CircularProgress className={classes.progress} />
+                  )}
+                </Paper>
+                <Paper className={classNames(classes.paper)}>
+                  {!this.props.loader ? (
+                    <MachinerySlider
+                      info={this.props.allCompanyData.allFertilizerData}
+                      allDataFer={this.props.allCompanyData.allFertilizerData}
+                      typeSelect='Fertilizer'
+                    />
+                  ) : (
+                    <CircularProgress className={classes.progress} />
+                  )}
+                </Paper>
+                <Paper className={classNames(classes.paper)}>
+                  {!this.props.loader ? (
+                    <MachinerySlider
+                      info={this.props.allCompanyData.allPesticideData}
+                      allDataPes={this.props.allCompanyData.allPesticideData}
+                      typeSelect='Pesticide'
+                    />
+                  ) : (
+                    <CircularProgress className={classes.progress} />
+                  )}
+                </Paper>
               </Grid>
             </Grid>
-
-            <Grid item xs={12}>
-              <Paper className={[classes.paper, classes.marginTopIncrease]}>
-                {!this.props.loader ? (
-                  <ProblemSlider
-                    info={
-                      this.props.farmerData.cropArray
-                        ? this.props.farmerData.cropArray.concat(
-                          this.props.farmerData.problemArray
-                        )
-                        : null
-                    }
-                  />
-                ) : (
-                  <CircularProgress className={classes.progress} />
-                )}
-              </Paper>
-            </Grid>
           </Grid>
+
+          <Grid item xs={12}>
+            <Paper className={[classes.paper, classes.marginTopIncrease]}>
+              {!this.props.loader ? (
+                <ProblemSlider
+                  info={
+                    this.props.farmerData.cropArray
+                      ? this.props.farmerData.cropArray.concat(
+                        this.props.farmerData.problemArray
+                      )
+                      : null
+                  }
+                />
+              ) : (
+                <CircularProgress className={classes.progress} />
+              )}
+            </Paper>
+          </Grid>
+        </Grid>
         {/* )} */}
       </div>
     )
@@ -320,7 +312,7 @@ function mapDispatchToProps (dispatch) {
     getPesticide: () => {
       dispatch(getAllPesticideAction())
     },
-    loaderOff:()=>{
+    loaderOff: () => {
       dispatch(loaderOffProcess())
     }
   }

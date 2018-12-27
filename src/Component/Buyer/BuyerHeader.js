@@ -11,10 +11,8 @@ import { withStyles } from '@material-ui/core/styles'
 import { browserHistory } from 'react-router'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-// import { changeNavbar } from '../../Container/store/action/action'
 import { signoutUser } from '../../Container/store/action/authAction'
 import NotificationDialog from '../../Container/NotificationDialog'
-// import MenuIcon from '@material-ui/icons/Menu'
 
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
@@ -30,11 +28,9 @@ class BuyerHeader extends Component {
     }
   }
   messengerApp = (passParam) => {
-    // this.props.changeRoute(passParam);
     browserHistory.push('/messenger')
   }
   onClickLogout = passParam => {
-    // this.props.changeRoute(passParam)
     this.props.signoutUserComp(passParam)
   }
 
@@ -96,15 +92,18 @@ class BuyerHeader extends Component {
 
 function mapDispatchToProp (dispatch) {
   return {
-    // changeRoute: data => {
-    //   dispatch(changeNavbar(data))
-    // },
+  
     signoutUserComp: (data) => {
       dispatch(signoutUser(data))
     }
   }
 }
+function mapStateToProps(state){
+  return{
+
+  }
+}
 export default compose(
   withStyles(styles, { name: 'BuyerHeader' }),
-  connect(null, mapDispatchToProp)
+  connect(mapStateToProps, mapDispatchToProp)
 )(BuyerHeader)

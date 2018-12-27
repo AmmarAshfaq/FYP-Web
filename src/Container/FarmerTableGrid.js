@@ -40,7 +40,6 @@ const CustomTableCell = withStyles(theme => ({
 
 const styles = theme => ({
   table: {
-    // minWidth: 700,
     overflowY: 'auto',
     width:'100%'
     
@@ -82,11 +81,9 @@ class TableGrid extends Component {
     this.props.selectValue(objSet)
   }
   handleDelete = (obj, index) => {
-    // console.log(obj)
     if (obj === 'Crops') {
       this.props.deleteSpecificData(index)
     } else if (obj === 'Problem') {
-      // this.props.d
       this.props.deleteProblemData(index)
     }
   }

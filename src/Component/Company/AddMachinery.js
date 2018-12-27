@@ -35,16 +35,14 @@ class AddMachinery extends Component {
     this.setState(obj)
   }
   updateFile = event => {
-    // let obj = {}
-    // obj[target] = event.target.files[0]
+  
     this.setState({
       image: event.target.files[0]
     })
   }
   handleSubmit = () => {
     const { name, price, description, image } = this.state
-    // console.log(this.state)
-    // console.log(this.state)
+    
     let obj = {
       name,
       price,
@@ -63,7 +61,6 @@ class AddMachinery extends Component {
     }
     console.log(obj)
     if (this.props.selectId && this.props.selectId !== undefined) {
-      // console.log(obj)
       this.props.updateItem(obj)
     } else {
       this.props.addItem(obj)
@@ -77,26 +74,7 @@ class AddMachinery extends Component {
     })
   }
   render () {
-    //          var obj = this.props.itemValue.reducer.selectDialog;
-    //          console.log(obj)
-    //       //    obj.props.typeSelect == null && obj.props.typeSelect == undefined ?
 
-    //       //  null
-    //       //    :obj= obj.props.typeSelect;
-    //       //    console.log(obj)
-    //         //  var objVal = {};
-    //         //  objVal["data"]=obj
-    //         //  console.log(objVal)
-    //         //  console.log(Object.keys(objVal))
-    // // var obj = {};
-    // // obj["selectValue"] = this.props.itemValue.reducer.selectDialog.props
-    // // console.log(obj.selectValue)
-
-    //     // var arr = [];
-    //     // arr.push();
-    //     // console.log(arr[0].props)
-    //     // var obj = {};
-    //     // obj
     return (
       <div>
         <Dialog
@@ -148,8 +126,7 @@ class AddMachinery extends Component {
             />
 
             <TextField
-              // onChange={this.handleChange}
-              // style={styles.textStyle}
+           
               type='file'
               label='Select File'
               onChange={this.updateFile}
@@ -172,9 +149,6 @@ class AddMachinery extends Component {
 }
 
 function mapStateToProps (state) {
-  // console.log(state.reducer.selectDialog)
-  // arr.push(state.reducer.selectDialog)
-  // console.log(arr[0].props)
   return {
     itemValue: state,
     companyInfo: state.authReducer.currentUserData.user,

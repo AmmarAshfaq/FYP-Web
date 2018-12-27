@@ -46,7 +46,6 @@ class DrawerOpenClose extends Component {
     else if( argument === 'Login'){
       browserHistory.push('/login')
     }
-    // this.props.itemAdd(argument)
     this.setState({ anchorEl: null })
   }
   render () {
@@ -100,27 +99,7 @@ class DrawerOpenClose extends Component {
                   >
                     LogIn
                   </Button>
-                {/* <Menu
-                style={{position:'absolute',top:40}}
-                  id='simple-menu'
-                  anchorEl={anchorEl}
-                  open={Boolean(anchorEl)}
-                  onClose={this.handleClose}
-                  >
-                  <MenuItem onClick={this.changeScreen.bind(this, 'Farmer')}>
-                      Farmer
-                    </MenuItem>
-                  <MenuItem onClick={this.changeScreen.bind(this, 'Company')}>
-                      Company
-                    </MenuItem>
-                  <MenuItem onClick={this.changeScreen.bind(this, 'Expert')}>
-                      Expert
-                    </MenuItem>
-                  <MenuItem onClick={this.changeScreen.bind(this, 'Buyer')}>
-                      Buyer
-                    </MenuItem>
-                    s{' '}
-                </Menu> */}
+              
               </div>
 
             </Toolbar>

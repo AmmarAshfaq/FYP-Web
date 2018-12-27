@@ -7,9 +7,10 @@ import Avatar from '@material-ui/core/Avatar'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-const options = ['Ammar', 'Junaid', 'Meraj', 'Ubaid', 'Shams', 'Aamir']
-
-const ITEM_HEIGHT = 48
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+const options = ['Ammar', 'Junaid', 'Meraj', 'Ubaid', 'Shams', 'Aamir'];
+const ITEM_HEIGHT = 48;
 
 class NotificationDialog extends React.Component {
   state = {
@@ -21,16 +22,14 @@ class NotificationDialog extends React.Component {
   }
 
   handleClose = () => {
-   
-
     this.setState({ anchorEl: null })
   }
-  handleSelect= ()=>{
+  handleSelect = () => {
     this.props.typeSelect === 'Crop'
-    ? browserHistory.push('/specificCrop')
-    : this.props.typeSelect === 'Problem'
-      ? browserHistory.push('/problemSolution')
-      : browserHistory.push('/notificationpanel')
+      ? browserHistory.push('/specificCrop')
+      : this.props.typeSelect === 'Problem'
+        ? browserHistory.push('/problemSolution')
+        : browserHistory.push('/notificationpanel')
   }
 
   render () {
@@ -61,14 +60,10 @@ class NotificationDialog extends React.Component {
               width: 220
             }
           }}
-          style={{ position: 'absolute', top: 45 }} // changing
+          style={{ position: 'absolute', top: 45 }}
         >
           {options.map(option => (
-            <MenuItem
-              key={option}
-              // selected={option === 'Pyxis'}
-              onClick={() => this.handleSelect()}
-            >
+            <MenuItem key={option} onClick={() => this.handleSelect()}>
               <Avatar
                 alt='Remy Sharp'
                 src={require('../images/Machinery/tractor.jpg')}
@@ -83,4 +78,4 @@ class NotificationDialog extends React.Component {
   }
 }
 
-export default NotificationDialog
+export default NotificationDialog;

@@ -248,7 +248,7 @@ class ProductData extends Component {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper className={classnames(classes.paper, classes.bottomMargin)}>
+            <Paper className={classnames(classes.paper)}>
               <Typography variant='headline'>
                 Product Specification:{' '}
               </Typography>
@@ -257,6 +257,37 @@ class ProductData extends Component {
                   {this.props.allSpecificData.fertilizerProduct.product
                     ? this.props.allSpecificData.fertilizerProduct.product
                     : null}
+                </li>
+              </ul>
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper className={classnames(classes.paper, classes.bottomMargin)}>
+              <Typography variant='headline'>Company Detail: </Typography>
+              <ul>
+                <li>
+                  {`Name: ${
+                    this.props.allSpecificData.fertilizerProduct.contactDetails
+                      .contactName
+                  }`}
+                </li>
+                <li>
+                  {`Email: ${
+                    this.props.allSpecificData.fertilizerProduct.contactDetails
+                      .contactEmail
+                  }`}
+                </li>
+                <li>
+                  {`Number: ${
+                    this.props.allSpecificData.fertilizerProduct.contactDetails
+                      .contactNumber
+                  }`}
+                </li>
+                <li>
+                  {`Address: ${
+                    this.props.allSpecificData.fertilizerProduct.contactDetails
+                      .address
+                  }`}
                 </li>
               </ul>
             </Paper>

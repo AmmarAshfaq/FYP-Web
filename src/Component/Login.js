@@ -27,7 +27,6 @@ const style = {
     width: '100%',
     marginTop: '10px',
     marginBottom: '10px',
-    // backgroundColor:'#fff',
     color: '#fff',
     backgroundColor: '#000'
   },
@@ -48,7 +47,6 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: ''
-      // userType:'Farmer'
     }
   }
 

@@ -15,17 +15,7 @@ export function openModel (itemReceive) {
     dispatch({
       type: ActionTypes.OPEN,
       itemSelect: itemReceive,
-      // specificId:id
     })
   }
 }
-// export function changeNavbar (componentChange) {
-//   console.log(componentChange+ 'jasjkajkajdskjakdjakdkjdkajkdja')
-//   return dispatch => {
-//     dispatch({
-//       type: ActionTypes.CHANGE,
-//       componentList: componentChange
-//     })
-//   }
-// }
 

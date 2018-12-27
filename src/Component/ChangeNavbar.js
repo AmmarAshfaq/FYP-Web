@@ -9,7 +9,6 @@ import AdminHeader from './Admin/AdminHeader'
  class ChangeNavbar extends Component{
 
   render(){
-  // let token = 
   return (
     <Fragment>
       {localStorage.getItem('token')  ?
@@ -30,7 +29,6 @@ import AdminHeader from './Admin/AdminHeader'
         <DrawerOpenClose />
       ) : null)
       }
-      {/* {props.componentValue === 'Main' ? <Footer /> : null} */}
     </Fragment>
   )
 }

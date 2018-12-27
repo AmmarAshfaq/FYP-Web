@@ -18,7 +18,6 @@ const styles = theme => ({
 class AllUserMessage extends Component {
 
     getAllMessage = (obj)=>{
-// console.log(obj)
 this.props.getSpecific(obj)
     }
   render () {

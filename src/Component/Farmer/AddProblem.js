@@ -49,7 +49,6 @@ class AddProblem extends Component {
   }
   handleClose = () => {
     const { image, audio, problemName, problemDescription } = this.state
-    // console.log(this.state)
     const objData = {
       image,
       audio,
@@ -178,36 +177,5 @@ export default compose(
     mapDispatchToProps
   )
 )(AddProblem)
-{
-  /* <input
-              accept='image/*'
-              className={classes.input}
-              id='contained-button-file'
-              multiple
-              type='file'
-              // placeholder="choose image"
-            />
-            <label htmlFor='contained-button-file'>
-              <Button variant='contained' component='span'>
-                <PhotoCamera />
-                Add Image
-              </Button>
 
-            </label>
-
-            <input
-              accept='image/*'
-              className={classes.input}
-              id='contained-button-file'
-              multiple
-              type='file'
-              // placeholder="choose image"
-            />
-            <label htmlFor='contained-button-file' style={{ float: 'right' }}>
-              <Button variant='contained' component='span'>
-                <Audio />
-                Add Audio
-              </Button>
-
-            </label> */
-}
+  

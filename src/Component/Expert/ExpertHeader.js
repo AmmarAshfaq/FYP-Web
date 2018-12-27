@@ -11,7 +11,6 @@ import { withStyles } from '@material-ui/core/styles'
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-// import {changeNavbar} from '../../Container/store/action/action'
 import { signoutUser } from '../../Container/store/action/authAction'
 import NotificationDialog from '../../Container/NotificationDialog'
 
@@ -37,14 +36,11 @@ class ExpertHeader extends Component {
   }
 
   handleLogOut = passParam => {
-    // browserHistory.push('/login')
 
-    // this.props.changeRoute(passParam)
     this.props.signoutUserComp(passParam)
   }
 
   messengerApp = passParam => {
-    // this.props.changeRoute(passParam)
     browserHistory.push('/messenger')
   }
   render () {

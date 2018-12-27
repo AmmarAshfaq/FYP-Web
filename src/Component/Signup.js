@@ -29,7 +29,6 @@ const styles = {
     width: '100%',
     marginTop: '10px',
     marginBottom: '10px',
-    // backgroundColor:'#fff',
     color: '#fff',
     backgroundColor: '#000'
   },

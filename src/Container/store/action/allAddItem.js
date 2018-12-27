@@ -3,14 +3,7 @@ import {browserHistory} from 'react-router'
 
 const ROOT_URL = 'http://localhost:8080'
 let getToken
-// function requestProcess(){
-//   return dispatch =>{
-//     dispatch({
-//       type:ActionTypes.LOADER_PROCESS,
 
-//     })
-//   }
-// }
 export function loaderProcessDone(){
   return dispatch =>{
     dispatch({
@@ -55,7 +48,6 @@ export function getSpecificCrop (obj) {
       body: JSON.stringify(obj)
     })
     const getData = await result.json()
-    // console.log(getData)
     dispatch({
       type: ActionTypes.LOADER_PROCESS
     })
@@ -74,7 +66,6 @@ function getCropByID (getData) {
 
 export function getSpecificProblem (obj) {
   getToken = localStorage.getItem('token')
-  // console.log(obj)
   let objData = {
     _id: obj
   }
@@ -89,7 +80,6 @@ export function getSpecificProblem (obj) {
       body: JSON.stringify(objData)
     })
     const getData = await result.json()
-    // console.log(getData.problemDetail)
     dispatch({
       type: ActionTypes.LOADER_PROCESS
     })
@@ -97,7 +87,6 @@ export function getSpecificProblem (obj) {
   }
 }
 export function getAllProblemAction () {
-  // console.log(obj)
   getToken = localStorage.getItem('token')
   return async dispatch => {
     const result = await fetch(`${ROOT_URL}/problem/all`, {
@@ -108,7 +97,6 @@ export function getAllProblemAction () {
       }
     })
     const getData = await result.json()
-    // console.log(getData)
     dispatch(getProblem(getData.problems))
   }
 }

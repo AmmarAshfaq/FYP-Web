@@ -21,7 +21,6 @@ import AddFertilizer from './AddFertilizer'
 import { signoutUser } from '../../Container/store/action/authAction'
 import NotificationDialog from '../../Container/NotificationDialog'
 
-// import MenuIcon from '@material-ui/icons/Menu'
 
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
@@ -52,11 +51,9 @@ class CompanyHeader extends Component {
   }
 
   handleLogOut = passParam => {
-    // this.props.changeRoute(passParam)
     this.props.signoutUserComp(passParam)
   }
   messengerApp = passParam => {
-    // this.props.changeRoute(passParam);
     if (passParam === 'Messenger') {
       browserHistory.push('/messenger');
     } else {
@@ -87,7 +84,7 @@ class CompanyHeader extends Component {
               </Typography>
             </div>
             <div>
-              <Button //   onClick={this.changeScreen.bind(this, 'Main')}
+              <Button
                 color='inherit'
                 onClick={this.openHome.bind(this)}
                 
@@ -124,13 +121,11 @@ class CompanyHeader extends Component {
                 style={{ position: 'absolute', top: 40 }}
               >
                 <MenuItem
-                  //   onClick={this.changeScreen.bind(this, 'Farmer')}
                   onClick={this.handleClickOpen.bind(this, 'Fertilizer')}
                 >
                   Add Fertilizer
                 </MenuItem>
                 <MenuItem
-                  //   onClick={this.changeScreen.bind(this, 'Company')}
                   onClick={this.handleClickOpen.bind(this, 'Machinery')}
                 >
                   Add Machinery
@@ -164,9 +159,7 @@ function mapDispatchToProp (dispatch) {
     selectValue: data => {
       dispatch(openModel(data))
     },
-    // changeRoute: passParam => {
-    //   dispatch(changeNavbar(passParam))
-    // },
+   
     signoutUserComp: data => {
       dispatch(signoutUser(data))
     }

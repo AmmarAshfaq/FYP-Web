@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Paper, Tabs, Button } from '@material-ui/core'
 import { connect } from 'react-redux'
-// import {changeNavbar} from './store/action/action'
 class Footer extends Component {
   render () {
     return (

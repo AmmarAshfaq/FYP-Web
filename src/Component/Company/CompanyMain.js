@@ -26,7 +26,7 @@ class CompanyMain extends Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
+        <Grid container spacing={0}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               {this.props.companyAddList.machineryArray ? (
