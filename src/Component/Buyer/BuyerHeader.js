@@ -24,23 +24,46 @@ class BuyerHeader extends Component {
     super()
     this.state = {
       toggle: 'Main',
-      achorEl: null
+      achorEl: null,
+      arrShow:[]
     }
   }
-  messengerApp = (passParam) => {
+  messengerApp = passParam => {
     browserHistory.push('/messenger')
   }
   onClickLogout = passParam => {
     this.props.signoutUserComp(passParam)
   }
-
+// componentDidMount(){
+//   // var objAdd = this.props.notificationAdd;
+//   // console.log(objAdd)
+//   // this.setState({
+//   //   arrShow: this.state.arrShow.push(objAdd)
+//   // })
+//   this.setState((state,props)=>({
+// arrShow: state.arrShow.push(props.notificationAdd)
+//   }))
+// }
   render () {
     const { classes } = this.props
     const { anchorEl } = this.state
+    // var arr = [];
+    // var objAdd = this.props.notificationAdd;
+    // if(objAdd !== undefined){
+    // arr.push(objAdd)
+    // }else{
+
+    //   console.log("not add")
+    // }
+    // console.log(arr)
+    // console.log(this.props.notificationAdd)
+    // console.log(this.state.arrShow)
     return (
       <Fragment>
-        <AppBar position='fixed' style={{ flexGrow: 1, backgroundColor: '#00806d' }}>
-
+        <AppBar
+          position='fixed'
+          style={{ flexGrow: 1, backgroundColor: '#00806d' }}
+        >
           <Toolbar>
             <Avatar
               alt='Logo'
@@ -51,24 +74,26 @@ class BuyerHeader extends Component {
               <Typography variant='title' color='inherit'>
                 Buyer
               </Typography>
-
             </div>
             <div>
-              <Button color='inherit'
-              onClick={()=> browserHistory.push('/buyermain')}
+              <Button
+                color='inherit'
+                onClick={() => browserHistory.push('/buyermain')}
               >
                 Home
               </Button>
               <Badge color='secondary' badgeContent={4}>
-                <Button color='inherit' className={classes.buttonStyle}
-                 onClick={this.messengerApp.bind(this,'Messenger')}
+                <Button
+                  color='inherit'
+                  className={classes.buttonStyle}
+                  onClick={this.messengerApp.bind(this, 'Messenger')}
                 >
                   Messege
                 </Button>
               </Badge>
 
               <Badge color='secondary' badgeContent={6}>
-                <NotificationDialog typeSelect="Crop"/>
+                <NotificationDialog typeSelect='Crop' />
               </Badge>
               <Button
                 aria-owns={anchorEl ? 'simple-menu' : null}
@@ -78,13 +103,9 @@ class BuyerHeader extends Component {
               >
                 Log Out
               </Button>
-
             </div>
-
           </Toolbar>
-
         </AppBar>
-
       </Fragment>
     )
   }
@@ -92,18 +113,20 @@ class BuyerHeader extends Component {
 
 function mapDispatchToProp (dispatch) {
   return {
-  
-    signoutUserComp: (data) => {
+    signoutUserComp: data => {
       dispatch(signoutUser(data))
     }
   }
 }
-function mapStateToProps(state){
-  return{
-
+function mapStateToProps (state) {
+  return {
+    notificationAdd: state.farmerReducer.notificationCrop
   }
 }
 export default compose(
   withStyles(styles, { name: 'BuyerHeader' }),
-  connect(mapStateToProps, mapDispatchToProp)
+  connect(
+    mapStateToProps,
+    mapDispatchToProp
+  )
 )(BuyerHeader)

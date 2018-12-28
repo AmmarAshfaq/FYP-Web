@@ -23,11 +23,17 @@ export function addCropAction (obj) {
       body: data
     })
     const getData = await result.json()
-    // console.log(getData)
+    console.log(getData)
+    dispatch(addToBuyerNotification(getData))
     dispatch(addCropData(getData))
   }
 }
-
+function addToBuyerNotification(obj){
+  return{
+    type:ActionTypes.NOTIFICATION_CROP,
+    payload:obj
+  }
+}
 export function addProblemAction (obj) {
   getToken = localStorage.getItem('token')
 

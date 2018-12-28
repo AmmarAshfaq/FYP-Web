@@ -57,7 +57,7 @@ class ProblemSlider extends React.Component {
       autoplay: true,
       autoplaySpeed: 2000
     }
-console.log(this.props.info)
+// console.log(this.props.info)
     return (
       <Slider {...settings}>
         {this.props.info.map((data, ind) => (

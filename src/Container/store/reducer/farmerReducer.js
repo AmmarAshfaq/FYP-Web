@@ -2,7 +2,8 @@ import ActionTypes from '../constant/farmerConstant'
 
 const INITIAL_STATE = {
   cropArray: [],
-  problemArray: []
+  problemArray: [],
+  notificationCrop:{}
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -45,6 +46,12 @@ export default (state = INITIAL_STATE, action) => {
             return itemVal._id !== action.payload._id
           })
         }
+        break
+        case ActionTypes.NOTIFICATION_CROP:
+          return {
+            ...state,
+            notificationCrop:action.payload
+          }
     default:
       return state
   }
