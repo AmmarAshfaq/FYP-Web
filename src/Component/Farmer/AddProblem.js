@@ -8,7 +8,12 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { openModel } from '../../Container/store/action/action'
-import { addProblemAction,updateProblemAction } from '../../Container/store/action/farmerAction'
+import Alert from 'react-s-alert'
+
+import {
+  addProblemAction,
+  updateProblemAction
+} from '../../Container/store/action/farmerAction'
 import { withStyles } from '@material-ui/core/styles'
 import { compose } from 'redux'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
@@ -48,22 +53,39 @@ class AddProblem extends Component {
     this.setState(obj)
   }
   handleClose = () => {
+    this.props.itemValueFunc(false)
+  }
+  showAlertMessage = message => {
+    Alert.error(message || 'Something is wrong', {
+      position: 'bottom-right',
+      effect: 'slide',
+      timeout: 'none'
+    })
+  }
+  handleSubmit = () => {
     const { image, audio, problemName, problemDescription } = this.state
-    const objData = {
-      image,
-      audio,
-      problemName,
-      problemDescription,
-      farmerID: this.props.farmerID,
-      selectId:this.props.selectId
+    if (
+      image !== '' &&
+      problemName !== '' &&
+      audio !== '' &&
+      problemDescription !== ''
+    ) {
+      const objData = {
+        image,
+        audio,
+        problemName,
+        problemDescription,
+        farmerID: this.props.farmerID,
+        selectId: this.props.selectId
+      }
+      if (this.props.selectId && this.props.selectId !== undefined) {
+        this.props.updateProblemData(objData)
+      } else {
+        this.props.addProblemDetail(objData)
+      }
+    } else {
+      this.showAlertMessage('Please Insert Some Data!')
     }
-    if(this.props.selectId && this.props.selectId !== undefined){
-
-      this.props.updateProblemData(objData)
-    }else{
-    this.props.addProblemDetail(objData)
-    }
-
 
     this.props.itemValueFunc(false)
     this.setState({
@@ -139,7 +161,7 @@ class AddProblem extends Component {
             <Button onClick={this.handleClose} color='primary'>
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color='primary'>
+            <Button onClick={this.handleSubmit} color='primary'>
               Submit
             </Button>
           </DialogActions>
@@ -153,7 +175,7 @@ function mapStateToProps (state) {
   return {
     itemValue: state,
     farmerID: state.authReducer.currentUserData.user.id,
-    selectId:state.reducer.selectListId
+    selectId: state.reducer.selectListId
   }
 }
 function mapDispatchToProps (dispatch) {
@@ -164,7 +186,7 @@ function mapDispatchToProps (dispatch) {
     addProblemDetail: data => {
       dispatch(addProblemAction(data))
     },
-    updateProblemData: data =>{
+    updateProblemData: data => {
       dispatch(updateProblemAction(data))
     }
   }
@@ -177,5 +199,3 @@ export default compose(
     mapDispatchToProps
   )
 )(AddProblem)
-
-  

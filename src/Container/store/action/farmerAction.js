@@ -1,7 +1,7 @@
 import ActionTypes from '../constant/farmerConstant'
 
 const ROOT_URL = 'http://localhost:8080'
-let getToken;
+let getToken
 export function addCropAction (obj) {
   getToken = localStorage.getItem('token')
   let data = new FormData()
@@ -14,6 +14,7 @@ export function addCropAction (obj) {
   data.append('farmerId', obj.farmerId)
   console.log(data)
   return async dispatch => {
+    dispatch(processProgress())
     const result = await fetch(`${ROOT_URL}/crop/add`, {
       method: 'POST',
       headers: {
@@ -23,21 +24,68 @@ export function addCropAction (obj) {
       body: data
     })
     const getData = await result.json()
-    console.log(getData)
-    dispatch(addToBuyerNotification(getData))
-    dispatch(addCropData(getData))
+    // console.log(getData)
+    // dispatch(addToBuyerNotification(getData))
+    if (getData.error) {
+      console.log(getData.error)
+      dispatch(processDone())
+    } else {
+      console.log(getData)
+      dispatch(addCropData(getData))
+      dispatch(processDone())
+    }
+    // notificationAdd(getData)
   }
 }
-function addToBuyerNotification(obj){
-  return{
-    type:ActionTypes.NOTIFICATION_CROP,
-    payload:obj
+/// ///////////////////// Testing //////////////////
+
+// function notificationAdd (obj) {
+//   // getToken = localStorage.getItem('token')
+//   console.log(obj)
+//   const objValue = {
+//     notification:{
+//       title:obj.name,
+//       body:obj.price,
+//       icon:obj.image_url
+//     },
+//     to:"dve_HSqLKP4:APA91bEbqluJTQQuo_byyoqeQB4eymnKcYb9fguWi3OeoVZXu2yXdamPJXWFCyObh_Rf8woxYJ50DMoNvpB_C6cXP6X5KwuRgJmPieZg5T582-qMzTT5O02D6nQvZQf04MzUzFgTaNxX"
+//   }
+
+//   return async dispatch => {
+//     const result = await fetch('https://fcm.googleapis.com/fcm/send', {
+//       method: 'POST',
+//       headers: {
+//         Authorization:
+//           'key=AAAA5lj0eGk:APA91bF-zRhEbIc7WttkmRtdN4ExH60PJoIUZUpxt0Rrrsx4d_cnyrlXutsjfdF5DXRwAwQwflmTTHsOgrf7qrt6AClzW0CtOlGeo9IA_joH-YdDobgT46kj1wOunujkljyRKQDqMJDa',
+//         'Content-Type': 'application/json; charset=utf-8'
+//       },
+//       body: JSON.stringify(objValue)
+//     })
+//     // const getData
+//   }
+// }
+
+/// ///////////////////////////////////////////////////////////////////////////////
+function processProgress () {
+  return {
+    type: ActionTypes.PROCESS_PROGRESS
+  }
+}
+function processDone () {
+  return {
+    type: ActionTypes.PROCESS_DONE
+  }
+}
+function addToBuyerNotification (obj) {
+  return {
+    type: ActionTypes.NOTIFICATION_CROP,
+    payload: obj
   }
 }
 export function addProblemAction (obj) {
   getToken = localStorage.getItem('token')
 
-  console.log(getToken, 'asddddddddddsadss')
+  // console.log(getToken, 'asddddddddddsadss')
 
   let data = new FormData()
   data.append('image_url', obj.image)
@@ -47,6 +95,8 @@ export function addProblemAction (obj) {
   data.append('name', obj.problemName)
   console.log(data)
   return async dispatch => {
+    dispatch(processProgress())
+
     const result = await fetch(`${ROOT_URL}/problem/add`, {
       method: 'POST',
       headers: {
@@ -57,14 +107,34 @@ export function addProblemAction (obj) {
 
     const getData = await result.json()
     // console.log(getData)
-    dispatch(addProblemData(getData))
+    if (getData.error) {
+      console.log(getData.error.message.error)
+      dispatch(errorMessage(getData.error.message))
+      dispatch(processDone())
+    } else {
+      dispatch(addProblemData(getData))
+      dispatch(processDone())
+      dispatch(errorEmpty())
+    }
   }
 }
 
+function errorMessage (obj) {
+  return {
+    type: ActionTypes.ERROR_MESSAGE,
+    payload: obj
+  }
+}
+function errorEmpty () {
+  return {
+    type: ActionTypes.ERROR_NULL,
+    // payload: obj
+  }
+}
 export function getCropAddData (obj) {
   getToken = localStorage.getItem('token')
   // console.log(token,"Croppppppppppppppppppppppppppppppppppppppp")
-  console.log('Get Token farmer Crop', getToken)
+  // console.log('Get Token farmer Crop', getToken)
   const objData = {
     farmerId: obj
   }
@@ -78,13 +148,13 @@ export function getCropAddData (obj) {
       body: JSON.stringify(objData)
     })
     const getData = await result.json()
-    console.log(getData)
+    // console.log(getData)
     dispatch(getCropData(getData.cropData))
   }
 }
 export function getProblemAddData (obj) {
   getToken = localStorage.getItem('token')
-  console.log('Get Token farmer Problem', getToken)
+  // console.log('Get Token farmer Problem', getToken)
 
   const objData = {
     id: obj
@@ -103,7 +173,7 @@ export function getProblemAddData (obj) {
     })
 
     const getData = await result.json()
-    console.log(getData.problems)
+    // console.log(getData.problems)
 
     dispatch(getProblemData(getData.problems))
   }
@@ -144,20 +214,20 @@ export function updateProblemAction (obj) {
   data.append('description', obj.problemDescription)
   data.append('name', obj.problemName)
   data.append('problem_id', obj.selectId)
-  // for(var pair of data.entries()){
-  //     console.log(pair[0]+','+pair[1]);
-  // }
+  for (var pair of data.entries()) {
+    console.log(pair[0] + ',' + pair[1])
+  }
   return async dispatch => {
-    const result = await fetch(`${ROOT_URL}/problem/update`, {
+    const result = await fetch(`${ROOT_URL}/problem/modify`, {
       method: 'PUT',
       headers: {
         authorization: getToken
-        // 'Content-Type': 'application/json; charset=utf-8'
       },
       body: data
     })
     const getData = await result.json()
     console.log(getData)
+    dispatch(updateProblem(getData))
   }
 }
 export function updateCropAction (obj) {
@@ -174,9 +244,9 @@ export function updateCropAction (obj) {
   data.append('farmerId', obj.farmerId)
   data.append('crop_id', obj.selectId)
   console.log(data)
-     for(var pair of data.entries()){
-        console.log(pair[0]+','+pair[1]);
-    }
+  for (var pair of data.entries()) {
+    console.log(pair[0] + ',' + pair[1])
+  }
   return async dispatch => {
     const result = await fetch(`${ROOT_URL}/crop/update`, {
       method: 'PUT',
@@ -187,9 +257,22 @@ export function updateCropAction (obj) {
     })
     const getData = await result.json()
     console.log(getData)
+    dispatch(updateCrop(getData))
   }
 }
 
+function updateCrop (data) {
+  return {
+    type: ActionTypes.UPDATE_CROP,
+    payload: data
+  }
+}
+function updateProblem (data) {
+  return {
+    type: ActionTypes.UPDATE_PROBLEM,
+    payload: data
+  }
+}
 export function deleteCropAction (obj) {
   // console.log(obj)
   getToken = localStorage.getItem('token')

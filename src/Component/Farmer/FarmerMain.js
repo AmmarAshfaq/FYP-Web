@@ -18,6 +18,7 @@ import NativeSelect from '@material-ui/core/NativeSelect'
 import Weather from '../../Container/Weather'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { loaderOffProcess } from '../../Container/store/action/authAction'
+import Loader from 'react-loader-spinner'
 import {
   getAllFertilizerAction,
   getAllPesticideAction,
@@ -106,7 +107,8 @@ const styles = theme => ({
     margin: theme.spacing.unit * 2
   },
   marginTopIncrease: {
-    marginTop: 130
+    marginTop: 130,
+    textAlign: 'center'
   }
 })
 class FarmerMain extends Component {
@@ -117,14 +119,12 @@ class FarmerMain extends Component {
     anchorEl: null
   }
   componentWillMount () {
-    
     this.props.getAddedCrop(this.props.farmerId)
     this.props.getAddedProblem(this.props.farmerId)
     this.props.requestWeather()
     this.props.getFertilizer()
     this.props.getPesticide()
     this.props.getMachinery()
-    
   }
   componentDidMount () {
     setTimeout(() => {
@@ -146,13 +146,13 @@ class FarmerMain extends Component {
     })
   }
 
+ 
   render () {
     const { classes } = this.props
     const { selectList, city, search, anchorEl } = this.state
     let i = 0
     return (
       <div className={classes.root}>
-      
         <Grid container spacing={24}>
           <Weather data={this.props.weatherDetail} />
 
@@ -224,17 +224,21 @@ class FarmerMain extends Component {
             <Grid item xs container direction='column'>
               <Grid item xs>
                 <Paper className={classNames(classes.paper)}>
-                  {!this.props.loader ? (
-                    <MachinerySlider
-                      info={this.props.allCompanyData.allMachineryData}
-                      allDataMac={this.props.allCompanyData.allMachineryData}
-                      typeSelect='Machinery'
-                    />
-                  ) : (
-                    <CircularProgress className={classes.progress} />
-                  )}
+                  <div style={{ textAlign: 'center' }}>
+                    {!this.props.loader ? (
+                      <MachinerySlider
+                        info={this.props.allCompanyData.allMachineryData}
+                        allDataMac={this.props.allCompanyData.allMachineryData}
+                        typeSelect='Machinery'
+                      />
+                    ) : (
+                      <Loader type='Oval' color='#000' height={50} width={50} />
+                    )}
+                  </div>
                 </Paper>
                 <Paper className={classNames(classes.paper)}>
+                <div style={{ textAlign: 'center' }}>
+
                   {!this.props.loader ? (
                     <MachinerySlider
                       info={this.props.allCompanyData.allFertilizerData}
@@ -242,10 +246,13 @@ class FarmerMain extends Component {
                       typeSelect='Fertilizer'
                     />
                   ) : (
-                    <CircularProgress className={classes.progress} />
+                    <Loader type='Oval' color='#000' height={50} width={50} />
                   )}
+                  </div>
                 </Paper>
                 <Paper className={classNames(classes.paper)}>
+                <div style={{ textAlign: 'center' }}>
+
                   {!this.props.loader ? (
                     <MachinerySlider
                       info={this.props.allCompanyData.allPesticideData}
@@ -253,8 +260,9 @@ class FarmerMain extends Component {
                       typeSelect='Pesticide'
                     />
                   ) : (
-                    <CircularProgress className={classes.progress} />
+                    <Loader type='Oval' color='#000' height={50} width={50} />
                   )}
+                  </div>
                 </Paper>
               </Grid>
             </Grid>
@@ -262,6 +270,8 @@ class FarmerMain extends Component {
 
           <Grid item xs={12}>
             <Paper className={[classes.paper, classes.marginTopIncrease]}>
+            <div style={{ textAlign: 'center' }}>
+
               {!this.props.loader ? (
                 <ProblemSlider
                   info={
@@ -273,8 +283,9 @@ class FarmerMain extends Component {
                   }
                 />
               ) : (
-                <CircularProgress className={classes.progress} />
+                <Loader type='Oval' color='#000' height={50} width={50} />
               )}
+              </div>
             </Paper>
           </Grid>
         </Grid>

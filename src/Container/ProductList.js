@@ -173,6 +173,26 @@ class ProductList extends Component {
     }
     this.props.selectValue(objSet)
   }
+  changeState = event => {
+    // console.log(event.target.value)
+
+    this.setState({
+      selectValue: this.props.location.state.display.filter(item =>
+        item.machineName
+          ? item.machineName
+            .toLowerCase()
+            .indexOf(event.target.value.toLowerCase()) > -1
+          : item.name
+            ? item.name.toLowerCase().indexOf(event.target.value.toLowerCase()) >
+            -1
+            : item.pesticideName
+              ? item.pesticideName
+                .toLowerCase()
+                .indexOf(event.target.value.toLowerCase()) > -1
+              : null
+      )
+    })
+  }
   render () {
     const { classes } = this.props
     const settings = {
@@ -191,37 +211,37 @@ class ProductList extends Component {
             <Grid item xs={4}>
               <Paper className={classes.paper}>
                 <div className={classes.textField}>
-                  {this.props.location.state.typeCheck === 'Crop' ? (
+                  {/* {this.props.location.state.typeCheck === 'Crop' ? (
                     <FormControl style={{ marginRight: 5, width: '20%' }}>
                       <NativeSelect name='age'>
-                        {/* // onChange={this.handleChange('age')}  */}
-                        {/* // value={this.state.age} */}
-                        {/* // className={classes.selectEmpty} */}
+                         onChange={this.handleChange('age')}
+                         value={this.state.age}
+                         className={classes.selectEmpty}
                         <option value=''>All</option>
                         <option value={10}>Vegetables</option>
                         <option value={20}>Fruit</option>
-                        {/* <option value={30}>Pesticide</option> */}
+                        <option value={30}>Pesticide</option>
                       </NativeSelect>
                     </FormControl>
                   ) : (
                     <FormControl style={{ marginRight: 5, width: '20%' }}>
                       <NativeSelect name='age'>
-                        {/* // onChange={this.handleChange('age')}  */}
-                        {/* // value={this.state.age} */}
-                        {/* // className={classes.selectEmpty} */}
+                         onChange={this.handleChange('age')}
+                       value={this.state.age}
+                        className={classes.selectEmpty}
                         <option value=''>All</option>
                         <option value={10}>Machinery</option>
                         <option value={20}>Fertilizer</option>
                         <option value={30}>Pesticide</option>
                       </NativeSelect>
                     </FormControl>
-                  )}
+                  )} */}
                   {this.props.location.state.typeCheck === 'Crop' ? (
                     <TextField
                       id='name'
                       placeholder='Search Product'
                       //   value={this.state.name}
-                      //   onChange={this.handleChange('name')}
+                      onChange={event => this.changeState(event)}
                       //   margin='normal'
                       style={{ marginRight: 15, width: '50%' }}
                     />
@@ -230,6 +250,7 @@ class ProductList extends Component {
                       id='name'
                       placeholder='Search Product'
                       //   value={this.state.name}
+                      onChange={event => this.changeState(event)}
                       //   onChange={this.handleChange('name')}
                       //   margin='normal'
                       style={{ marginRight: 15, width: '50%' }}
@@ -252,18 +273,27 @@ class ProductList extends Component {
               {this.props.location.state.typeCheck === 'Crop' ? (
                 <Slider {...settings}>
                   {//   console.log(allData)
-                    allData.map((item, ind) => {
+
+                    this.props.location.state.display.map((item, ind) => {
                       return (
-                        <img alt='loading ...' src={item.img} height='350px' />
+                        <img
+                          alt='loading ...'
+                          src={item.image_url}
+                          height='350px'
+                        />
                       )
                     })}
                 </Slider>
               ) : (
                 <Slider {...settings}>
                   {//   console.log(allData)
-                    allData.map((item, ind) => {
+                    this.props.location.state.display.map((item, ind) => {
                       return (
-                        <img alt='loading ...' src={item.img} height='350px' />
+                        <img
+                          alt='loading ...'
+                          src={item.image_url}
+                          height='350px'
+                        />
                       )
                     })}
                 </Slider>

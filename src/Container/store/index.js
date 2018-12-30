@@ -1,5 +1,6 @@
 import rootReducer from './reducer'
 import { createStore, applyMiddleware } from 'redux'
+
 // import { persistReducer, persistStore } from 'redux-persist'
 // import storage from 'redux-persist/lib/storage'
 import Storage from './localStore'

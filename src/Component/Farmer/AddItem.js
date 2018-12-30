@@ -8,34 +8,59 @@ import {
   getCropAddData,
   getProblemAddData
 } from '../../Container/store/action/farmerAction'
+
 import { connect } from 'react-redux'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 import FarmerProblemData from '../AllData/FarmerProblemData'
 import FarmerCropData from '../AllData/FarmerCropData'
 class AddedItem extends Component {
+  constructor () {
+    super()
+    // this.state = {
+    //   change: false
+    // }
+  }
   componentWillMount () {
-   
     this.props.getAddedCrop(this.props.farmerId)
     this.props.getAddedProblem(this.props.farmerId)
   }
+  // shouldComponentUpdate (nextProps) {
+  //   // if(nextProps.cropList.problemArray.length > )
+  //   console.log(nextProps.cropList.problemArray.length)
+  //   console.log(this.props.cropList.problemArray.length)
+  //   return nextProps.cropList.problemArray.length !== this.props.cropList.problemArray.length
+  // }
 
+  // componentWillReceiveProps (nextProps) {
+  //   // console.log(nextProps.cropList.problemArray.length )
+  //   // console.log(this.props.cropList.problemArray.length)
+  //   if(nextProps.cropList.problemArray.length >this.props.cropList.problemArray.length){
+  //     this.props.getAddedProblem(this.props.farmerId)
+  //   }
+  //   // this.setState({
+  //   //   change: nextProps.cropList.problemArray.length > this.props.cropList.problemArray.length || nextProps.cropList.cropArray.length >this.props.cropList.cropArray.length
+  //   // })
+  // }
   render () {
-
+    // console.log(this.props.cropList)
+    // console.log(this.state.change)
+    // console.log('render called')
     const { classes } = this.props
     return (
-      <div style={{ marginTop: 100 ,flexGrow:1 }}>
+      <div style={{ marginTop: 100, flexGrow: 1 }}>
         <Grid container spacing={0}>
-          <Grid item xs={12} >
+          <Grid item xs={12}>
             <Paper className={classes.paper}>
-              {this.props.cropList.problemArray ? (
-                  <TableGrid
-                    data={this.props.cropList.problemArray}
-                    typeSelect='Problem'
-                  />
+              {
+                
+                this.props.cropList.problemArray ? (
+                <TableGrid
+                  data={this.props.cropList.problemArray}
+                  typeSelect='Problem'
+                />
               ) : (
                 <CircularProgress className={classes.progress} />
-               
               )}
             </Paper>
           </Grid>
@@ -48,8 +73,6 @@ class AddedItem extends Component {
                 />
               ) : (
                 <CircularProgress className={classes.progress} />
-                
-                
               )}
             </Paper>
           </Grid>
@@ -73,7 +96,7 @@ const styles = theme => ({
 function mapStateToProps (state) {
   return {
     farmerId: state.authReducer.currentUserData.user.id,
-    cropList: state.farmerReducer
+    cropList: state.farmerReducer,
   }
 }
 function mapDispatchToProps (dispatch) {

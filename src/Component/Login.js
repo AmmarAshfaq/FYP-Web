@@ -2,9 +2,15 @@ import React from 'react'
 import { TextField, Button } from '@material-ui/core'
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
-import { signinUser, authError } from '../Container/store/action/authAction'
+import {
+  signinUser,
+  authError,
+  loaderOffProcess
+} from '../Container/store/action/authAction'
+import Alert from 'react-s-alert'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import NativeSelect from '@material-ui/core/NativeSelect'
+import Loader from 'react-loader-spinner'
 
 const style = {
   paperWapper: {
@@ -58,12 +64,25 @@ class Login extends React.Component {
     obj[target] = ev.target.value
     this.setState(obj)
   }
+  showAlertMessage = message => {
+    Alert.error(
+      message || this.props.errorAuthenticate.error.message || 'Something is wrong',
+      {
+        position: 'bottom-right',
+        effect: 'slide',
+        timeout: 'none'
+      }
+    )
+  }
 
   signIn = authenticate => {
     const { email, password } = this.state
-
-    this.props.siginUserForm({ email, password, authenticate })
-  
+    if (email.trim() !== '' && password.trim() !== '') {
+      this.props.siginUserForm({ email, password, authenticate })
+    } else {
+      this.showAlertMessage('Data Badly Formated')
+      this.props.loaderOff()
+    }
   }
 
   render () {
@@ -93,8 +112,11 @@ class Login extends React.Component {
             label='Password'
           />
           <br />
-          {this.props.loader ? <CircularProgress /> : null}
-
+          <br />
+          {this.props.loader ? (
+            <Loader type='Oval' color='#000' height={50} width={50} />
+          ) : null}
+         
           <Button
             onClick={this.signIn.bind(this, 'companymain')}
             style={style.button}
@@ -102,7 +124,6 @@ class Login extends React.Component {
             LOGIN
           </Button>
 
-         
           <Button onClick={this.register} style={style.button}>
             Register
           </Button>
@@ -114,14 +135,15 @@ class Login extends React.Component {
 function mapStateToProps (state) {
   return {
     ComponentName: state.reducer.item,
-    loader: state.authReducer.authenticated
+    loader: state.authReducer.authenticated,
+    errorAuthenticate: state.authReducer.error
   }
 }
 function mapDispatchToProps (dispatch) {
   return {
-    
     siginUserForm: obj => dispatch(signinUser(obj)),
-    errorLogin: err => dispatch(authError(err))
+    errorLogin: err => dispatch(authError(err)),
+    loaderOff: () => dispatch(loaderOffProcess())
   }
 }
 

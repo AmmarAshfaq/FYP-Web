@@ -8,6 +8,8 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { openModel } from '../../Container/store/action/action'
+import Alert from 'react-s-alert'
+
 import {
   addCropAction,
   updateCropAction
@@ -47,23 +49,43 @@ class AddCrop extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
   }
+  showAlertMessage = message => {
+    Alert.error(message || 'Something is wrong', {
+      position: 'bottom-right',
+      effect: 'slide',
+      timeout: 'none'
+    })
+  }
   handleClose = () => {
+    this.props.itemValueFunc(false)
+  }
+  handleSubmit = () => {
     const { name, price, image_url, wieght, date, transport } = this.state
-    console.log(this.state)
-    const objData = {
-      name: name,
-      price: price,
-      image_url: image_url,
-      wieght: wieght,
-      date: date,
-      transport: transport,
-      farmerId: this.props.farmerID,
-      selectId: this.props.selectId
-    }
-    if (this.props.selectId && this.props.selectId !== undefined) {
-      this.props.cropDataUpdate(objData)
+    // console.log(this.state)
+    if (
+      name !== '' &&
+      price !== '' &&
+      image_url !== '' &&
+      wieght !== '' &&
+      date !== ''
+    ) {
+      const objData = {
+        name: name,
+        price: price,
+        image_url: image_url,
+        wieght: wieght,
+        date: date,
+        transport: transport,
+        farmerId: this.props.farmerID,
+        selectId: this.props.selectId
+      }
+      if (this.props.selectId && this.props.selectId !== undefined) {
+        this.props.cropDataUpdate(objData)
+      } else {
+        this.props.addCropData(objData)
+      }
     } else {
-      this.props.addCropData(objData)
+      this.showAlertMessage('Please Insert Some Data')
     }
     this.props.itemValueFunc(false)
     this.setState({
@@ -185,7 +207,7 @@ class AddCrop extends Component {
             <Button onClick={this.handleClose} color='primary'>
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color='primary'>
+            <Button onClick={this.handleSubmit} color='primary'>
               Submit
             </Button>
           </DialogActions>
@@ -225,4 +247,3 @@ export default compose(
     mapDispatchToProps
   )
 )(AddCrop)
-

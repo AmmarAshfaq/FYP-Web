@@ -21,15 +21,7 @@ export function signinUser (obj) {
       body: JSON.stringify(data)
     })
     const getData = await result.json()
-    console.log(getData)
-    // setTimeout(()=>{
-    //   dispatch(signupSucced(getData))
-    //   localStorage.setItem('token', getData.token)
-    //     dispatch(changeNavbar(`${getData.user.userType}Home`))
-
-    // },2000)
-
-    // console.log(getData)
+   
 
     if (getData.user) {
       if (getData.user.userType === 'Company') {
@@ -72,9 +64,11 @@ export function signinUser (obj) {
       //   browserHistory.push(`/${obj.authenticate}`)
       //   dispatch(changeNavbar(`${getData.user.userType}Home`))
       // }
+      // dispatch(signupUnAuthRequest())
     } else if (getData.error) {
       browserHistory.push('/login')
       dispatch(authError(getData))
+      dispatch(signupUnAuthRequest()) // if use doesnot give correct email then they should not be signin
     }
   }
 }
@@ -90,8 +84,8 @@ export function signoutUser (data) {
   console.log(data)
   return dispatch => {
     localStorage.removeItem('token')
-    localStorage.removeItem('state')
     browserHistory.push('/login')
+    localStorage.removeItem('state')
     dispatch(signOut())
     dispatch(changeNavbar(data))
   }
@@ -194,6 +188,9 @@ export function authError (error) {
   }
 }
 function signOut () {
+  return { type: ActionTypes.UNAUTH_USER }
+}
+function signupUnAuthRequest () {
   return { type: ActionTypes.UNAUTH_USER }
 }
 export function changeNavbar (componentChange) {

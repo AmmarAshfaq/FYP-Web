@@ -59,7 +59,7 @@ class Weather extends Component {
     ]
     const dataValue = this.props.data
 
-    console.log(dataValue)
+    // console.log(dataValue)
 
     for (var i = 0; i < dataValue.length; i++) {
       dataValue[i]['days'] = dataGet[i]

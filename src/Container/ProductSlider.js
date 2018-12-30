@@ -12,7 +12,8 @@ const styles = theme => ({
   card: {
     maxWidth: 400,
     textAlign: 'center',
-    marginBottom: 10
+    marginBottom: 10,
+    maxHeight:400
   },
   media: {
     height: 0,
