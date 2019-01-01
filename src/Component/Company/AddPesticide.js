@@ -10,7 +10,11 @@ import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { openModel } from '../../Container/store/action/action'
 import Divider from '@material-ui/core/Divider'
-import { addPesticideAction,updatePesticideAction } from '../../Container/store/action/companyAction'
+import {
+  addPesticideAction,
+  updatePesticideAction
+} from '../../Container/store/action/companyAction'
+import Alert from 'react-s-alert'
 
 class AddPesticide extends Component {
   constructor () {
@@ -31,34 +35,45 @@ class AddPesticide extends Component {
     this.setState(obj)
   }
   updateFile = event => {
-    
     this.setState({
       image: event.target.files[0]
     })
   }
+  showAlertMessage = message => {
+    Alert.error(message || 'Something is wrong', {
+      position: 'bottom-right',
+      effect: 'slide',
+      timeout: 'none'
+    })
+  }
+
   handleSubmit = () => {
     const { name, price, description, image } = this.state
-    let obj = {
-      name,
-      price,
-      description,
-      image,
-      companyDetails: {
-        contactEmail: this.props.companyInfo.email,
-        contactNumber: '000000000000000000000000000000',
-        contactName: this.props.companyInfo.name,
-        location: '36800000000000000000000000000000',
-        address: '0000000000000000000000000000000000000'
-      },
-      companyName: this.props.companyInfo.name,
-      companyId: this.props.companyInfo.id,
-      selectId: this.props.selectId
-    }
-    console.log(obj)
-    if (this.props.selectId && this.props.selectId !== undefined) {
-this.props.updateItem(obj)
+    if (name !== '' && price !== '' && description !== '' && image !== null) {
+      let obj = {
+        name,
+        price,
+        description,
+        image,
+        companyDetails: {
+          contactEmail: this.props.companyInfo.email,
+          contactNumber: '000000000000000000000000000000',
+          contactName: this.props.companyInfo.name,
+          location: '36800000000000000000000000000000',
+          address: '0000000000000000000000000000000000000'
+        },
+        companyName: this.props.companyInfo.name,
+        companyId: this.props.companyInfo.id,
+        selectId: this.props.selectId
+      }
+      console.log(obj)
+      if (this.props.selectId && this.props.selectId !== undefined) {
+        this.props.updateItem(obj)
+      } else {
+        this.props.itemAdd(obj)
+      }
     } else {
-      this.props.itemAdd(obj)
+      this.showAlertMessage('Please Insert All Data')
     }
     this.props.itemValueFunc(false)
     this.setState({
@@ -158,7 +173,7 @@ function mapDispatchToProps (dispatch) {
     itemAdd: data => {
       dispatch(addPesticideAction(data))
     },
-    updateItem :data =>{
+    updateItem: data => {
       dispatch(updatePesticideAction(data))
     }
   }

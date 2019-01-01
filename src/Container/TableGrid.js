@@ -19,6 +19,7 @@ import { openModel } from '../Container/store/action/action'
 import AddPesticide from '../Component/Company/AddPesticide'
 import AddMachinery from '../Component/Company/AddMachinery'
 import AddFertilizer from '../Component/Company/AddFertilizer'
+import Loader from 'react-loader-spinner'
 
 import {
   deleteMachineryAction,
@@ -71,11 +72,11 @@ class TableGrid extends Component {
     super(props)
     // console.log(this.props.data)
   }
-  handleClickOpen = (obj,index) => {
+  handleClickOpen = (obj, index) => {
     let objSet = {
       toggle: true,
       specificDialog: obj,
-      id:index
+      id: index
     }
     console.log(objSet)
     this.props.selectValue(objSet)
@@ -106,7 +107,6 @@ class TableGrid extends Component {
   }
   render () {
     const { classes, data, typeSelect } = this.props
-    console.log(data)
     let i = 0
     return (
       // console.log(this.props)
@@ -169,102 +169,134 @@ class TableGrid extends Component {
               </CustomTableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {data.map((n, key) => {
-              return (
-                <TableRow className={classes.row} key={n.name}>
-                  <CustomTableCell numeric className={classes.columnNo}>
-                    {++i}
-                  </CustomTableCell>
-                  {typeSelect === 'Fertilizer' ? (
+          {!this.props.loader ? (
+            <TableBody>
+              {data.map((n, key) => {
+                return (
+                  <TableRow className={classes.row} key={n.name}>
+                    <CustomTableCell numeric className={classes.columnNo}>
+                      {++i}
+                    </CustomTableCell>
+                    {typeSelect === 'Fertilizer' ? (
+                      <CustomTableCell
+                        numeric
+                        className={classes.columnNo}
+                      >{`${n.name.substring(0, 15)}....`}</CustomTableCell>
+                    ) : null}
+                    {typeSelect === 'Machinery' ? (
+                      <CustomTableCell
+                        numeric
+                        className={classes.columnNo}
+                      >{`${n.machineName.substring(
+                          0,
+                          15
+                        )}....`}</CustomTableCell>
+                    ) : null}
+                    {typeSelect === 'Pesticide' ? (
+                      <CustomTableCell
+                        numeric
+                        className={classes.columnNo}
+                      >{`${n.pesticideName.substring(
+                          0,
+                          15
+                        )}....`}</CustomTableCell>
+                    ) : null}
+                    <CustomTableCell numeric className={classes.columnNo}>
+                      {`Rs. ${n.price.substring(0, 15)}`}{' '}
+                    </CustomTableCell>
+                    {typeSelect === 'Machinery' ? (
+                      <CustomTableCell
+                        numeric
+                        className={classes.columnWidth}
+                      >{`${n.machineDescription.substring(
+                          0,
+                          20
+                        )}.....`}</CustomTableCell>
+                    ) : null}
+                    {typeSelect === 'Pesticide' ? (
+                      <CustomTableCell
+                        numeric
+                        className={classes.columnWidth}
+                      >{`${n.pesticideDescription.substring(
+                          0,
+                          20
+                        )}.....`}</CustomTableCell>
+                    ) : null}
+                    {typeSelect === 'Fertilizer' ? (
+                      <CustomTableCell
+                        numeric
+                        className={classes.columnNo}
+                      >{`${n.product.substring(0, 15)}....`}</CustomTableCell>
+                    ) : null}
+                    {typeSelect === 'Fertilizer' ? (
+                      <CustomTableCell
+                        numeric
+                        className={classes.columnNo}
+                      >{`${n.application.substring(
+                          0,
+                          15
+                        )}....`}</CustomTableCell>
+                    ) : null}
+                    <CustomTableCell numeric className={classes.columnNo}>
+                      <Avatar
+                        alt='Adelle Charles'
+                        src={n.image_url}
+                        className={classNames(
+                          classes.avatar,
+                          classes.bigAvatar
+                        )}
+                      />
+                    </CustomTableCell>
                     <CustomTableCell
                       numeric
                       className={classes.columnNo}
-                    >{`${n.name.substring(0, 15)}....`}</CustomTableCell>
-                  ) : null}
-                  {typeSelect === 'Machinery' ? (
+                      onClick={this.handleDelete.bind(
+                        this,
+                        typeSelect,
+                        n._id,
+                        n.companyId
+                      )}
+                    >
+                      <IconButton aria-label='Delete'>
+                        <DeleteIcon fontSize='large' />
+                      </IconButton>
+                    </CustomTableCell>
                     <CustomTableCell
                       numeric
                       className={classes.columnNo}
-                    >{`${n.machineName.substring(0, 15)}....`}</CustomTableCell>
-                  ) : null}
-                  {typeSelect === 'Pesticide' ? (
-                    <CustomTableCell
-                      numeric
-                      className={classes.columnNo}
-                    >{`${n.pesticideName.substring(
-                        0,
-                        15
-                      )}....`}</CustomTableCell>
-                  ) : null}
-                  <CustomTableCell numeric className={classes.columnNo}>
-                    {`Rs. ${n.price.substring(0, 15)}`}{' '}
-                  </CustomTableCell>
-                  {typeSelect === 'Machinery' ? (
-                    <CustomTableCell
-                      numeric
-                      className={classes.columnWidth}
-                    >{`${n.machineDescription.substring(
-                        0,
-                        20
-                      )}.....`}</CustomTableCell>
-                  ) : null}
-                  {typeSelect === 'Pesticide' ? (
-                    <CustomTableCell
-                      numeric
-                      className={classes.columnWidth}
-                    >{`${n.pesticideDescription.substring(
-                        0,
-                        20
-                      )}.....`}</CustomTableCell>
-                  ) : null}
-                  {typeSelect === 'Fertilizer' ? (
-                    <CustomTableCell
-                      numeric
-                      className={classes.columnNo}
-                    >{`${n.product.substring(0, 15)}....`}</CustomTableCell>
-                  ) : null}
-                  {typeSelect === 'Fertilizer' ? (
-                    <CustomTableCell
-                      numeric
-                      className={classes.columnNo}
-                    >{`${n.application.substring(0, 15)}....`}</CustomTableCell>
-                  ) : null}
-                  <CustomTableCell numeric className={classes.columnNo}>
-                    <Avatar
-                      alt='Adelle Charles'
-                      src={n.image_url}
-                      className={classNames(classes.avatar, classes.bigAvatar)}
-                    />
-                  </CustomTableCell>
-                  <CustomTableCell
-                    numeric
-                    className={classes.columnNo}
-                    onClick={this.handleDelete.bind(
-                      this,
-                      typeSelect,
-                      n._id,
-                      n.companyId
-                    )}
+                      onClick={this.handleClickOpen.bind(
+                        this,
+                        typeSelect,
+                        n._id
+                      )}
+                    >
+                      <IconButton aria-label='Update'>
+                        <UpdateIcon fontSize='large' />
+                      </IconButton>
+                    </CustomTableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          ) : (
+            <TableBody>
+              <TableRow>
+                <TableCell colSpan='8'>
+                  <Typography
+                    variant='display1'
+                    gutterBottom
+                    style={{ textAlign: 'center' }}
                   >
-                    <IconButton aria-label='Delete'>
-                      <DeleteIcon fontSize='large' />
-                    </IconButton>
-                  </CustomTableCell>
-                  <CustomTableCell
-                    numeric
-                    className={classes.columnNo}
-                    onClick={this.handleClickOpen.bind(this, typeSelect,n._id)}
-                  >
-                    <IconButton aria-label='Update'>
-                      <UpdateIcon fontSize='large' />
-                    </IconButton>
-                  </CustomTableCell>
-                </TableRow>
-              )
-            })}
-          </TableBody>
+                    <Loader type='Oval' color='#000' height={50} width={50} />
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
         </Table>
+        {this.props.errorShow.error
+          ? this.showAlertMessage(this.props.errorShow.error.message)
+          : null}
         <AddPesticide />
         <AddFertilizer />
         <AddMachinery />
@@ -289,10 +321,16 @@ function mapDipatchToProps (dispatch) {
     }
   }
 }
+function mapStateToProps (state) {
+  return {
+    loader: state.companyReducer.upload,
+    errorShow: state.companyReducer.error
+  }
+}
 export default compose(
   withStyles(styles),
   connect(
-    null,
+    mapStateToProps,
     mapDipatchToProps
   )
 )(TableGrid)

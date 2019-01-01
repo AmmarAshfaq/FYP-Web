@@ -137,8 +137,10 @@ export function addFertilizerAction (obj) {
   data.append('contactDetails[contactNumber]', obj.companyDetails.contactNumber)
   data.append('contactDetails[location]', obj.companyDetails.location)
   data.append('contactDetails[address]', obj.companyDetails.address)
-  
+
   return async dispatch => {
+    dispatch(processProgress())
+
     const result = await fetch(`${ROOT_URL}/fertilizer/add`, {
       method: 'POST',
       headers: {
@@ -149,8 +151,40 @@ export function addFertilizerAction (obj) {
     })
 
     const getData = await result.json()
-    console.log(getData)
-    dispatch(addFertilizer(getData.data))
+    // console.log(getData)
+    if (getData.data) {
+      dispatch(addFertilizer(getData.data))
+      dispatch(processDone())
+      dispatch(errorEmpty())
+    } else {
+      // console.log(getData)
+      dispatch(errorMessage(getData.error))
+
+      dispatch(processDone())
+    }
+  }
+}
+
+function errorMessage (obj) {
+  return {
+    type: ActionTypes.ERROR_MESSAGE,
+    payload: obj
+  }
+}
+function errorEmpty () {
+  return {
+    type: ActionTypes.ERROR_NULL
+    // payload: obj
+  }
+}
+function processProgress () {
+  return {
+    type: ActionTypes.PROCESS_PROGRESS
+  }
+}
+function processDone () {
+  return {
+    type: ActionTypes.PROCESS_DONE
   }
 }
 export function addPesticideAction (obj) {
@@ -174,6 +208,8 @@ export function addPesticideAction (obj) {
   //       console.log(pair[0]+','+pair[1]);
   //   }
   return async dispatch => {
+    dispatch(processProgress())
+
     const result = await fetch(`${ROOT_URL}/pesticide/add`, {
       method: 'POST',
       headers: {
@@ -184,8 +220,18 @@ export function addPesticideAction (obj) {
     })
 
     const getData = await result.json()
-    console.log(getData)
-    dispatch(addPesticide(getData.data))
+    // console.log(getData)
+    // dispatch(addPesticide(getData.data))
+    if (getData.data) {
+      dispatch(addPesticide(getData.data))
+      dispatch(processDone())
+      dispatch(errorEmpty())
+    } else {
+      // console.log(getData)
+      dispatch(errorMessage(getData.error))
+
+      dispatch(processDone())
+    }
   }
 }
 export function addMachineryAction (obj) {
@@ -210,6 +256,8 @@ export function addMachineryAction (obj) {
   //       console.log(pair[0]+','+pair[1]);
   //   }
   return async dispatch => {
+    dispatch(processProgress())
+
     const result = await fetch(`${ROOT_URL}/machine/add`, {
       method: 'POST',
       headers: {
@@ -220,8 +268,18 @@ export function addMachineryAction (obj) {
     })
 
     const getData = await result.json()
-    console.log(getData)
-    dispatch(addMachinery(getData.data))
+    // console.log(getData)
+    if (getData.data) {
+      dispatch(addMachinery(getData.data))
+
+      dispatch(processDone())
+      dispatch(errorEmpty())
+    } else {
+      // console.log(getData)
+      dispatch(errorMessage(getData.error))
+
+      dispatch(processDone())
+    }
   }
 }
 export function deleteMachineryAction (obj) {
@@ -240,6 +298,10 @@ export function deleteMachineryAction (obj) {
 
     const getData = await result.json()
     console.log(getData)
+    dispatch({
+      type: ActionTypes.DELETE_MACHINERY,
+      payload: getData.data
+    })
   }
 }
 export function deleteFertilizerAction (obj) {
@@ -257,7 +319,10 @@ export function deleteFertilizerAction (obj) {
     })
 
     const getData = await result.json()
-    console.log(getData)
+    dispatch({
+      type: ActionTypes.DELETE_FERTILIZER,
+      payload: getData.data
+    })
   }
 }
 export function deletePesticideAction (obj) {
@@ -276,6 +341,10 @@ export function deletePesticideAction (obj) {
 
     const getData = await result.json()
     console.log(getData)
+    dispatch({
+      type: ActionTypes.DELETE_PESTICIDE,
+      payload: getData.data
+    })
   }
 }
 export function getFertilizerIdAction (obj) {
@@ -335,7 +404,11 @@ export function updateFetilizerAction (obj) {
 
     const getData = await result.json()
     console.log(getData)
-    dispatch(updateFertlizer(getData.data))
+    if (getData.data) {
+      dispatch(updateFertlizer(getData.data))
+    } else {
+      console.log('Error')
+    }
   }
 }
 export function updateMachineryAction (obj) {
@@ -527,11 +600,11 @@ function getAllPesticide (data) {
   }
 }
 
-export function storeDataForMsg(data){
-  return dispatch =>{
+export function storeDataForMsg (data) {
+  return dispatch => {
     dispatch({
-      type:ActionTypes.STORE_FOR_MSG,
-      payload:data
+      type: ActionTypes.STORE_FOR_MSG,
+      payload: data
     })
   }
 }

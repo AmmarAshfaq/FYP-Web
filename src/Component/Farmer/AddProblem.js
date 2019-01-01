@@ -76,7 +76,8 @@ class AddProblem extends Component {
         problemName,
         problemDescription,
         farmerID: this.props.farmerID,
-        selectId: this.props.selectId
+        selectId: this.props.selectId,
+        type:'Problem'
       }
       if (this.props.selectId && this.props.selectId !== undefined) {
         this.props.updateProblemData(objData)

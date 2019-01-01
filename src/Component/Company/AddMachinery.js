@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography'
 import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { openModel } from '../../Container/store/action/action'
+import Alert from 'react-s-alert'
+
 import {
   addMachineryAction,
   updateMachineryAction
@@ -40,9 +42,16 @@ class AddMachinery extends Component {
       image: event.target.files[0]
     })
   }
+  showAlertMessage = message => {
+    Alert.error(message || 'Something is wrong', {
+      position: 'bottom-right',
+      effect: 'slide',
+      timeout: 'none'
+    })
+  }
   handleSubmit = () => {
     const { name, price, description, image } = this.state
-    
+    if(name !== "" && price !== "" && description !== "" && image !== null){
     let obj = {
       name,
       price,
@@ -65,6 +74,9 @@ class AddMachinery extends Component {
     } else {
       this.props.addItem(obj)
     }
+  }else{
+    this.showAlertMessage("Please Insert All Data")
+  }
     this.props.itemValueFunc(false)
     this.setState({
       name: '',

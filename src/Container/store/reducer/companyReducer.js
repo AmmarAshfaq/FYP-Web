@@ -8,7 +8,11 @@ const INITIAL_STATE = {
   allPesticideData: [],
   allMachineryData: [],
   fertilizerProduct: {},
-  connectMsg:{}
+  connectMsg:{},
+  upload: false,
+  error:{}
+
+
   // machineryProduct: {},
   // pesticideProduct: {}
 }
@@ -151,6 +155,54 @@ export default (state = INITIAL_STATE, action) => {
           ...state,
           connectMsg: action.payload
         }
+        break
+        case ActionTypes.PROCESS_PROGRESS:
+        return {
+          ...state,
+          upload: true
+        }
+        break 
+        case ActionTypes.PROCESS_DONE:
+        return{
+          ...state,
+          upload:false
+        }
+        break
+        case ActionTypes.ERROR_MESSAGE:
+          return {
+            ...state,
+            error: action.payload
+          }
+          break
+          case ActionTypes.ERROR_NULL:
+            return {
+              ...state,
+              error: {}
+            }
+            break
+            case ActionTypes.DELETE_FERTILIZER:
+              return {
+                ...state,
+                fertilizerArray: state.fertilizerArray.filter(itemVal => {
+                  return itemVal._id !== action.payload._id
+                })
+              }
+              break
+              case ActionTypes.DELETE_MACHINERY:
+                return {
+                  ...state,
+                  machineryArray: state.machineryArray.filter(itemVal => {
+                    return itemVal._id !== action.payload._id
+                  })
+                }
+                break
+                case ActionTypes.DELETE_PESTICIDE:
+                  return {
+                    ...state,
+                    pesticideArray: state.pesticideArray.filter(itemVal => {
+                      return itemVal._id !== action.payload._id
+                    })
+                  }
     default:
       return state
   }

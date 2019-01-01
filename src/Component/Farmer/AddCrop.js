@@ -77,7 +77,8 @@ class AddCrop extends Component {
         date: date,
         transport: transport,
         farmerId: this.props.farmerID,
-        selectId: this.props.selectId
+        selectId: this.props.selectId,
+        type:'Crop'
       }
       if (this.props.selectId && this.props.selectId !== undefined) {
         this.props.cropDataUpdate(objData)

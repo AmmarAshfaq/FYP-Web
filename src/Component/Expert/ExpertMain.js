@@ -100,6 +100,10 @@ const styles = theme => ({
     margin: theme.spacing.unit * 2,
     textAlign:'center'
   },
+  marginTopIncrease: {
+    marginTop: 130,
+    // textAlign: 'center'
+  }
 })
 class ExpertMain extends Component {
   state = {
@@ -261,7 +265,7 @@ class ExpertMain extends Component {
           </Grid>
 
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
+            <Paper className={[classes.paper,classes.marginTopIncrease]}>
               {!this.props.loader ? (
                 <ProblemSlider
                   info={this.props.allProblem}

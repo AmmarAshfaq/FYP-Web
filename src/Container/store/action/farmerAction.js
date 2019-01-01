@@ -12,6 +12,7 @@ export function addCropAction (obj) {
   data.append('wieght', obj.wieght)
   data.append('date', obj.date)
   data.append('farmerId', obj.farmerId)
+  data.append('type',obj.type)
   console.log(data)
   return async dispatch => {
     dispatch(processProgress())
@@ -33,6 +34,8 @@ export function addCropAction (obj) {
       console.log(getData)
       dispatch(addCropData(getData))
       dispatch(processDone())
+      dispatch(errorEmpty())
+
     }
     // notificationAdd(getData)
   }
@@ -93,6 +96,7 @@ export function addProblemAction (obj) {
   data.append('farmerId', obj.farmerID)
   data.append('description', obj.problemDescription)
   data.append('name', obj.problemName)
+  data.append('type',obj.type)
   console.log(data)
   return async dispatch => {
     dispatch(processProgress())

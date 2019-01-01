@@ -8,6 +8,8 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import Typography from '@material-ui/core/Typography'
+import Alert from 'react-s-alert'
+
 import {
   addFertilizerAction,
   updateFetilizerAction
@@ -33,8 +35,16 @@ class AddFertilizer extends Component {
     obj[target] = event.target.value
     this.setState(obj)
   }
+  showAlertMessage = message => {
+    Alert.error(message || 'Something is wrong', {
+      position: 'bottom-right',
+      effect: 'slide',
+      timeout: 'none'
+    })
+  }
   handleSubmit = () => {
-    const { name, price, productName, application, image_url } = this.state
+    const { name, price, productName, application, image_url } = this.state;
+    if(name !== "" && price !== "" && productName !== "" && application !== "" && image_url !== null){
     let obj = {
       name,
       price,
@@ -57,6 +67,9 @@ class AddFertilizer extends Component {
     } else {
       this.props.addItem(obj)
     }
+  }else{
+    this.showAlertMessage("Please Insert All Data")
+  }
     this.props.itemValueFunc(false)
     this.setState({
       name: '',
@@ -151,7 +164,6 @@ class AddFertilizer extends Component {
 }
 
 function mapStateToProps (state) {
-  console.log(state.reducer.selectListId)
   return {
     itemValue: state,
     companyInfo: state.authReducer.currentUserData.user,

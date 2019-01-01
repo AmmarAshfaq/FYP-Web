@@ -108,7 +108,7 @@ const styles = theme => ({
   },
   marginTopIncrease: {
     marginTop: 130,
-    textAlign: 'center'
+    // textAlign: 'center'
   }
 })
 class FarmerMain extends Component {

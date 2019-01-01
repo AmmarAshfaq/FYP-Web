@@ -9,6 +9,9 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 import { browserHistory } from 'react-router'
+import { getSpecificCrop } from './store/action/allAddItem'
+import {connect} from 'react-redux'
+import {compose} from 'redux';
 
 const styles = theme => ({
   card: {
@@ -30,19 +33,27 @@ class ProblemSlider extends React.Component {
     super(props)
   }
 
-  goToProblem = selectId => {
+  goToProblem = (selectId ,type) => {
     console.log(selectId)
-    this.props.typeSelect === 'Crop'
+    this.props.typeSelect === 'Crop' 
       ? browserHistory.push({
         pathname: '/ProductList',
         state: { typeCheck: this.props.typeSelect, display: this.props.info }
       })
-      : this.props.typeSelect === 'Problem'
+      : this.props.typeSelect === 'Problem' || type === 'Problem'
         ? browserHistory.push({
           pathname: '/problemSolution',
           state: { typeCheck: this.props.typeSelect, selectId: selectId }
         })
-        : null
+        : type === 'Crop'
+        ?this.cropFetch(selectId):null
+  }
+  cropFetch = id => {
+    let obj = {
+      _id: id
+    }
+    this.props.getCrop(obj)
+    // browserHistory.push('/specificCrop')
   }
   render () {
     const { classes, typeSelect, info } = this.props
@@ -57,7 +68,7 @@ class ProblemSlider extends React.Component {
       autoplay: true,
       autoplaySpeed: 2000
     }
-// console.log(this.props.info)
+console.log(this.props.info)
     return (
       <Slider {...settings}>
         {this.props.info.map((data, ind) => (
@@ -67,7 +78,7 @@ class ProblemSlider extends React.Component {
               className={classes.media}
               image={data.image_url}
               title='Contemplative Reptile'
-              onClick={this.goToProblem.bind(this, data._id)}
+              onClick={this.goToProblem.bind(this, data._id,data.type)}
             />
             <CardContent>
               <Typography component='p'>{data.name}</Typography>
@@ -78,5 +89,11 @@ class ProblemSlider extends React.Component {
     )
   }
 }
-
-export default withStyles(styles)(ProblemSlider)
+function mapDispatchToProps(dispatch){
+  return {
+    getCrop : (obj)=>{
+dispatch(getSpecificCrop(obj))
+    }
+  }
+}
+export default compose(connect(null,mapDispatchToProps),withStyles(styles))(ProblemSlider)

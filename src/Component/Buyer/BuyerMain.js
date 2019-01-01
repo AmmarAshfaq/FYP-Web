@@ -93,6 +93,10 @@ const styles = theme => ({
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2
+  },
+  marginTopIncrease: {
+    marginTop: 130,
+    textAlign: 'center'
   }
 })
 class BuyerMain extends Component {
@@ -242,7 +246,7 @@ class BuyerMain extends Component {
           </Grid>
 
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
+            <Paper className={[classes.paper, classes.marginTopIncrease]}>
               {!this.props.loader ? (
                 <ProblemSlider info={this.props.cropArr} typeSelect='Crop' />
               ) : (

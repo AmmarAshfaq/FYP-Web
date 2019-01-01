@@ -165,7 +165,6 @@ class ProductList extends Component {
   }
 
   handleClickOpen = (obj, productDetail) => {
-    // console.log(obj, id)
     let objSet = {
       toggle: true,
       specificDialog: obj,
@@ -174,7 +173,6 @@ class ProductList extends Component {
     this.props.selectValue(objSet)
   }
   changeState = event => {
-    // console.log(event.target.value)
 
     this.setState({
       selectValue: this.props.location.state.display.filter(item =>
@@ -301,7 +299,7 @@ class ProductList extends Component {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={3}>
-            <NewList info={allData} />
+            <NewList info={this.props.location.state.display} />
           </Grid>
         </Grid>
 
