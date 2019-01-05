@@ -4,7 +4,8 @@ const INITIAL_STATE = {
   allUserList: [],
   allMsgList: [],
   userSelect: {},
-  loader: false
+  loader: false,
+  selectUserFromList: {}
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -13,7 +14,11 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, allUserList: action.payload }
       break
     case ActionTypes.GET_ALL_SPECIFIC:
-      return { ...state, allMsgList: action.payload }
+      return {
+        ...state,
+        allMsgList: action.payload,
+        selectUserFromList: action.userSelectForMsg
+      }
       break
     case ActionTypes.LISTEN_MESSAGE:
       var arrVal = state.allMsgList
@@ -30,7 +35,9 @@ export default (state = INITIAL_STATE, action) => {
       break
     case ActionTypes.LOAD_DONE:
       return { ...state, loader: false }
-
+      break
+      case ActionTypes.START_MESSAGE_NULL:
+        return { ...state, userSelect: {} }
     default:
       return state
   }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { TextField, Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { forgetPassword } from '../Container/store/action/authAction'
-import Alert from 'react-s-alert';
+import Alert from 'react-s-alert'
 const style = {
   paperWapper: {
     width: '70%',
@@ -50,7 +50,7 @@ class ChangePassword extends Component {
 
     // this.props.changeRoutes('Main')
   }
-  // here we have done only data passing error is left 
+  // here we have done only data passing error is left
   submit = () => {
     let { email, newPassword } = this.state
     console.log(email, newPassword)
@@ -64,20 +64,13 @@ class ChangePassword extends Component {
     } else {
       this.showAlertMessage('Data Badly Formated')
     }
-
-    
   }
   showAlertMessage = message => {
-    Alert.error(
-      message ||
-        this.props.errorAuthenticate.error.message ||
-        'Something is wrong',
-      {
-        position: 'bottom-right',
-        effect: 'slide',
-        timeout: 'none'
-      }
-    )
+    Alert.error(message || 'Something is wrong', {
+      position: 'bottom-right',
+      effect: 'slide',
+      timeout: 'none'
+    })
   }
   updateValue = (ev, target) => {
     let obj = {}
@@ -116,6 +109,9 @@ class ChangePassword extends Component {
         <Loader type='Oval' color='#000' height={50} width={50} />
       ) : null} */}
 
+          {
+            
+          }
           <Button onClick={this.submit.bind(this)} style={style.button}>
             Submit
           </Button>
@@ -132,7 +128,10 @@ function mapDispatchToProps (dispatch) {
     }
   }
 }
+function mapStateToProps (state) {
+  return {}
+}
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ChangePassword)

@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { Avatar } from '@material-ui/core'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { getSpecificMessages } from './store/action/messageAction'
+import { getSpecificMessages, userSelectMsgNull } from './store/action/messageAction'
 
 const styles = theme => ({
   avatar: {
@@ -16,8 +16,9 @@ const styles = theme => ({
   paddingRemoveList: { padding: 0 }
 })
 class AllUserMessage extends Component {
-  getAllMessage = obj => {
-    this.props.getSpecific(obj)
+  getAllMessage = (objId, obj) => {
+    this.props.getSpecific(objId, obj)
+    this.props.userMsgNull()
   }
   render () {
     const { classes, userList } = this.props
@@ -28,7 +29,7 @@ class AllUserMessage extends Component {
             <List
               component='nav'
               className={classes.paddingRemoveList}
-              onClick={() => this.getAllMessage(item.conversationId)}
+              onClick={() => this.getAllMessage(item.conversationId, item)}
             >
               <ListItem button>
                 <Avatar
@@ -57,8 +58,11 @@ function mapStateToProps (state) {
 }
 function mapDispatchToProps (dispatch) {
   return {
-    getSpecific: obj => {
-      dispatch(getSpecificMessages(obj))
+    getSpecific: (objId, obj) => {
+      dispatch(getSpecificMessages(objId, obj))
+    },
+    userMsgNull:()=>{
+      dispatch(userSelectMsgNull())
     }
   }
 }

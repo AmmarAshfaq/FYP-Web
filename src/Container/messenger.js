@@ -28,7 +28,8 @@ import TextField from '@material-ui/core/TextField'
 import classNames from 'classnames'
 import {
   ConnectWithSocket,
-  getAllMessage
+  getAllMessage,
+  userSelectMsgNull
 } from '../Container/store/action/messageAction'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
@@ -155,29 +156,60 @@ class Messenger extends React.Component {
     obj[target] = event.target.value
     this.setState(obj)
   }
-
-  sendMessage = () => {
+  componentWillUnmount () {
+    this.props.userMsgNull()
+  }
+  sendMessage = data => {
+    console.log(data)
     let obj = {}
     if (this.props.userId.userType === 'Farmer') {
-      // here we check both id when user click on message icon and when user directly go to the messenger
-      obj = {
-        // fe
-        // fc
-        // fb
-        receiverInfo: {
-          receiverId: this.props.getConnect.user_id,
-          receiverType: this.props.getConnect.userType,
-          receiverName: this.props.getConnect.user_name
-        },
-        senderInfo: {
-          senderId: this.props.userId.id,
-          senderName: this.props.userId.name,
-          senderType: this.props.userId.userType
-        },
-        message: this.state.message,
-        conversationId: `${this.props.userId.id}${
-          this.props.getConnect.user_id
-        }`
+      if (this.props.getConnect.user_id) {
+        obj = {
+          receiverInfo: {
+            receiverId: this.props.getConnect.user_id,
+            receiverType: this.props.getConnect.userType,
+            receiverName: this.props.getConnect.user_name
+          },
+          senderInfo: {
+            senderId: this.props.userId.id,
+            senderName: this.props.userId.name,
+            senderType: this.props.userId.userType
+          },
+          message: this.state.message,
+          conversationId: `${this.props.userId.id}${
+            this.props.getConnect.user_id
+          }`
+        }
+      } else if (data.receiverInfo.receiverId === this.props.userId.id) {
+        obj = {
+          receiverInfo: {
+            receiverId: data.senderInfo.senderId,
+            receiverType: data.senderInfo.senderName,
+            receiverName: data.senderInfo.senderType
+          },
+          senderInfo: {
+            senderId: data.receiverInfo.receiverId,
+            senderName: data.receiverInfo.receiverName,
+            senderType: data.receiverInfo.receiverType
+          },
+          message: this.state.message,
+          conversationId: data.conversationId
+        }
+      } else {
+        obj = {
+          receiverInfo: {
+            receiverId: data.senderInfo.senderId,
+            receiverType: data.senderInfo.senderName,
+            receiverName: data.senderInfo.senderType
+          },
+          senderInfo: {
+            senderId: data.senderInfo.senderId,
+            senderName: data.senderInfo.senderName,
+            senderType: data.senderInfo.senderType
+          },
+          message: this.state.message,
+          conversationId: data.conversationId
+        }
       }
     } else if (this.props.userId.userType === 'Buyer') {
       if (this.props.getConnect.userType === 'Farmer') {
@@ -200,7 +232,6 @@ class Messenger extends React.Component {
             this.props.userId.id
           }`
         }
-        console.log(obj)
       } else if (this.props.getConnect.userType === 'Company') {
         obj = {
           // cb
@@ -221,151 +252,200 @@ class Messenger extends React.Component {
             this.props.userId.id
           }`
         }
+      } else if (data.receiverInfo.receiverId === this.props.userId.id) {
+        obj = {
+          receiverInfo: {
+            receiverId: data.senderInfo.senderId,
+            receiverType: data.senderInfo.senderName,
+            receiverName: data.senderInfo.senderType
+          },
+          senderInfo: {
+            senderId: data.receiverInfo.receiverId,
+            senderName: data.receiverInfo.receiverName,
+            senderType: data.receiverInfo.receiverType
+          },
+          message: this.state.message,
+          conversationId: data.conversationId
+        }
+      } else {
+        obj = {
+          receiverInfo: {
+            receiverId: data.senderInfo.senderId,
+            receiverType: data.senderInfo.senderName,
+            receiverName: data.senderInfo.senderType
+          },
+          senderInfo: {
+            senderId: data.senderInfo.senderId,
+            senderName: data.senderInfo.senderName,
+            senderType: data.senderInfo.senderType
+          },
+          message: this.state.message,
+          conversationId: data.conversationId
+        }
       }
     }
-    console.log(obj)
-    // } else if (this.props.userId.userType === 'Expert') {
-    //   if (this.props.getConnect.userType === 'Farmer') {
-    //     obj = {
-    //       // ce
-    //       // fe
-    //       receiverInfo: {
-    //         receiverId: this.props.getConnect.user_id,
-    //         receiverType: this.props.getConnect.userType,
-    //         receiverName: this.props.getConnect.user_name
-    //       },
-    //       senderInfo: {
-    //         senderId: this.props.userId.id,
-    //         senderName: this.props.userId.name,
-    //         senderType: this.props.userId.userType
-    //       },
-    //       message: this.state.message,
-    //       conversationId: `${this.props.getConnect.user_id}${
-    //         this.props.userId.id
-    //       }`
-    //     }
-    //   } else if (this.props.getConnect.userType === 'Company') {
-    //     obj = {
-    //       // ce
-    //       // fe
-    //       receiverInfo: {
-    //         receiverId: this.props.getConnect.user_id,
-    //         receiverType: this.props.getConnect.userType,
-    //         receiverName: this.props.getConnect.user_name
-    //       },
-    //       senderInfo: {
-    //         senderId: this.props.userId.id,
-    //         senderName: this.props.userId.name,
-    //         senderType: this.props.userId.userType
-    //       },
-    //       message: this.state.message,
-    //       conversationId: `${this.props.getConnect.user_id}${
-    //         this.props.userId.id
-    //       }`
-    //     }
-    //   }
-    // } else if (this.props.userId.userType === 'Buyer') {
-    //   if (this.props.getConnect.userType === 'Farmer') {
-    //     obj = {
-    //       // cb
-    //       // fb
 
-    //       receiverInfo: {
-    //         receiverId: this.props.getConnect.user_id,
-    //         receiverType: this.props.getConnect.userType,
-    //         receiverName: this.props.getConnect.user_name
-    //       },
-    //       senderInfo: {
-    //         senderId: this.props.userId.id,
-    //         senderName: this.props.userId.name,
-    //         senderType: this.props.userId.userType
-    //       },
-    //       message: this.state.message,
-    //       conversationId: `${this.props.getConnect.user_id}${
-    //         this.props.userId.id
-    //       }`
-    //     }
-    //   } else if (this.props.getConnect.userType === 'Company') {
-    //     obj = {
-    //       // cb
-    //       // fb
+    // console.log(obj)
+    else if (this.props.userId.userType === 'Expert') {
+      if (this.props.getConnect.userType === 'Farmer') {
+        obj = {
+          // ce
+          // fe
+          receiverInfo: {
+            receiverId: this.props.getConnect.user_id,
+            receiverType: this.props.getConnect.userType,
+            receiverName: this.props.getConnect.user_name
+          },
+          senderInfo: {
+            senderId: this.props.userId.id,
+            senderName: this.props.userId.name,
+            senderType: this.props.userId.userType
+          },
+          message: this.state.message,
+          conversationId: `${this.props.getConnect.user_id}${
+            this.props.userId.id
+          }`
+        }
+      } else if (this.props.getConnect.userType === 'Company') {
+        obj = {
+          // ce
+          // fe
+          receiverInfo: {
+            receiverId: this.props.getConnect.user_id,
+            receiverType: this.props.getConnect.userType,
+            receiverName: this.props.getConnect.user_name
+          },
+          senderInfo: {
+            senderId: this.props.userId.id,
+            senderName: this.props.userId.name,
+            senderType: this.props.userId.userType
+          },
+          message: this.state.message,
+          conversationId: `${this.props.getConnect.user_id}${
+            this.props.userId.id
+          }`
+        }
+      } else if (data.receiverInfo.receiverId === this.props.userId.id) {
+        obj = {
+          receiverInfo: {
+            receiverId: data.senderInfo.senderId,
+            receiverType: data.senderInfo.senderName,
+            receiverName: data.senderInfo.senderType
+          },
+          senderInfo: {
+            senderId: data.receiverInfo.receiverId,
+            senderName: data.receiverInfo.receiverName,
+            senderType: data.receiverInfo.receiverType
+          },
+          message: this.state.message,
+          conversationId: data.conversationId
+        }
+      } else {
+        obj = {
+          receiverInfo: {
+            receiverId: data.senderInfo.senderId,
+            receiverType: data.senderInfo.senderName,
+            receiverName: data.senderInfo.senderType
+          },
+          senderInfo: {
+            senderId: data.senderInfo.senderId,
+            senderName: data.senderInfo.senderName,
+            senderType: data.senderInfo.senderType
+          },
+          message: this.state.message,
+          conversationId: data.conversationId
+        }
+      }
+    } else if (this.props.userId.userType === 'Company') {
+      if (this.props.storeMessage.userType === 'Farmer') {
+        obj = {
+          // fc
+          // bc
+          // ec
+          receiverInfo: {
+            receiverId: this.props.storeMessage.senderId,
+            receiverType: this.props.storeMessage.userType,
+            receiverName: this.props.storeMessage.name
+          },
+          senderInfo: {
+            senderId: this.props.userId.id,
+            senderName: this.props.userId.name,
+            senderType: this.props.userId.userType
+          },
+          message: this.state.message,
+          conversationId: `${this.props.storeMessage.senderId}${
+            this.props.userId.id
+          }`
+        }
+      } else if (this.props.storeMessage.userType === 'Expert') {
+        obj = {
+          // cb
+          // fb
 
-    //       receiverInfo: {
-    //         receiverId: this.props.getConnect.user_id,
-    //         receiverType: this.props.getConnect.userType,
-    //         receiverName: this.props.getConnect.user_name
-    //       },
-    //       senderInfo: {
-    //         senderId: this.props.userId.id,
-    //         senderName: this.props.userId.name,
-    //         senderType: this.props.userId.userType
-    //       },
-    //       message: this.state.message,
-    //       conversationId: `${this.props.getConnect.user_id}${
-    //         this.props.userId.id
-    //       }`
-    //     }
-    //   }
-    // } else if (this.props.userId.userType === 'Company') {
-    //   if (this.props.storeMessage.userType === 'Farmer') {
-    //     obj = {
-    //       // fc
-    //       // bc
-    //       // ec
-    //       receiverInfo: {
-    //         receiverId: this.props.storeMessage.senderId,
-    //         receiverType: this.props.storeMessage.userType,
-    //         receiverName: this.props.storeMessage.name
-    //       },
-    //       senderInfo: {
-    //         senderId: this.props.userId.id,
-    //         senderName: this.props.userId.name,
-    //         senderType: this.props.userId.userType
-    //       },
-    //       message: this.state.message,
-    //       conversationId: `${this.props.storeMessage.senderId}${
-    //         this.props.userId.id
-    //       }`
-    //     }
-    //   } else if (this.props.storeMessage.userType === 'Expert') {
-    //     obj = {
-    //       // cb
-    //       // fb
-
-    //       receiverInfo: {
-    //         receiverId: this.props.storeMessage.senderId,
-    //         receiverType: this.props.storeMessage.userType,
-    //         receiverName: this.props.storeMessage.name
-    //       },
-    //       senderInfo: {
-    //         senderId: this.props.userId.id,
-    //         senderName: this.props.userId.name,
-    //         senderType: this.props.userId.userType
-    //       },
-    //       message: this.state.message,
-    //       conversationId: `${this.props.userId.id}${
-    //         this.props.storeMessage.senderId
-    //       }`
-    //     }
-    //   } else if (this.props.storeMessage.userType === 'Buyer') {
-    //     obj = {
-    //       receiverInfo: {
-    //         receiverId: this.props.storeMessage.senderId,
-    //         receiverType: this.props.storeMessage.userType,
-    //         receiverName: this.props.storeMessage.name
-    //       },
-    //       senderInfo: {
-    //         senderId: this.props.userId.id,
-    //         senderName: this.props.userId.name,
-    //         senderType: this.props.userId.userType
-    //       },
-    //       message: this.state.message,
-    //       conversationId: `${this.props.userId.id}${
-    //         this.props.storeMessage.senderId
-    //       }`
-    //     }
-    //   }
-    // }
+          receiverInfo: {
+            receiverId: this.props.storeMessage.senderId,
+            receiverType: this.props.storeMessage.userType,
+            receiverName: this.props.storeMessage.name
+          },
+          senderInfo: {
+            senderId: this.props.userId.id,
+            senderName: this.props.userId.name,
+            senderType: this.props.userId.userType
+          },
+          message: this.state.message,
+          conversationId: `${this.props.userId.id}${
+            this.props.storeMessage.senderId
+          }`
+        }
+      } else if (this.props.storeMessage.userType === 'Buyer') {
+        obj = {
+          receiverInfo: {
+            receiverId: this.props.storeMessage.senderId,
+            receiverType: this.props.storeMessage.userType,
+            receiverName: this.props.storeMessage.name
+          },
+          senderInfo: {
+            senderId: this.props.userId.id,
+            senderName: this.props.userId.name,
+            senderType: this.props.userId.userType
+          },
+          message: this.state.message,
+          conversationId: `${this.props.userId.id}${
+            this.props.storeMessage.senderId
+          }`
+        }
+      } else if (data.receiverInfo.receiverId === this.props.userId.id) {
+        obj = {
+          receiverInfo: {
+            receiverId: data.senderInfo.senderId,
+            receiverType: data.senderInfo.senderName,
+            receiverName: data.senderInfo.senderType
+          },
+          senderInfo: {
+            senderId: data.receiverInfo.receiverId,
+            senderName: data.receiverInfo.receiverName,
+            senderType: data.receiverInfo.receiverType
+          },
+          message: this.state.message,
+          conversationId: data.conversationId
+        }
+      } else {
+        obj = {
+          receiverInfo: {
+            receiverId: data.senderInfo.senderId,
+            receiverType: data.senderInfo.senderName,
+            receiverName: data.senderInfo.senderType
+          },
+          senderInfo: {
+            senderId: data.senderInfo.senderId,
+            senderName: data.senderInfo.senderName,
+            senderType: data.senderInfo.senderType
+          },
+          message: this.state.message,
+          conversationId: data.conversationId
+        }
+      }
+    }
     this.props.connectSocket(obj)
   }
   render () {
@@ -447,10 +527,10 @@ class Messenger extends React.Component {
                             width: '100%'
                           }}
                         >
-                          {console.log(
+                          {/* {console.log(
                             'Message User ',
                             item.senderInfo.senderName
-                          )}
+                          )} */}
                           <Avatar
                             alt='Ammar'
                             src={require('../images/ammar.jpg')}
@@ -563,7 +643,7 @@ class Messenger extends React.Component {
                 <Button
                   color='primary'
                   style={{ width: '20%', fontSize: '24px' }}
-                  onClick={() => this.sendMessage()}
+                  onClick={() => this.sendMessage(this.props.userSelectedMsg)}
                 >
                   SEND
                 </Button>
@@ -583,19 +663,24 @@ function mapDispatchToProps (dispatch) {
     },
     getUserMessage: data => {
       dispatch(getAllMessage(data))
+    },
+    userMsgNull: () => {
+      dispatch(userSelectMsgNull())
     }
   }
 }
 
 function mapStateToProps (state) {
   // console.log(state.companyReducer.connectMsg)
-  console.log(state.authReducer.currentUserData.user)
+  // console.log(state.authReducer.currentUserData.user)
+  console.log(state.messageReducer.selectUserFromList)
   return {
     userId: state.authReducer.currentUserData.user,
     msgList: state.messageReducer.allMsgList,
     getConnect: state.messageReducer.userSelect,
     storeMessage: state.companyReducer.connectMsg,
-    loader: state.companyReducer.loader
+    loader: state.companyReducer.loader,
+    userSelectedMsg: state.messageReducer.selectUserFromList
   }
 }
 export default compose(

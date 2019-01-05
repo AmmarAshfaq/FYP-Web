@@ -37,10 +37,9 @@ export default (state = INITIAL_STATE, action) => {
       case ActionTypes.EMAIL_EMPTY:
         return { ...state, emailData: {} }
         break;
-    // case ActionTypes.FETCH_MESSAGE:
-    //   return { ...state, message: action.payload }
+   
     case 'SAVE_STORE_STATE':
-    // return Object.assign({}, action.state);
+  
     return {...state}
     default:
       return state

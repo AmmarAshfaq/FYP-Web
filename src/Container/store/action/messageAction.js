@@ -4,16 +4,11 @@ const ROOT_URL = 'http://localhost:8080'
 let getToken
 
 export function ConnectWithSocket (data) {
-  // let data = {
-  //   conversationId: 'F1'
-  // }
-  // console.log(data)
+  
   return dispatch => {
     console.log(data)
-    // console.log('Connect with server');
     socket.emit('message', data)
     socket.on(data.conversationId, function (obj) {
-      // console.log(obj)
       dispatch(listenMsg(obj))
     })
   }
@@ -22,7 +17,6 @@ export function ConnectWithSocket (data) {
 export function getAllMessage (obj) {
   getToken = localStorage.getItem('token')
   
-  console.log(obj)
   return async dispatch => {
     dispatch(processLoad())
     const result = await fetch(
@@ -33,11 +27,9 @@ export function getAllMessage (obj) {
           'Content-Type': 'application/json; charset=utf-8',
           authorization: getToken
         }
-        // body:JSON.stringify()
       }
     )
     const getData = await result.json()
-    // console.log(getData)
     dispatch(getAllMsg(getData))
     dispatch(processDone())
   }
@@ -50,14 +42,14 @@ function getAllMsg (data) {
   }
 }
 
-export function getSpecificMessages (obj) {
+export function getSpecificMessages (objId ,obj ) {
   getToken = localStorage.getItem('token')
 
   console.log(obj)
   return async dispatch => {
     dispatch(processLoad())
     const result = await fetch(
-      `${ROOT_URL}/privateMessage/conversation/${obj}`,
+      `${ROOT_URL}/privateMessage/conversation/${objId}`,
       {
         method: 'GET',
         headers: {
@@ -68,7 +60,7 @@ export function getSpecificMessages (obj) {
     )
     const getData = await result.json()
     console.log(getData)
-    dispatch(getAllSpecificMsg(getData))
+    dispatch(getAllSpecificMsg(getData,obj))
     dispatch(processDone())
   }
 }
@@ -84,10 +76,11 @@ function processDone () {
     type: ActionTypes.LOAD_DONE
   }
 }
-function getAllSpecificMsg (data) {
+function getAllSpecificMsg (data,obj) {
   return {
     type: ActionTypes.GET_ALL_SPECIFIC,
-    payload: data
+    payload: data,
+    userSelectForMsg:obj
   }
 }
 
@@ -104,6 +97,14 @@ export function startMessage (obj) {
     dispatch({
       type: ActionTypes.START_MESSAGE,
       payload: obj
+    })
+  }
+}
+
+export function userSelectMsgNull(){
+  return dispatch =>{
+    dispatch({
+      type:ActionTypes.START_MESSAGE_NULL
     })
   }
 }
