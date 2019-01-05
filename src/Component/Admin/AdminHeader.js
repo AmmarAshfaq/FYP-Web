@@ -5,13 +5,10 @@ import {
   Typography,
   Button,
   Avatar,
-  Badge
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import { browserHistory } from 'react-router'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-// import { changeNavbar } from '../../Container/store/action/action'
 import { signoutUser } from '../../Container/store/action/authAction'
 
 
@@ -31,7 +28,8 @@ class AdminHeader extends Component {
  
   onClickLogout = passParam => {
     // this.props.changeRoute(passParam)
-    this.props.signoutUserComp()
+    console.log(passParam)
+    this.props.signoutUserComp(passParam)
   }
 
   render () {
@@ -82,8 +80,8 @@ function mapDispatchToProp (dispatch) {
     // changeRoute: data => {
     //   dispatch(changeNavbar(data))
     // },
-    signoutUserComp: () => {
-      dispatch(signoutUser())
+    signoutUserComp: (obj) => {
+      dispatch(signoutUser(obj))
     }
   }
 }

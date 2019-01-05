@@ -1,28 +1,19 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import Input from '@material-ui/core/Input'
-import Badge from '@material-ui/core/Badge'
-import MenuItem from '@material-ui/core/MenuItem'
-import Menu from '@material-ui/core/Menu'
+
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import { withStyles } from '@material-ui/core/styles'
-import MenuIcon from '@material-ui/icons/Menu'
+
 import SearchIcon from '@material-ui/icons/Search'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import MailIcon from '@material-ui/icons/Mail'
-import NotificationsIcon from '@material-ui/icons/Notifications'
+
 import MoreIcon from '@material-ui/icons/MoreVert'
 import { Grid, Paper, Avatar } from '@material-ui/core'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import Divider from '@material-ui/core/Divider'
-import ImageIcon from '@material-ui/icons/Image'
+
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import classNames from 'classnames'
@@ -449,10 +440,11 @@ class Messenger extends React.Component {
     this.props.connectSocket(obj)
   }
   render () {
-    const { anchorEl, mobileMoreAnchorEl } = this.state
+    const { anchorEl, 
+      
+    } = this.state
     const { classes } = this.props
     const isMenuOpen = Boolean(anchorEl)
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
 
     return (
       <div className={classes.root}>

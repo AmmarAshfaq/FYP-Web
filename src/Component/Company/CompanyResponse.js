@@ -32,8 +32,8 @@ class CompanyResponse extends Component {
     let arrMerge2 = arrMerge1.concat(
       this.props.allCompanyResponse.fertilizerArray
     )
-    let arrSort = []
-    let filterArr = arrMerge2.filter(item => {
+    let arrSort = [];
+    arrMerge2.filter(item => {
       item.response.map(value => {
         if (value._id) {
           arrSort.push(item)
@@ -119,7 +119,7 @@ class CompanyResponse extends Component {
                       <Typography gutterBottom component='h2' variant='h1'>
                         Product Image
                       </Typography>
-                      <img src={item.image_url} width='400' height='200' />
+                      <img src={item.image_url} width='400' height='200' alt="loading.."/>
                     </Grid>
                     <Grid item>
                       <Typography style={{ cursor: 'pointer' }}>

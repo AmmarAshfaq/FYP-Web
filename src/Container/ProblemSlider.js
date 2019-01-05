@@ -29,9 +29,7 @@ const styles = theme => ({
 })
 
 class ProblemSlider extends React.Component {
-  constructor (props) {
-    super(props)
-  }
+ 
 
   goToProblem = (selectId, type) => {
     console.log(selectId)
@@ -57,7 +55,8 @@ class ProblemSlider extends React.Component {
     // browserHistory.push('/specificCrop')
   }
   render () {
-    const { classes, typeSelect, info } = this.props
+    const { classes, 
+      info } = this.props
 
     const settings = {
       // dots: true,
@@ -71,6 +70,7 @@ class ProblemSlider extends React.Component {
     }
     console.log(this.props.info)
     return (
+      <div>
       <Slider {...settings}>
         {this.props.info.map((data, ind) => (
           <Card className={classes.card} keys={ind}>
@@ -87,6 +87,7 @@ class ProblemSlider extends React.Component {
           </Card>
         ))}
       </Slider>
+      </div>
     )
   }
 }

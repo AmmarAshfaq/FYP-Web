@@ -18,7 +18,6 @@ export default (state = INITIAL_STATE, action) => {
         currentUserData: action.currentUser
       }
 
-      break
       case ActionTypes.UN_AUTH_PROCESS:
       return {
         ...state,
@@ -26,17 +25,12 @@ export default (state = INITIAL_STATE, action) => {
       }
     case ActionTypes.UNAUTH_USER:
       return { ...state, authenticated: false }
-      break
     case ActionTypes.AUTH_ERROR:
       return { ...state, error: action.payload }
-      break
     case ActionTypes.EMAIL_SEND:
       return { ...state, emailData: action.payload }
-      break;
-      break
       case ActionTypes.EMAIL_EMPTY:
         return { ...state, emailData: {} }
-        break;
    
     case 'SAVE_STORE_STATE':
   

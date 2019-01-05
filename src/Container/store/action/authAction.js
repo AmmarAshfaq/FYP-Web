@@ -21,7 +21,7 @@ export function signinUser (obj) {
       body: JSON.stringify(data)
     })
     const getData = await result.json()
-
+console.log(getData)
     if (getData.user) {
       if (getData.user.userType === 'Company') {
         localStorage.setItem('token', getData.token)
@@ -48,7 +48,16 @@ export function signinUser (obj) {
         dispatch(signupSucced(getData))
         browserHistory.push('/buyermain')
         dispatch(changeNavbar(`${getData.user.userType}Home`))
-      } else {
+      }
+      else if(getData.user.userType === 'Admin'){
+        /* Admin Login */
+        localStorage.setItem('token', getData.token)
+        dispatch(signupSucced(getData))
+
+        browserHistory.push('/adminmain')
+        dispatch(changeNavbar(`${getData.user.userType}Home`))
+      } 
+      else {
         browserHistory.push('/login')
       }
     } else if (getData.error) {
@@ -67,7 +76,6 @@ export function loaderOffProcess () {
 }
 
 export function emailSendAction (obj) {
-  console.log(obj)
   return async dispatch => {
     const result = await fetch(`${ROOT_URL}/contactForm`, {
       method: 'POST',
@@ -98,9 +106,7 @@ export function emailSuccessEmpty(){
 
   }
 }
-// here we change when logout
 export function signoutUser (data) {
-  console.log(data)
   return dispatch => {
     localStorage.removeItem('token')
     browserHistory.push('/login')
@@ -110,7 +116,6 @@ export function signoutUser (data) {
   }
 }
 export function signupUser (obj) {
-  // console.log(obj)
   let data = new FormData()
   data.append('image_url', obj.image_url)
   data.append('name', obj.name)
@@ -125,7 +130,6 @@ export function signupUser (obj) {
       method: 'POST',
       headers: {
         Accept: 'application/json'
-        // 'Content-Type':'multipart/form-data'
       },
       body: data
     })
@@ -140,7 +144,6 @@ export function signupUser (obj) {
         browserHistory.push('/companymain')
 
         dispatch(changeNavbar(`${getData.user.userType}Home`))
-        // dispatch(signupSucced(getData))
       } else if (getData.user.userType === 'Farmer') {
         localStorage.setItem('token', getData.token)
         dispatch(signupSucced(getData))

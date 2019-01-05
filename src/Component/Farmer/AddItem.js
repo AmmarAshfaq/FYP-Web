@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Grid, Paper } from '@material-ui/core'
-import { browserHistory } from 'react-router'
 import TableGrid from '../../Container/FarmerTableGrid'
 import { withStyles } from '@material-ui/core/styles'
 import { compose } from 'redux'
@@ -15,12 +14,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import FarmerProblemData from '../AllData/FarmerProblemData'
 import FarmerCropData from '../AllData/FarmerCropData'
 class AddedItem extends Component {
-  constructor () {
-    super()
-    // this.state = {
-    //   change: false
-    // }
-  }
+ 
   componentWillMount () {
     this.props.getAddedCrop(this.props.farmerId)
     this.props.getAddedProblem(this.props.farmerId)
@@ -43,9 +37,7 @@ class AddedItem extends Component {
   //   // })
   // }
   render () {
-    // console.log(this.props.cropList)
-    // console.log(this.state.change)
-    // console.log('render called')
+ 
     const { classes } = this.props
     return (
       <div style={{ marginTop: 100, flexGrow: 1 }}>

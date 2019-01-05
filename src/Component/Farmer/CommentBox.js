@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react'
-import { Grid, Paper, Typography, ButtonBase } from '@material-ui/core'
-import classNames from 'classnames'
+import { Grid,
+   Typography,
+   } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import ProblemSolution from '../../Container/ProblemSlider'
 import TextField from '@material-ui/core/TextField'
 import Avatar from '@material-ui/core/Avatar'
 import { compose } from 'redux'

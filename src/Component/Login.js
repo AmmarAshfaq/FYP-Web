@@ -8,8 +8,6 @@ import {
   loaderOffProcess
 } from '../Container/store/action/authAction'
 import Alert from 'react-s-alert'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import NativeSelect from '@material-ui/core/NativeSelect'
 import Loader from 'react-loader-spinner'
 
 const style = {

@@ -26,7 +26,6 @@ export function addCropAction (obj) {
     })
     const getData = await result.json()
     // console.log(getData)
-    // dispatch(addToBuyerNotification(getData))
     if (getData.error) {
       console.log(getData.error)
       dispatch(processDone())
@@ -79,12 +78,12 @@ function processDone () {
     type: ActionTypes.PROCESS_DONE
   }
 }
-function addToBuyerNotification (obj) {
-  return {
-    type: ActionTypes.NOTIFICATION_CROP,
-    payload: obj
-  }
-}
+// function addToBuyerNotification (obj) {
+//   return {
+//     type: ActionTypes.NOTIFICATION_CROP,
+//     payload: obj
+//   }
+// }
 export function addProblemAction (obj) {
   getToken = localStorage.getItem('token')
 

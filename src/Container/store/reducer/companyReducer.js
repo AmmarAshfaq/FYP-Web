@@ -25,49 +25,43 @@ export default (state = INITIAL_STATE, action) => {
       // console.log(arr)
       // state.fertilizerArray.push(action.payload)
       // console.log(state.fertilizerArray)
-      var arrValue = state.fertilizerArray
-      console.log(arrValue)
-      var arrObj = action.payload
-      arrValue.push(arrObj)
-      console.log(arrValue)
+      var arrFer = state.fertilizerArray
+      console.log(arrFer)
+      var arrObjFer = action.payload
+      arrFer.push(arrObjFer)
+      console.log(arrFer)
       // console.log(arrValue)
       return {
         ...state,
-        fertilizerArray: arrValue
+        fertilizerArray: arrFer
       }
-      break
     case ActionTypes.ADD_MACHINERY:
-      var arrValue = state.machineryArray
-      console.log(arrValue)
-      var arrObj = action.payload
-      arrValue.push(arrObj)
+      var arrMach = state.machineryArray
+      console.log(arrMach)
+      var arrObjMac = action.payload
+      arrMach.push(arrObjMac)
 
       return {
         ...state,
-        machineryArray: arrValue
+        machineryArray: arrMach
       }
-      break
     case ActionTypes.ADD_PESTICIDE:
-      var arrValue = state.pesticideArray
-      console.log(arrValue)
+      var arrPes = state.pesticideArray
+      console.log(arrPes)
       console.log(action.payload)
-      var arrObj = action.payload
-      arrValue.push(arrObj)
+      var arrObjPes = action.payload
+      arrPes.push(arrObjPes)
 
       return {
         ...state,
-        pesticideArray: arrValue
+        pesticideArray: arrPes
       }
-      break
     case ActionTypes.GET_FERTILIZER:
       return { ...state, fertilizerArray: action.payload }
-      break
     case ActionTypes.GET_MACHINERY:
       return { ...state, machineryArray: action.payload }
-      break
     case ActionTypes.GET_PESTICIDE:
       return { ...state, pesticideArray: action.payload }
-      break
     case ActionTypes.UPDATE_FERTILIZER:
       // console.log(action.payload)
       // var arr = state.fertilizerArray.map((data,ind)=>{
@@ -91,7 +85,6 @@ export default (state = INITIAL_STATE, action) => {
           return data
         })
       }
-      break
     case ActionTypes.UPDATE_MACHINERY:
       return {
         ...state,
@@ -102,7 +95,6 @@ export default (state = INITIAL_STATE, action) => {
           return data
         })
       }
-      break
     case ActionTypes.UPDATE_PESTICIDE:
       return {
         ...state,
@@ -113,73 +105,61 @@ export default (state = INITIAL_STATE, action) => {
           return data
         })
       }
-      break
     case ActionTypes.GET_ALL_FERTILIZER:
       return {
         ...state,
         allFertilizerData: action.payload
       }
-      break
     case ActionTypes.GET_ALL_MACHINERY:
       return {
         ...state,
         allMachineryData: action.payload
       }
-      break
     case ActionTypes.GET_ALL_PESTICIDE:
       return {
         ...state,
         allPesticideData: action.payload
       }
-      break
     case ActionTypes.GET_SPECIFIC_FERTILIZER:
       return {
         ...state,
         fertilizerProduct: action.payload
       }
-      break
     case ActionTypes.GET_SPECIFIC_FERTILIZER:
       return {
         ...state,
         fertilizerProduct: action.payload
       }
-      break
     case ActionTypes.GET_SPECIFIC_FERTILIZER:
       return {
         ...state,
         fertilizerProduct: action.payload
       }
-      break
       case ActionTypes.STORE_FOR_MSG:
         return {
           ...state,
           connectMsg: action.payload
         }
-        break
         case ActionTypes.PROCESS_PROGRESS:
         return {
           ...state,
           upload: true
         }
-        break 
         case ActionTypes.PROCESS_DONE:
         return{
           ...state,
           upload:false
         }
-        break
         case ActionTypes.ERROR_MESSAGE:
           return {
             ...state,
             error: action.payload
           }
-          break
           case ActionTypes.ERROR_NULL:
             return {
               ...state,
               error: {}
             }
-            break
             case ActionTypes.DELETE_FERTILIZER:
               return {
                 ...state,
@@ -187,7 +167,6 @@ export default (state = INITIAL_STATE, action) => {
                   return itemVal._id !== action.payload._id
                 })
               }
-              break
               case ActionTypes.DELETE_MACHINERY:
                 return {
                   ...state,
@@ -195,7 +174,6 @@ export default (state = INITIAL_STATE, action) => {
                     return itemVal._id !== action.payload._id
                   })
                 }
-                break
                 case ActionTypes.DELETE_PESTICIDE:
                   return {
                     ...state,

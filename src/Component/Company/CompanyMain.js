@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Grid, Paper } from '@material-ui/core'
-import { browserHistory } from 'react-router'
 import TableGrid from '../../Container/TableGrid'
 import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'

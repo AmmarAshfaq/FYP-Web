@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import {
-  Paper,
   Table,
   TableHead,
   TableRow,
   TableBody,
   TableCell,
-  Grid,
   Typography
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
@@ -69,12 +67,7 @@ const styles = theme => ({
   }
 })
 class TableGrid extends Component {
-  constructor (props) {
-    super(props)
-    // this.state = {
-    //   change: false
-    // }
-  }
+ 
   handleClickOpen = (obj, index) => {
     let objSet = {
       toggle: true,

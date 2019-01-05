@@ -6,9 +6,7 @@ export default function (ComposedComponent) {
   
   class Authentication extends Component {
 
-    constructor(){
-      super()
-    }
+  
     static contextTypes = {
       router: PropTypes.object
     }

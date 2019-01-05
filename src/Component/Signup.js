@@ -3,7 +3,6 @@ import { TextField, Button } from '@material-ui/core'
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { signupUser,authError } from '../Container/store/action/authAction'
-import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import { selectManu } from '../Container/store/action/action'
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -69,7 +68,7 @@ class SignUp extends React.Component {
       confirmPassword:'',
       name:'',
       image_url:null,
-      userType:''
+      userType:'Admin'
     })
   }
   updateValue = (ev, target) => {
@@ -109,6 +108,7 @@ class SignUp extends React.Component {
             style={styles.formControl}
           >
             <option value="">Select</option>
+
             <option value="Farmer">Farmer</option>
             <option value="Company">Company</option>
             <option value="Expert">Expert</option>

@@ -4,13 +4,9 @@ import {
   Typography,
   Grid,
   Avatar,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText
+
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import StarIcon from '@material-ui/icons/Star'
 import classNames from 'classnames'
 import { compose } from 'redux'
 import { connect } from 'react-redux'

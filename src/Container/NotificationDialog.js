@@ -4,11 +4,7 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import { browserHistory } from 'react-router'
 import Avatar from '@material-ui/core/Avatar'
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
-import { compose } from 'redux'
-import { connect } from 'react-redux'
+
 const options = ['Ammar', 'Junaid', 'Meraj', 'Ubaid', 'Shams', 'Aamir'];
 const ITEM_HEIGHT = 48;
 

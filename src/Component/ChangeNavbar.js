@@ -9,6 +9,7 @@ import AdminHeader from './Admin/AdminHeader'
  class ChangeNavbar extends Component{
 
   render(){
+    console.log(this.props.componentValue)
   return (
     <Fragment>
       {localStorage.getItem('token')  ?

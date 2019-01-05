@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Hidden, { Grid, Paper, Typography } from '@material-ui/core'
+import  { Grid, Paper, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 import CommentBox from '../Component/Farmer/CommentBox'
@@ -36,10 +36,7 @@ const styles = theme => ({
   }
 })
 class ProblemSolution extends Component {
-  constructor () {
-    super()
-    // this.props.location.state.selectId
-  }
+ 
   componentWillMount () {
     // console.log("chal")
     this.props.getProblemDetail(this.props.location.state.selectId)

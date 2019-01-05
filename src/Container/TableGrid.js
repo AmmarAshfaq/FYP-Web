@@ -68,10 +68,7 @@ const styles = theme => ({
   }
 })
 class TableGrid extends Component {
-  constructor (props) {
-    super(props)
-    // console.log(this.props.data)
-  }
+  
   handleClickOpen = (obj, index) => {
     let objSet = {
       toggle: true,

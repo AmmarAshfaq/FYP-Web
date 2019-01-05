@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import croprates from '../AllData/CropRates'
-import Search from '@material-ui/icons/Search'
-import KeyBoardArrow from '@material-ui/icons/KeyboardArrowDown'
+
 import MachinerySlider from '../../Container/ProductSlider'
 import FarmerProblem from '../AllData/ProblemData'
 import ImgData from '../AllData/MachineryData'
@@ -23,9 +22,6 @@ import { loaderOffProcess } from '../../Container/store/action/authAction'
 
 import classNames from 'classnames'
 import {
-  Button,
-  Menu,
-  MenuItem,
   Paper,
   Table,
   TableHead,
@@ -34,8 +30,6 @@ import {
   TableCell,
   Grid,
   Typography,
-  TextField,
-  InputAdornment
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import {
@@ -147,7 +141,8 @@ class ExpertMain extends Component {
 
   render () {
     const { classes } = this.props
-    const { selectList, city, search, anchorEl } = this.state
+    const { selectList,
+      } = this.state
     let i = 0
     return (
       <div className={classes.root}>

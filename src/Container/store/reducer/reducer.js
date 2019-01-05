@@ -14,11 +14,9 @@ export default (state = INITIAL_STATE, action) => {
     case ActionTypes.MENU:
       return { ...state, item: action.itemSelect }
 
-      break
     case ActionTypes.CHANGE:
       return { ...state, componentUpdate: action.componentList }
 
-      break
     case ActionTypes.OPEN:
       return {
         ...state,
@@ -28,7 +26,6 @@ export default (state = INITIAL_STATE, action) => {
         addId: action.itemSelect.selectId
       }
 
-      break
     case ActionTypes.WEATHER_GET:
       return { ...state, weatherData: action.payload }
     

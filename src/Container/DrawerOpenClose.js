@@ -5,8 +5,6 @@ import {
   Typography,
   Button,
   Avatar,
-  Menu,
-  MenuItem
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import { browserHistory } from 'react-router'
@@ -22,16 +20,9 @@ class DrawerOpenClose extends Component {
     super()
     this.state = {
       toggle: 'Main',
-      achorEl: null
     }
   }
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget })
-  }
-
-  handleClose = () =>{
-    this.setState({anchorEl:null})
-  }
+ 
  
   changeScreen = argument => {
    
@@ -50,7 +41,6 @@ class DrawerOpenClose extends Component {
   }
   render () {
     const { classes } = this.props
-    const { anchorEl } = this.state
     return (
       <Fragment>
         <AppBar position='fixed' style={{ flexGrow: 1 ,backgroundColor:'#00806d'}} >

@@ -2,12 +2,9 @@ import React, { Component, Fragment } from 'react'
 import ChangeNavbar from './Component/ChangeNavbar'
 import Footer from './Container/Footer'
 import Routers from './Routes'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import { Provider } from 'react-redux'
 // import {store,persistor} from './Container/store'
 import store from './Container/store'
-import { PersistGate } from 'redux-persist/es/integration/react'
-import { askForPermissioToReceiveNotifications } from './push-notification'
 import 'react-s-alert/dist/s-alert-default.css'
 import 'react-s-alert/dist/s-alert-css-effects/slide.css'
 import Alert from 'react-s-alert'
@@ -53,9 +50,4 @@ export default class App extends Component {
     )
   }
 }
-{
-  /* <PersistGate loading={null} persistor={persistor}> */
-}
-{
-  /* </PersistGate> */
-}
+

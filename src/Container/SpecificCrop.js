@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Hidden, { Grid, Paper, Typography } from '@material-ui/core'
+import  { Grid, Paper, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 import CommentBox from '../Component/Farmer/CommentBox'

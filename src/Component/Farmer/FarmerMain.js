@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import croprates from '../AllData/CropRates'
-import Search from '@material-ui/icons/Search'
-import KeyBoardArrow from '@material-ui/icons/KeyboardArrowDown'
 import MachinerySlider from '../../Container/ProductSlider'
 import ProblemData from '../AllData/ProblemData'
 import ImgData from '../AllData/MachineryDataCompany'
@@ -12,11 +10,9 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import 'weather-icons/css/weather-icons.css'
 import { weatherData } from '../../Container/store/action/weatherAction'
-import FormHelperText from '@material-ui/core/FormHelperText'
 import FormControl from '@material-ui/core/FormControl'
 import NativeSelect from '@material-ui/core/NativeSelect'
 import Weather from '../../Container/Weather'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import { loaderOffProcess } from '../../Container/store/action/authAction'
 import Loader from 'react-loader-spinner'
 import {
@@ -32,9 +28,6 @@ import {
 import classNames from 'classnames'
 
 import {
-  Button,
-  Menu,
-  MenuItem,
   Paper,
   Table,
   TableHead,
@@ -42,9 +35,7 @@ import {
   TableBody,
   TableCell,
   Grid,
-  Typography,
-  TextField,
-  InputAdornment
+  Typography
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 
@@ -107,7 +98,7 @@ const styles = theme => ({
     margin: theme.spacing.unit * 2
   },
   marginTopIncrease: {
-    marginTop: 130,
+    marginTop: 130
     // textAlign: 'center'
   }
 })
@@ -146,10 +137,9 @@ class FarmerMain extends Component {
     })
   }
 
- 
   render () {
     const { classes } = this.props
-    const { selectList, city, search, anchorEl } = this.state
+    const { selectList } = this.state
     let i = 0
     return (
       <div className={classes.root}>
@@ -179,7 +169,7 @@ class FarmerMain extends Component {
                             name='Select City'
                             className={classes.selectEmpty}
                           >
-                            <option value={'Karachi'}>Karachi</option>
+                            <option value={'Karachi'}>Karachi</option>a{' '}
                             <option value={'Lahore'}>Lahore</option>
                             <option value={'Hyderabad'}>Hyderabad</option>
                           </NativeSelect>
@@ -237,31 +227,29 @@ class FarmerMain extends Component {
                   </div>
                 </Paper>
                 <Paper className={classNames(classes.paper)}>
-                <div style={{ textAlign: 'center' }}>
-
-                  {!this.props.loader ? (
-                    <MachinerySlider
-                      info={this.props.allCompanyData.allFertilizerData}
-                      allDataFer={this.props.allCompanyData.allFertilizerData}
-                      typeSelect='Fertilizer'
-                    />
-                  ) : (
-                    <Loader type='Oval' color='#000' height={50} width={50} />
-                  )}
+                  <div style={{ textAlign: 'center' }}>
+                    {!this.props.loader ? (
+                      <MachinerySlider
+                        info={this.props.allCompanyData.allFertilizerData}
+                        allDataFer={this.props.allCompanyData.allFertilizerData}
+                        typeSelect='Fertilizer'
+                      />
+                    ) : (
+                      <Loader type='Oval' color='#000' height={50} width={50} />
+                    )}
                   </div>
                 </Paper>
                 <Paper className={classNames(classes.paper)}>
-                <div style={{ textAlign: 'center' }}>
-
-                  {!this.props.loader ? (
-                    <MachinerySlider
-                      info={this.props.allCompanyData.allPesticideData}
-                      allDataPes={this.props.allCompanyData.allPesticideData}
-                      typeSelect='Pesticide'
-                    />
-                  ) : (
-                    <Loader type='Oval' color='#000' height={50} width={50} />
-                  )}
+                  <div style={{ textAlign: 'center' }}>
+                    {!this.props.loader ? (
+                      <MachinerySlider
+                        info={this.props.allCompanyData.allPesticideData}
+                        allDataPes={this.props.allCompanyData.allPesticideData}
+                        typeSelect='Pesticide'
+                      />
+                    ) : (
+                      <Loader type='Oval' color='#000' height={50} width={50} />
+                    )}
                   </div>
                 </Paper>
               </Grid>
@@ -270,21 +258,20 @@ class FarmerMain extends Component {
 
           <Grid item xs={12}>
             <Paper className={[classes.paper, classes.marginTopIncrease]}>
-            <div style={{ textAlign: 'center' }}>
-
-              {!this.props.loader ? (
-                <ProblemSlider
-                  info={
-                    this.props.farmerData.cropArray
-                      ? this.props.farmerData.cropArray.concat(
-                        this.props.farmerData.problemArray
-                      )
-                      : null
-                  }
-                />
-              ) : (
-                <Loader type='Oval' color='#000' height={50} width={50} />
-              )}
+              <div style={{ textAlign: 'center' }}>
+                {!this.props.loader ? (
+                  <ProblemSlider
+                    info={
+                      this.props.farmerData.cropArray
+                        ? this.props.farmerData.cropArray.concat(
+                          this.props.farmerData.problemArray
+                        )
+                        : null
+                    }
+                  />
+                ) : (
+                  <Loader type='Oval' color='#000' height={50} width={50} />
+                )}
               </div>
             </Paper>
           </Grid>
