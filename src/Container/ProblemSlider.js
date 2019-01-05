@@ -10,8 +10,8 @@ import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 import { browserHistory } from 'react-router'
 import { getSpecificCrop } from './store/action/allAddItem'
-import {connect} from 'react-redux'
-import {compose} from 'redux';
+import { connect } from 'react-redux'
+import { compose } from 'redux'
 
 const styles = theme => ({
   card: {
@@ -33,9 +33,9 @@ class ProblemSlider extends React.Component {
     super(props)
   }
 
-  goToProblem = (selectId ,type) => {
+  goToProblem = (selectId, type) => {
     console.log(selectId)
-    this.props.typeSelect === 'Crop' 
+    this.props.typeSelect === 'Crop'
       ? browserHistory.push({
         pathname: '/ProductList',
         state: { typeCheck: this.props.typeSelect, display: this.props.info }
@@ -46,7 +46,8 @@ class ProblemSlider extends React.Component {
           state: { typeCheck: this.props.typeSelect, selectId: selectId }
         })
         : type === 'Crop'
-        ?this.cropFetch(selectId):null
+          ? this.cropFetch(selectId)
+          : null
   }
   cropFetch = id => {
     let obj = {
@@ -68,7 +69,7 @@ class ProblemSlider extends React.Component {
       autoplay: true,
       autoplaySpeed: 2000
     }
-console.log(this.props.info)
+    console.log(this.props.info)
     return (
       <Slider {...settings}>
         {this.props.info.map((data, ind) => (
@@ -78,7 +79,7 @@ console.log(this.props.info)
               className={classes.media}
               image={data.image_url}
               title='Contemplative Reptile'
-              onClick={this.goToProblem.bind(this, data._id,data.type)}
+              onClick={this.goToProblem.bind(this, data._id, data.type)}
             />
             <CardContent>
               <Typography component='p'>{data.name}</Typography>
@@ -89,11 +90,17 @@ console.log(this.props.info)
     )
   }
 }
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps (dispatch) {
   return {
-    getCrop : (obj)=>{
-dispatch(getSpecificCrop(obj))
+    getCrop: obj => {
+      dispatch(getSpecificCrop(obj))
     }
   }
 }
-export default compose(connect(null,mapDispatchToProps),withStyles(styles))(ProblemSlider)
+export default compose(
+  connect(
+    null,
+    mapDispatchToProps
+  ),
+  withStyles(styles)
+)(ProblemSlider)

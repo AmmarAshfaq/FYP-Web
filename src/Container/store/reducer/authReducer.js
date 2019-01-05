@@ -3,7 +3,8 @@ import ActionTypes from '../constant/constant'
 const INITIAL_STATE = {
   authenticated: false,
   currentUserData: {},
-  error:{}
+  error:{},
+  emailData:{}
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -28,7 +29,14 @@ export default (state = INITIAL_STATE, action) => {
       break
     case ActionTypes.AUTH_ERROR:
       return { ...state, error: action.payload }
+      break
+    case ActionTypes.EMAIL_SEND:
+      return { ...state, emailData: action.payload }
       break;
+      break
+      case ActionTypes.EMAIL_EMPTY:
+        return { ...state, emailData: {} }
+        break;
     // case ActionTypes.FETCH_MESSAGE:
     //   return { ...state, message: action.payload }
     case 'SAVE_STORE_STATE':

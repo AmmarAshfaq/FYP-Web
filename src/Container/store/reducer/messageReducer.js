@@ -3,7 +3,8 @@ import ActionTypes from '../constant/messageConstant'
 const INITIAL_STATE = {
   allUserList: [],
   allMsgList: [],
-  userSelect: {}
+  userSelect: {},
+  loader: false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -24,6 +25,11 @@ export default (state = INITIAL_STATE, action) => {
     case ActionTypes.START_MESSAGE:
       return { ...state, userSelect: action.payload }
       break
+    case ActionTypes.LOAD_PROCESS:
+      return { ...state, loader: true }
+      break
+    case ActionTypes.LOAD_DONE:
+      return { ...state, loader: false }
 
     default:
       return state

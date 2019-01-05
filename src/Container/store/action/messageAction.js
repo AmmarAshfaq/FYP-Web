@@ -21,9 +21,10 @@ export function ConnectWithSocket (data) {
 
 export function getAllMessage (obj) {
   getToken = localStorage.getItem('token')
-
+  
   console.log(obj)
   return async dispatch => {
+    dispatch(processLoad())
     const result = await fetch(
       `${ROOT_URL}/privateMessage/myconversations?id=${obj}`,
       {
@@ -38,6 +39,7 @@ export function getAllMessage (obj) {
     const getData = await result.json()
     // console.log(getData)
     dispatch(getAllMsg(getData))
+    dispatch(processDone())
   }
 }
 
@@ -53,6 +55,7 @@ export function getSpecificMessages (obj) {
 
   console.log(obj)
   return async dispatch => {
+    dispatch(processLoad())
     const result = await fetch(
       `${ROOT_URL}/privateMessage/conversation/${obj}`,
       {
@@ -66,9 +69,21 @@ export function getSpecificMessages (obj) {
     const getData = await result.json()
     console.log(getData)
     dispatch(getAllSpecificMsg(getData))
+    dispatch(processDone())
   }
 }
 
+function processLoad () {
+  return {
+    type: ActionTypes.LOAD_PROCESS
+  }
+}
+
+function processDone () {
+  return {
+    type: ActionTypes.LOAD_DONE
+  }
+}
 function getAllSpecificMsg (data) {
   return {
     type: ActionTypes.GET_ALL_SPECIFIC,

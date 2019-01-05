@@ -66,7 +66,9 @@ class Login extends React.Component {
   }
   showAlertMessage = message => {
     Alert.error(
-      message || this.props.errorAuthenticate.error.message || 'Something is wrong',
+      message ||
+        this.props.errorAuthenticate.error.message ||
+        'Something is wrong',
       {
         position: 'bottom-right',
         effect: 'slide',
@@ -75,6 +77,9 @@ class Login extends React.Component {
     )
   }
 
+  changeRoute = ()=>{
+    browserHistory.push('/changePassword')
+  }
   signIn = authenticate => {
     const { email, password } = this.state
     if (email.trim() !== '' && password.trim() !== '') {
@@ -116,12 +121,18 @@ class Login extends React.Component {
           {this.props.loader ? (
             <Loader type='Oval' color='#000' height={50} width={50} />
           ) : null}
-         
+
           <Button
             onClick={this.signIn.bind(this, 'companymain')}
             style={style.button}
           >
             LOGIN
+          </Button>
+          <Button
+            onClick={this.changeRoute.bind(this)}
+            style={style.button}
+          >
+          Forget Password
           </Button>
 
           <Button onClick={this.register} style={style.button}>

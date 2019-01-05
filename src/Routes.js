@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Router, Route, browserHistory } from 'react-router'
 import Main from './Component/Main'
 import Login from './Component/Login'
+import ChangePassword from './Component/ChangePassword'
+
 import SignUp from './Component/Signup'
 import BuyerMain from './Component/Buyer/BuyerMain'
 import ExpertMain from './Component/Expert/ExpertMain'
@@ -33,6 +35,8 @@ export default class Routers extends Component {
         <Route exact path='/' component={Main} />
         <Route path='/login' component={Login} />
         <Route path='/signup' component={SignUp} />
+        <Route path='/changePassword' component={ChangePassword} />
+
         <Route path='/buyermain' component={AuthReducer(BuyerMain)} />
         <Route path='/expertmain' component={AuthReducer(ExpertMain)} />
         <Route path='/farmermain' component={AuthReducer(FarmerMain)} />
