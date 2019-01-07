@@ -57,7 +57,8 @@ const styles = theme => ({
     marginTop: 100,
     marginRight: 15,
     marginLeft: 15,
-    marginBottom: 15
+    marginBottom: 15,
+    backgroundImage: 'url(require("../../images/farmer.jpg"))'
   },
   papper: {
     padding: theme.spacing.unit * 2,

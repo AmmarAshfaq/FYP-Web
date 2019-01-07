@@ -17,9 +17,10 @@ import AddCrop from './AddCrop'
 import { connect } from 'react-redux'
 import { openModel } from '../../Container/store/action/action'
 import { signoutUser } from '../../Container/store/action/authAction'
+import {notificationAction} from '../../Container/store/action/farmerAction'
 import { compose } from 'redux'
 import { browserHistory } from 'react-router'
-import NotificationDialog from '../../Container/NotificationDialog'
+import FarmerNotification from '../Notification/farmerNotification';
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
   titleStyle: { flexDirection: 'column', flexGrow: 1 },
@@ -39,6 +40,9 @@ class FarmerHeader extends Component {
   }
   handleClickNoti = event => {
     this.setState({ open: true })
+  }
+  componentWillMount(){
+    this.props.notification(this.props.token)
   }
 
   handleClose = () => {
@@ -66,6 +70,7 @@ class FarmerHeader extends Component {
     browserHistory.push('/messenger')
   }
   render () {
+    console.log(this.props.token)
     const { classes } = this.props
     const { anchorEl } = this.state
     return (
@@ -106,7 +111,8 @@ class FarmerHeader extends Component {
 
               <Badge color='secondary' badgeContent={6}>
                
-                <NotificationDialog typeSelect='Crop' />
+               
+               <FarmerNotification typeSelect='Crop'/>
               </Badge>
 
               <Button
@@ -155,15 +161,21 @@ function mapDispatchToProp (dispatch) {
    
     signOutComp: data => {
       dispatch(signoutUser(data))
+    },
+    notification:data =>{
+      dispatch(notificationAction(data))
     }
   }
 }
 
 function mapStateToProps (state) {
   return {
-    userIdentity: state.authReducer.currentUserData.user
+    userIdentity: state.authReducer.currentUserData.user,
+    token:state.authReducer.tokenForNoti
   }
 }
+
+
 export default compose(
   withStyles(styles, { name: 'FarmerHeader' }),
   connect(

@@ -4,7 +4,8 @@ const INITIAL_STATE = {
   authenticated: false,
   currentUserData: {},
   error:{},
-  emailData:{}
+  emailData:{},
+  tokenForNoti :''
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -31,6 +32,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, emailData: action.payload }
       case ActionTypes.EMAIL_EMPTY:
         return { ...state, emailData: {} }
+        case "RECEIVE_TOKEN":
+        return {...state,tokenForNoti:action.payload}
    
     case 'SAVE_STORE_STATE':
   

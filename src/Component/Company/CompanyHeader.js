@@ -19,7 +19,7 @@ import AddPesticide from './AddPesticide'
 import AddMachinery from './AddMachinery'
 import AddFertilizer from './AddFertilizer'
 import { signoutUser } from '../../Container/store/action/authAction'
-import NotificationDialog from '../../Container/NotificationDialog'
+import CompanyNotification from '../Notification/companyNotification'
 
 
 const styles = theme => ({
@@ -102,7 +102,9 @@ class CompanyHeader extends Component {
               </Badge>
 
               <Badge color='secondary' badgeContent={6}>
-                <NotificationDialog typeSelect='' />
+              
+
+               <CompanyNotification typeSelect=''/>
               </Badge>
               <Button
                 aria-owns={anchorEl ? 'simple-menu' : null}

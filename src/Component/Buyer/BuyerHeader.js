@@ -12,7 +12,7 @@ import { browserHistory } from 'react-router'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { signoutUser } from '../../Container/store/action/authAction'
-import NotificationDialog from '../../Container/NotificationDialog'
+import BuyerNotification from '../Notification/buyerNotification'
 
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
@@ -93,7 +93,7 @@ class BuyerHeader extends Component {
               </Badge>
 
               <Badge color='secondary' badgeContent={6}>
-                <NotificationDialog typeSelect='Crop' />
+                <BuyerNotification typeSelect='Crop' />
               </Badge>
               <Button
                 aria-owns={anchorEl ? 'simple-menu' : null}

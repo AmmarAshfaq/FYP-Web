@@ -2,6 +2,33 @@ import ActionTypes from '../constant/farmerConstant'
 
 const ROOT_URL = 'http://localhost:8080'
 let getToken
+
+export function notificationAction (obj) {
+  let objConfig = {
+    notification: {
+      title: 'Firebase',
+      body: 'Firebase is awsone',
+      click_action: 'http://localhost:3000/',
+      icon: ''
+    },
+    to: obj
+  }
+  console.log(obj)
+  console.log(objConfig)
+  return async dispatch => {
+    const result = await fetch('https://fcm.googleapis.com/fcm/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization:
+          'key=AAAAn7be3h4:APA91bHW2zLA4PJb3lBcC3JQnkGe8qELWP7YL23Nh4HXswuiN7ZQwyeiAAIQkzp--g0RwAvpssMSumKOjRkzLssi-GOHHln1KSUhjraRUHY__iMZeDU3T7OXpyjLts45ojhDdvlinosm'
+      },
+      body: JSON.stringify(objConfig)
+    })
+    const getData = await result.json()
+    console.log(getData)
+  }
+}
 export function addCropAction (obj) {
   getToken = localStorage.getItem('token')
   let data = new FormData()
@@ -12,7 +39,7 @@ export function addCropAction (obj) {
   data.append('wieght', obj.wieght)
   data.append('date', obj.date)
   data.append('farmerId', obj.farmerId)
-  data.append('type',obj.type)
+  data.append('type', obj.type)
   console.log(data)
   return async dispatch => {
     dispatch(processProgress())
@@ -28,13 +55,15 @@ export function addCropAction (obj) {
     // console.log(getData)
     if (getData.error) {
       console.log(getData.error)
+      dispatch(errorMessage(getData.error.message))
       dispatch(processDone())
     } else {
       console.log(getData)
       dispatch(addCropData(getData))
+      dispatch(notificationCrop(getData))
+
       dispatch(processDone())
       dispatch(errorEmpty())
-
     }
     // notificationAdd(getData)
   }
@@ -95,7 +124,7 @@ export function addProblemAction (obj) {
   data.append('farmerId', obj.farmerID)
   data.append('description', obj.problemDescription)
   data.append('name', obj.problemName)
-  data.append('type',obj.type)
+  data.append('type', obj.type)
   console.log(data)
   return async dispatch => {
     dispatch(processProgress())
@@ -116,12 +145,24 @@ export function addProblemAction (obj) {
       dispatch(processDone())
     } else {
       dispatch(addProblemData(getData))
+      dispatch(notificationProblem(getData))
       dispatch(processDone())
       dispatch(errorEmpty())
     }
   }
 }
-
+function notificationProblem (add) {
+  return {
+    type: ActionTypes.NOTIFICATION_PROBLEM,
+    payload: add
+  }
+}
+function notificationCrop (add) {
+  return {
+    type: ActionTypes.NOTIFICATION_CROP,
+    payload: add
+  }
+}
 function errorMessage (obj) {
   return {
     type: ActionTypes.ERROR_MESSAGE,
@@ -130,7 +171,7 @@ function errorMessage (obj) {
 }
 function errorEmpty () {
   return {
-    type: ActionTypes.ERROR_NULL,
+    type: ActionTypes.ERROR_NULL
     // payload: obj
   }
 }

@@ -154,6 +154,8 @@ export function addFertilizerAction (obj) {
     // console.log(getData)
     if (getData.data) {
       dispatch(addFertilizer(getData.data))
+      dispatch(notificationFertilizer(getData.data))
+
       dispatch(processDone())
       dispatch(errorEmpty())
     } else {
@@ -224,6 +226,7 @@ export function addPesticideAction (obj) {
     // dispatch(addPesticide(getData.data))
     if (getData.data) {
       dispatch(addPesticide(getData.data))
+      dispatch(notificationPesticide(getData.data))
       dispatch(processDone())
       dispatch(errorEmpty())
     } else {
@@ -232,6 +235,24 @@ export function addPesticideAction (obj) {
 
       dispatch(processDone())
     }
+  }
+}
+function notificationFertilizer (add) {
+  return {
+    type: ActionTypes.NOTIFICATION_FERTILIZER,
+    payload: add
+  }
+}
+function notificationMachinery (add) {
+  return {
+    type: ActionTypes.NOTIFICATION_MACHINERY,
+    payload: add
+  }
+}
+function notificationPesticide (add) {
+  return {
+    type: ActionTypes.NOTIFICATION_PESTICIDE,
+    payload: add
   }
 }
 export function addMachineryAction (obj) {
@@ -271,6 +292,7 @@ export function addMachineryAction (obj) {
     // console.log(getData)
     if (getData.data) {
       dispatch(addMachinery(getData.data))
+      dispatch(notificationMachinery(getData.data))
 
       dispatch(processDone())
       dispatch(errorEmpty())

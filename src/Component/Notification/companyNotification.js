@@ -5,12 +5,13 @@ import MenuItem from '@material-ui/core/MenuItem'
 import { browserHistory } from 'react-router'
 import Avatar from '@material-ui/core/Avatar'
 
-const options = ['Ammar', 'Junaid', 'Meraj', 'Ubaid', 'Shams', 'Aamir'];
-const ITEM_HEIGHT = 48;
+const options = ['Ammar', 'Junaid', 'Meraj', 'Ubaid', 'Shams', 'Aamir']
+const ITEM_HEIGHT = 48
 
 class NotificationDialog extends React.Component {
   state = {
-    anchorEl: null
+    anchorEl: null,
+    options: ['Ammar', 'Junaid', 'Meraj', 'Ubaid', 'Shams', 'Aamir']
   }
 
   handleClick = event => {
@@ -58,11 +59,11 @@ class NotificationDialog extends React.Component {
           }}
           style={{ position: 'absolute', top: 45 }}
         >
-          {options.map(option => (
+          {this.state.options.map(option => (
             <MenuItem key={option} onClick={() => this.handleSelect()}>
               <Avatar
                 alt='Remy Sharp'
-                src={require('../images/Machinery/tractor.jpg')}
+                // src={require('../images/Machinery/tractor.jpg')}
                 style={{ marginRight: 5 }}
               />
               <p>{option}</p>
@@ -74,4 +75,4 @@ class NotificationDialog extends React.Component {
   }
 }
 
-export default NotificationDialog;
+export default NotificationDialog
