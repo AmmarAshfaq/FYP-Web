@@ -13,11 +13,18 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { signoutUser } from '../../Container/store/action/authAction'
 import BuyerNotification from '../Notification/buyerNotification'
+import HomeIcon from '../../images/Icons/Home.png'
+import IconButton from '@material-ui/core/IconButton';
+import MessegeIcon from '../../images/Icons/chat.png'
+import Tooltip from '@material-ui/core/Tooltip'
+
 
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
   titleStyle: { flexDirection: 'column', flexGrow: 1 },
-  buttonStyle: { marginRight: 5, position: 'relative' }
+  buttonStyle: { marginRight: 8,marginLeft:8, position: 'relative' },
+  colorStyle:{color:'white',backgroundColor:'black'}
+
 })
 class BuyerHeader extends Component {
   constructor () {
@@ -25,7 +32,8 @@ class BuyerHeader extends Component {
     this.state = {
       toggle: 'Main',
       achorEl: null,
-      arrShow:[]
+      arrShow: [],
+      invisible: true
     }
   }
   messengerApp = passParam => {
@@ -34,30 +42,15 @@ class BuyerHeader extends Component {
   onClickLogout = passParam => {
     this.props.signoutUserComp(passParam)
   }
-// componentDidMount(){
-//   // var objAdd = this.props.notificationAdd;
-//   // console.log(objAdd)
-//   // this.setState({
-//   //   arrShow: this.state.arrShow.push(objAdd)
-//   // })
-//   this.setState((state,props)=>({
-// arrShow: state.arrShow.push(props.notificationAdd)
-//   }))
-// }
+ 
+  handleBadgeVisibility = () => {
+    this.setState(prevState => ({ invisible: !prevState.invisible }))
+  }
   render () {
     const { classes } = this.props
     const { anchorEl } = this.state
-    // var arr = [];
-    // var objAdd = this.props.notificationAdd;
-    // if(objAdd !== undefined){
-    // arr.push(objAdd)
-    // }else{
+    
 
-    //   console.log("not add")
-    // }
-    // console.log(arr)
-    // console.log(this.props.notificationAdd)
-    // console.log(this.state.arrShow)
     return (
       <Fragment>
         <AppBar
@@ -76,29 +69,53 @@ class BuyerHeader extends Component {
               </Typography>
             </div>
             <div>
-              <Button
+            <Tooltip title='Home'>
+
+              <IconButton
                 color='inherit'
                 onClick={() => browserHistory.push('/buyermain')}
               >
-                Home
-              </Button>
-              <Badge color='secondary' badgeContent={4}>
-                <Button
+               <img src={HomeIcon} alt="lloading" width='40' height='35'/>
+              </IconButton>
+          </Tooltip>
+
+              <Badge
+                color={this.props.cropData.length === 0 ? 'secondary' : 'secondary'}
+                badgeContent={
+                  this.props.cropData.length === 0
+                    ? null
+                    : this.props.cropData.length
+                }
+                badgeContent={4}
+              >
+              <Tooltip title='Message'>
+
+                <IconButton
                   color='inherit'
                   className={classes.buttonStyle}
                   onClick={this.messengerApp.bind(this, 'Messenger')}
                 >
-                  Messege
-                </Button>
+                  <img src={MessegeIcon} alt="loading" width='40' height='35'/>
+                </IconButton>
+                </Tooltip>
               </Badge>
 
-              <Badge color='secondary' badgeContent={6}>
+              <Badge
+                color={this.props.cropData.length === 0 ? '' : 'secondary'}
+                badgeContent={
+                  this.props.cropData.length === 0
+                    ? null
+                    : this.props.cropData.length
+                }
+              >
                 <BuyerNotification typeSelect='Crop' />
               </Badge>
               <Button
                 aria-owns={anchorEl ? 'simple-menu' : null}
                 aria-haspopup='true'
-                color='inherit'
+                variant="contained" 
+                // color={}
+                className={[classes.buttonStyle,classes.colorStyle]}
                 onClick={this.onClickLogout.bind(this, 'Main')}
               >
                 Log Out
@@ -120,7 +137,8 @@ function mapDispatchToProp (dispatch) {
 }
 function mapStateToProps (state) {
   return {
-    notificationAdd: state.farmerReducer.notificationCrop
+    notificationAdd: state.farmerReducer.notificationCrop,
+    cropData: state.farmerReducer.cropGlobal
   }
 }
 export default compose(

@@ -3,28 +3,37 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Button,
   Avatar,
   Menu,
   MenuItem,
   Badge
 } from '@material-ui/core'
 
-import DownArrow from '@material-ui/icons/KeyboardArrowDown'
 import { withStyles } from '@material-ui/core/styles'
 import AddProblem from './AddProblem'
 import AddCrop from './AddCrop'
 import { connect } from 'react-redux'
 import { openModel } from '../../Container/store/action/action'
 import { signoutUser } from '../../Container/store/action/authAction'
-import {notificationAction} from '../../Container/store/action/farmerAction'
+import { notificationAction } from '../../Container/store/action/farmerAction'
 import { compose } from 'redux'
 import { browserHistory } from 'react-router'
-import FarmerNotification from '../Notification/farmerNotification';
+import FarmerNotification from '../Notification/farmerNotification'
+import HomeIcon from '../../images/Icons/Home.png'
+import IconButton from '@material-ui/core/IconButton'
+import MessegeIcon from '../../images/Icons/chat.png'
+import MoreIcon from '../../images/Icons/more.png'
+import Tooltip from '@material-ui/core/Tooltip'
+import AddItem from '@material-ui/icons/AddCircle'
+import LOGOUT from '../../images/Icons/logout.png'
+import ListItem from '@material-ui/icons/List'
+
+
+
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
   titleStyle: { flexDirection: 'column', flexGrow: 1 },
-  buttonStyle: { marginRight: 5, position: 'relative' }
+  buttonStyle: { marginRight: 8, marginLeft: 8, position: 'relative' }
 })
 class FarmerHeader extends Component {
   constructor () {
@@ -41,7 +50,7 @@ class FarmerHeader extends Component {
   handleClickNoti = event => {
     this.setState({ open: true })
   }
-  componentWillMount(){
+  componentWillMount () {
     this.props.notification(this.props.token)
   }
 
@@ -62,7 +71,6 @@ class FarmerHeader extends Component {
     browserHistory.push('/farmermain')
   }
   handleLogOut = passParam => {
-  
     console.log(passParam)
     this.props.signOutComp(passParam)
   }
@@ -91,56 +99,76 @@ class FarmerHeader extends Component {
               </Typography>
             </div>
             <div>
-              <Button
+            <Tooltip title='Home'>
+              
+              <IconButton
                 color='inherit'
                 className={classes.buttonStyle}
                 onClick={this.openHome.bind(this)}
               >
-                Home
-              </Button>
+                <img src={HomeIcon} alt='lloading' width='40' height='35' />
+              </IconButton>
 
+</Tooltip>
               <Badge color='secondary' badgeContent={4}>
-                <Button
+              <Tooltip title='Message'>
+              
+                <IconButton
                   color='inherit'
                   className={classes.buttonStyle}
                   onClick={this.messengerApp.bind(this, 'Messenger')}
                 >
-                  Messege
-                </Button>
+                  <img src={MessegeIcon} alt='loading' width='40' height='35' />
+                </IconButton>
+                </Tooltip>
               </Badge>
 
-              <Badge color='secondary' badgeContent={6}>
-               
-               
-               <FarmerNotification typeSelect='Crop'/>
-              </Badge>
+              <Badge
+                color={
+                  this.props.farmerNotification.length === 0 ? '' : 'secondary'
+                }
+                badgeContent={
+                  this.props.farmerNotification.length === 0
+                    ? null
+                    : this.props.farmerNotification.length
+                }
+              >
+              <Tooltip title='Home'>
 
-              <Button
+                <FarmerNotification typeSelect='Crop' />
+                </Tooltip>
+              </Badge>
+              <Tooltip title='More features'>
+
+              <IconButton
                 aria-haspopup='true'
                 onClick={this.handleClick}
                 color='inherit'
                 className={classes.buttonStyle}
               >
-                More <DownArrow />
-              </Button>
+                <img src={MoreIcon} alt='loading' width='40' height='35' />
+              </IconButton>
+              </Tooltip>
+              
               <Menu
                 id='simple-menu'
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
                 onClose={this.handleClose}
-                style={{ position: 'absolute', top: 40 }}
+                style={{ position: 'absolute', top: 50 }}
               >
                 <MenuItem onClick={this.handleClickOpen.bind(this, 'Problem')}>
-                  Add Problem
+               <AddItem/>  {"\u00A0"} Add Problem
                 </MenuItem>
                 <MenuItem onClick={this.handleClickOpen.bind(this, 'Crops')}>
-                  Add Crop
+                <AddItem/>  {"\u00A0"} Add Crop
                 </MenuItem>
                 <MenuItem onClick={this.handleClickAddItem.bind(this)}>
-                  Added Item
+                <ListItem/>  {"\u00A0"}  Added Item
                 </MenuItem>
                 <MenuItem onClick={this.handleLogOut.bind(this, 'Main')}>
-                  Log Out
+                <img src={LOGOUT} alt='loading' width='25' height='25' />
+                {"\u00A0"}      Log Out
                 </MenuItem>
                 s{' '}
               </Menu>
@@ -158,11 +186,11 @@ function mapDispatchToProp (dispatch) {
     selectValue: data => {
       dispatch(openModel(data))
     },
-   
+
     signOutComp: data => {
       dispatch(signoutUser(data))
     },
-    notification:data =>{
+    notification: data => {
       dispatch(notificationAction(data))
     }
   }
@@ -171,10 +199,10 @@ function mapDispatchToProp (dispatch) {
 function mapStateToProps (state) {
   return {
     userIdentity: state.authReducer.currentUserData.user,
-    token:state.authReducer.tokenForNoti
+    token: state.authReducer.tokenForNoti,
+    farmerNotification: state.farmerReducer.farmerGlobalNoti
   }
 }
-
 
 export default compose(
   withStyles(styles, { name: 'FarmerHeader' }),

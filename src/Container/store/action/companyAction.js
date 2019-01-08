@@ -16,6 +16,7 @@ export function responseAddFertilizerAction (obj) {
     })
     const getData = await result.json()
     console.log(getData)
+    dispatch(notificationResponse(getData.response))
   }
 }
 export function responseAddMachineryAction (obj) {
@@ -33,6 +34,8 @@ export function responseAddMachineryAction (obj) {
     })
     const getData = await result.json()
     console.log(getData)
+    dispatch(notificationResponse(getData.response))
+
   }
 }
 export function responseAddPesticideAction (obj) {
@@ -50,8 +53,18 @@ export function responseAddPesticideAction (obj) {
     })
     const getData = await result.json()
     console.log(getData)
+    dispatch(notificationResponse(getData.response))
+
   }
 }
+function notificationResponse(obj){
+  return{
+    type:ActionTypes.NOTIFICATION_RESPONSE,
+    payload: obj
+  }
+}
+
+
 export function getFertilizerAction (obj) {
   getToken = localStorage.getItem('token')
 

@@ -3,7 +3,6 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Button,
   Avatar,
   Menu,
   MenuItem,
@@ -11,7 +10,6 @@ import {
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import { browserHistory } from 'react-router'
-import DownArrow from '@material-ui/icons/KeyboardArrowDown'
 import { connect } from 'react-redux'
 import { openModel } from '../../Container/store/action/action'
 import { compose } from 'redux'
@@ -20,12 +18,20 @@ import AddMachinery from './AddMachinery'
 import AddFertilizer from './AddFertilizer'
 import { signoutUser } from '../../Container/store/action/authAction'
 import CompanyNotification from '../Notification/companyNotification'
+import HomeIcon from '../../images/Icons/Home.png'
+import IconButton from '@material-ui/core/IconButton'
+import MessegeIcon from '../../images/Icons/chat.png'
+import MoreIcon from '../../images/Icons/more.png'
+import AddItem from '@material-ui/icons/AddCircle'
+import ListItem from '@material-ui/icons/List'
+import Tooltip from '@material-ui/core/Tooltip'
 
 
+import LOGOUT from '../../images/Icons/logout.png'
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
   titleStyle: { flexDirection: 'column', flexGrow: 1 },
-  buttonStyle: { marginRight: 5, position: 'relative' }
+  buttonStyle: { marginRight: 8, marginLeft: 8, position: 'relative' }
 })
 class CompanyHeader extends Component {
   constructor () {
@@ -55,9 +61,9 @@ class CompanyHeader extends Component {
   }
   messengerApp = passParam => {
     if (passParam === 'Messenger') {
-      browserHistory.push('/messenger');
+      browserHistory.push('/messenger')
     } else {
-      browserHistory.push('/allResponse');
+      browserHistory.push('/allResponse')
     }
   }
   openHome = () => {
@@ -84,37 +90,51 @@ class CompanyHeader extends Component {
               </Typography>
             </div>
             <div>
-              <Button
+            <Tooltip title='Home'>
+
+              <IconButton
                 color='inherit'
                 onClick={this.openHome.bind(this)}
-                
+                className={classes.buttonStyle}
               >
-                Home
-              </Button>
+                <img src={HomeIcon} alt='lloading' width='40' height='35' />
+              </IconButton>
+              </Tooltip>
               <Badge color='secondary' badgeContent={4}>
-                <Button
+              <Tooltip title='Message'>
+
+                <IconButton
                   color='inherit'
                   className={classes.buttonStyle}
                   onClick={this.messengerApp.bind(this, 'Messenger')}
                 >
-                  Messege
-                </Button>
+                  <img src={MessegeIcon} alt='loading' width='40' height='35' />
+                </IconButton>
+                </Tooltip>
               </Badge>
 
-              <Badge color='secondary' badgeContent={6}>
-              
-
-               <CompanyNotification typeSelect=''/>
+              <Badge  color={
+                  this.props.companyNotification.length === 0 ? '' : 'secondary'
+                }
+                badgeContent={
+                  this.props.companyNotification.length === 0
+                    ? null
+                    : this.props.companyNotification.length
+                }>
+                <CompanyNotification typeSelect='' />
               </Badge>
-              <Button
+              <Tooltip title='More Features'>
+
+              <IconButton
                 aria-owns={anchorEl ? 'simple-menu' : null}
                 aria-haspopup='true'
                 onClick={this.handleClick}
+                className={classes.buttonStyle}
                 color='inherit'
               >
-                More Option
-                <DownArrow />
-              </Button>
+                <img src={MoreIcon} alt='loading' width='40' height='35' />
+              </IconButton>
+              </Tooltip>
               <Menu
                 id='simple-menu'
                 anchorEl={anchorEl}
@@ -125,22 +145,24 @@ class CompanyHeader extends Component {
                 <MenuItem
                   onClick={this.handleClickOpen.bind(this, 'Fertilizer')}
                 >
-                  Add Fertilizer
+                <AddItem/>  {"\u00A0"} Add Fertilizer
                 </MenuItem>
                 <MenuItem
                   onClick={this.handleClickOpen.bind(this, 'Machinery')}
                 >
-                  Add Machinery
+                <AddItem/>  {"\u00A0"} Add Machinery
                 </MenuItem>
                 <MenuItem
                   onClick={this.handleClickOpen.bind(this, 'Pesticide')}
                 >
-                  Add Pesticide
+                 <AddItem/> {"\u00A0"} Add Pesticide
                 </MenuItem>
                 <MenuItem onClick={this.messengerApp.bind(this, 'Response')}>
-                  All Response
+                <ListItem/>  {"\u00A0"} All Response
                 </MenuItem>
                 <MenuItem onClick={this.handleLogOut.bind(this, 'Main')}>
+                <img src={LOGOUT} alt='loading' width='25' height='25' />
+                {"\u00A0"}
                   Log Out
                 </MenuItem>
                 s{' '}
@@ -161,17 +183,22 @@ function mapDispatchToProp (dispatch) {
     selectValue: data => {
       dispatch(openModel(data))
     },
-   
+
     signoutUserComp: data => {
       dispatch(signoutUser(data))
     }
   }
 }
-
+function mapStateToProps (state) {
+  return {
+    // farmerNotification: state.farmerReducer.farmerGlobalNoti
+    companyNotification: state.farmerReducer.companyNotification
+  }
+}
 export default compose(
   withStyles(styles, { name: 'CompanyHeader' }),
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProp
   )
 )(CompanyHeader)

@@ -4,14 +4,16 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import { browserHistory } from 'react-router'
 import Avatar from '@material-ui/core/Avatar'
-import {connect} from 'react-redux';
-const options = ['Ammar', 'Junaid', 'Meraj', 'Ubaid', 'Shams', 'Aamir']
+import { connect } from 'react-redux'
+import IconButton from '@material-ui/core/IconButton'
+import NotificationIcon from '../../images/Icons/notification.png'
+import Tooltip from '@material-ui/core/Tooltip'
+
 const ITEM_HEIGHT = 48
 
 class NotificationDialog extends React.Component {
   state = {
-    anchorEl: null,
-    options: ['Ammar', 'Junaid', 'Meraj', 'Ubaid', 'Shams', 'Aamir']
+    anchorEl: null
   }
 
   handleClick = event => {
@@ -36,7 +38,9 @@ class NotificationDialog extends React.Component {
 
     return (
       <div>
-        <Button
+        <Tooltip title='Notifications'>
+
+        <IconButton
           color='inherit'
           aria-label='More'
           aria-owns={open ? 'long-menu' : undefined}
@@ -44,8 +48,9 @@ class NotificationDialog extends React.Component {
           onClick={this.handleClick}
           style={{ marginRight: 5, position: 'relative' }}
         >
-          Notification
-        </Button>
+          <img src={NotificationIcon} alt='loading' width='40' height='35' />
+        </IconButton>
+        </Tooltip>
         <Menu
           id='long-menu'
           anchorEl={anchorEl}
@@ -63,17 +68,19 @@ class NotificationDialog extends React.Component {
             <MenuItem key={option} onClick={() => this.handleSelect()}>
               <Avatar
                 alt='Remy Sharp'
-                // src={require('../images/Machinery/tractor.jpg')}
                 src={option.image_url}
                 style={{ marginRight: 5 }}
               />
-              <p> {option.name
+              <p>
+                {' '}
+                {option.name
                   ? option.name.substring(0, 15)
                   : option.pesticideName
                     ? option.pesticideName.substring(0, 15)
                     : option.machineName
                       ? option.machineName.substring(0, 15)
-                      : null}</p>
+                      : null}
+              </p>
             </MenuItem>
           ))}
         </Menu>
@@ -82,9 +89,12 @@ class NotificationDialog extends React.Component {
   }
 }
 
-function mapStateToProps(state){
-  return{
-    farmerNotification :state.farmerReducer.farmerGlobalNoti
+function mapStateToProps (state) {
+  return {
+    farmerNotification: state.farmerReducer.farmerGlobalNoti
   }
 }
-export default connect(mapStateToProps,null)(NotificationDialog)
+export default connect(
+  mapStateToProps,
+  null
+)(NotificationDialog)

@@ -13,11 +13,16 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { signoutUser } from '../../Container/store/action/authAction'
 import ExpertNotification from '../Notification/expertNotification'
+import HomeIcon from '../../images/Icons/Home.png'
+import IconButton from '@material-ui/core/IconButton'
+import MessegeIcon from '../../images/Icons/chat.png'
+import Tooltip from '@material-ui/core/Tooltip'
 
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
   titleStyle: { flexDirection: 'column', flexGrow: 1 },
-  buttonStyle: { marginRight: 5, position: 'relative' }
+  buttonStyle: { marginRight: 8, marginLeft: 8, position: 'relative' },
+  colorStyle: { color: 'white', backgroundColor: 'black' }
 })
 class ExpertHeader extends Component {
   constructor () {
@@ -36,7 +41,6 @@ class ExpertHeader extends Component {
   }
 
   handleLogOut = passParam => {
-
     this.props.signoutUserComp(passParam)
   }
 
@@ -64,27 +68,46 @@ class ExpertHeader extends Component {
               </Typography>
             </div>
             <div>
-              <Button onClick={this.openHome.bind(this)} color='inherit'>
-                Home
-              </Button>
+              <Tooltip title='Home'>
+                <IconButton onClick={this.openHome.bind(this)} color='inherit'>
+                  <img src={HomeIcon} alt='lloading' width='40' height='35' />
+                </IconButton>
+              </Tooltip>
               <Badge color='secondary' badgeContent={4}>
-                <Button
-                  color='inherit'
-                  className={classes.buttonStyle}
-                  onClick={this.messengerApp.bind(this, 'Messenger')}
-                >
-                  Messege
-                </Button>
+                <Tooltip title='Message'>
+                  <IconButton
+                    color='inherit'
+                    className={classes.buttonStyle}
+                    onClick={this.messengerApp.bind(this, 'Messenger')}
+                  >
+                    <img
+                      src={MessegeIcon}
+                      alt='loading'
+                      width='40'
+                      height='35'
+                    />
+                  </IconButton>
+                </Tooltip>
               </Badge>
 
-              <Badge color='secondary' badgeContent={6}>
-               
-               <ExpertNotification typeSelect='Problem'/>
+              <Badge
+                color={
+                  this.props.notificationCounter.length === 0 ? '' : 'secondary'
+                }
+                badgeContent={
+                  this.props.notificationCounter.length === 0
+                    ? null
+                    : this.props.notificationCounter.length
+                }
+              >
+                <ExpertNotification typeSelect='Problem' />
               </Badge>
               <Button
                 aria-owns={anchorEl ? 'simple-menu' : null}
                 aria-haspopup='true'
-                color='inherit'
+                // color='inherit'
+                variant='contained'
+                className={[classes.buttonStyle, classes.colorStyle]}
                 onClick={this.handleLogOut.bind(this, 'Main')}
               >
                 Log Out
@@ -107,10 +130,15 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
+function mapStateToProps (state) {
+  return {
+    notificationCounter: state.farmerReducer.problemGlobal
+  }
+}
 export default compose(
   withStyles(styles, { name: 'ExpertHeader' }),
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )
 )(ExpertHeader)

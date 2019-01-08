@@ -1,4 +1,4 @@
-import ActionTypes from '../constant/commentConstant'
+import ActionTypes from '../constant/commentConstant';
 const ROOT_URL = 'http://localhost:8080'
 let getToken
 export function addCommentAction (obj) {
@@ -17,9 +17,22 @@ export function addCommentAction (obj) {
     const getData = await result.json()
     console.log(getData)
     dispatch(addComment(getData.comments,obj.type))
+
   }
 }
-
+// from here we can start //
+function notificationProblem (add) {
+  return {
+    type: ActionTypes.NOTIFICATION_PROBLEM,
+    payload: add
+  }
+}
+function notificationCrop (add) {
+  return {
+    type: ActionTypes.NOTIFICATION_CROP,
+    payload: add
+  }
+}
 export function deleteCommentAction (obj) {
   console.log(obj)
   getToken = localStorage.getItem('token')
@@ -34,6 +47,7 @@ export function deleteCommentAction (obj) {
       body: JSON.stringify(obj)
     })
     const getData = await result.json()
+    console.log(getData)
     // console.log(getData)
     dispatch(deleteComment(getData.comments,obj.type))
   }

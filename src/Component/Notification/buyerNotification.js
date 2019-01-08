@@ -5,13 +5,15 @@ import MenuItem from '@material-ui/core/MenuItem'
 import { browserHistory } from 'react-router'
 import Avatar from '@material-ui/core/Avatar'
 import { connect } from 'react-redux'
-// const options = ['Ammar', 'Junaid', 'Meraj', 'Ubaid', 'Shams', 'Aamir']
+import IconButton from '@material-ui/core/IconButton'
+import NotificationIcon from '../../images/Icons/notification.png'
+import Tooltip from '@material-ui/core/Tooltip'
+
 const ITEM_HEIGHT = 48
 
 class NotificationDialog extends React.Component {
   state = {
     anchorEl: null
-    // options: ['Ammar', 'Junaid', 'Meraj', 'Ubaid', 'Shams', 'Aamir']
   }
 
   handleClick = event => {
@@ -32,22 +34,21 @@ class NotificationDialog extends React.Component {
   render () {
     const { anchorEl } = this.state
     const open = Boolean(anchorEl)
-    console.log(open)
-    // var data = this.props.cropData
-    // var listRender = []
-    // listRender.push(data)
+
     return (
       <div>
-        <Button
-          color='inherit'
-          aria-label='More'
-          aria-owns={open ? 'long-menu' : undefined}
-          aria-haspopup='true'
-          onClick={this.handleClick}
-          style={{ marginRight: 5, position: 'relative' }}
-        >
-          Notification
-        </Button>
+        <Tooltip title='Notifications'>
+          <IconButton
+            color='inherit'
+            aria-label='More'
+            aria-owns={open ? 'long-menu' : undefined}
+            aria-haspopup='true'
+            onClick={this.handleClick}
+            style={{ marginRight: 5, position: 'relative' }}
+          >
+            <img src={NotificationIcon} alt='loading' width='40' height='35' />
+          </IconButton>
+        </Tooltip>
         <Menu
           id='long-menu'
           anchorEl={anchorEl}
