@@ -8,7 +8,13 @@ import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import Typography from '@material-ui/core/Typography'
 import Alert from 'react-s-alert'
+import Create from '@material-ui/icons/Create'
+import AddPhoto from '@material-ui/icons/AddAPhoto'
+import Divider from '@material-ui/core/Divider'
 
+import PriceIcon from '@material-ui/icons/AttachMoney'
+// import FileField from "react-material-filefield";
+import InputAdornment from '@material-ui/core/InputAdornment';
 import {
   addFertilizerAction,
   updateFetilizerAction
@@ -100,54 +106,104 @@ class AddFertilizer extends Component {
               Add Fertilizer Detail
             </Typography>
           </DialogTitle>
+          <Divider/>
           <DialogContent>
             <TextField
               autoFocus
               margin='dense'
               id='name'
-              label='Name'
+              // label='Name'
+              placeholder="Fertilizer Name"
               type='text'
               fullWidth
               onChange={event => this.updateValue(event, 'name')}
               value={this.state.name}
-            />
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Create />
+                  </InputAdornment>
+                ),
+              }}
+       
+           />
+
+            {/* </TextField> */}
+            {/* <div style={{position: 'relative', display: 'inline-block'}}> */}
+       {/* <Create style={{position: 'absolute', left: 0, top: 10, width: 20, height: 20}}/>
+       <TextField
+              style={{textIndent: 30}}
+              hintText="Search by Name"
+              // onChange={_.debounce((event, value) => this.handleSearch(value), 500)}
+        />
+</div> */}
             <TextField
               autoFocus
               margin='dense'
               id='product'
-              label='Product'
+              placeholder='Product Detail'
               type='text'
               fullWidth
               onChange={event => this.updateValue(event, 'productName')}
               value={this.state.productName}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Create />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               autoFocus
               margin='dense'
               id='application'
-              label='Application'
+              placeholder='How To Use Fertilizer ?'
               type='text'
               fullWidth
               onChange={event => this.updateValue(event, 'application')}
               value={this.state.application}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Create />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               autoFocus
               margin='dense'
               id='price'
-              label='Price'
+              placeholder='Price'
               type='text'
               fullWidth
               onChange={event => this.updateValue(event, 'price')}
               value={this.state.price}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PriceIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
           
               type='file'
-              label='Select File'
+              label='Select Image'
               onChange={this.updateFile}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AddPhoto />
+                  </InputAdornment>
+                ),
+              }}
             />
+  
           </DialogContent>
+          <Divider/>
           <DialogActions>
             <Button onClick={this.handleClose} color='primary'>
               Cancel

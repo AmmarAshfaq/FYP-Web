@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import IconButton from '@material-ui/core/IconButton'
 import NotificationIcon from '../../images/Icons/notification.png'
 import Tooltip from '@material-ui/core/Tooltip'
+import { notificationDataDetail } from '../../Container/store/action/companyAction'
 
 const ITEM_HEIGHT = 48
 
@@ -23,18 +24,15 @@ class NotificationDialog extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null })
   }
-  handleSelect = () => {
-    this.props.typeSelect === 'Crop'
-      ? browserHistory.push('/specificCrop')
-      : this.props.typeSelect === 'Problem'
-        ? browserHistory.push('/problemSolution')
-        : browserHistory.push('/notificationpanel')
+  handleSelect = (data) => {
+    this.props.getResponse(data)
+    browserHistory.push('/notificationpanel')
   }
 
   render () {
     const { anchorEl } = this.state
     const open = Boolean(anchorEl)
-    console.log(open)
+    // console.log(open)
 
     return (
       <div>
@@ -64,7 +62,7 @@ class NotificationDialog extends React.Component {
           style={{ position: 'absolute', top: 45 }}
         >
           {this.props.companyNoti.map(option => (
-            <MenuItem key={option} onClick={() => this.handleSelect()}>
+            <MenuItem key={option} onClick={() => this.handleSelect(option)}>
               <Avatar
                 alt='Remy Sharp'
                 src={option.image_url}
@@ -84,13 +82,20 @@ class NotificationDialog extends React.Component {
     )
   }
 }
-
+function mapDispatchToProps (dispatch) {
+  return {
+    getResponse: data => {
+      dispatch(notificationDataDetail(data))
+    }
+  }
+}
 function mapStateToProps (state) {
   return {
-    companyNoti: state.farmerReducer.companyNotification
+    companyNoti: state.farmerReducer.companyNotification,
+    
   }
 }
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(NotificationDialog)

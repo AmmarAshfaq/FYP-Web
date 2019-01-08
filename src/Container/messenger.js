@@ -28,7 +28,7 @@ import AllUserMessages from './AllUserMessages'
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: 20
+    marginTop: 85
   },
   grow: {
     flexGrow: 1
@@ -448,7 +448,7 @@ class Messenger extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position='static' style={{ backgroundColor: '#00806d' }}>
+        {/* <AppBar position='static' style={{ backgroundColor: '#00806d' }}>
           <Toolbar>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
@@ -491,7 +491,7 @@ class Messenger extends React.Component {
               </IconButton>
             </div>
           </Toolbar>
-        </AppBar>
+        </AppBar> */}
         <Grid container>
           <Grid item xs={3}>
             <Paper>

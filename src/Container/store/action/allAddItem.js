@@ -84,6 +84,7 @@ export function getSpecificProblem (obj) {
       type: ActionTypes.LOADER_PROCESS
     })
     dispatch(getProblemById(getData.problemDetail))
+    browserHistory.push('/problemSolution')
   }
 }
 export function getAllProblemAction () {

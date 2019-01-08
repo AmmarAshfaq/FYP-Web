@@ -8,7 +8,11 @@ import { connect } from 'react-redux'
 import IconButton from '@material-ui/core/IconButton'
 import NotificationIcon from '../../images/Icons/notification.png'
 import Tooltip from '@material-ui/core/Tooltip'
-
+import {
+  getFertilizerIdAction,
+  getMachineryIdAction,
+  getPesticideIdAction
+} from '../../Container/store/action/companyAction'
 const ITEM_HEIGHT = 48
 
 class NotificationDialog extends React.Component {
@@ -23,33 +27,46 @@ class NotificationDialog extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null })
   }
-  handleSelect = () => {
-    this.props.typeSelect === 'Crop'
-      ? browserHistory.push('/specificCrop')
-      : this.props.typeSelect === 'Problem'
-        ? browserHistory.push('/problemSolution')
-        : browserHistory.push('/notificationpanel')
+  handleSelect = data => {
+    data.type === 'Problem'
+      ? console.log(data)
+      : // ? browserHistory.push({
+    //   pathname: '/problemSolution',
+    //   state: { typeCheck: this.props.typeSelect,
+    //   // selectId: selectId
+    //  }
+    // })
+      this.companyFetch(data)
   }
-
+  companyFetch = data => {
+    console.log(data)
+    // console.log(data)
+    if (data.name) {
+      this.props.getFertilizerProduct(data)
+    } else if (data.machineName) {
+      this.props.getMachineryProduct(data)
+    } else if (data.pesticideName) {
+      this.props.getPesticideProduct(data)
+    }
+    browserHistory.push('/productdata')
+  }
   render () {
     const { anchorEl } = this.state
     const open = Boolean(anchorEl)
-    console.log(open)
 
     return (
       <div>
         <Tooltip title='Notifications'>
-
-        <IconButton
-          color='inherit'
-          aria-label='More'
-          aria-owns={open ? 'long-menu' : undefined}
-          aria-haspopup='true'
-          onClick={this.handleClick}
-          style={{ marginRight: 5, position: 'relative' }}
-        >
-          <img src={NotificationIcon} alt='loading' width='40' height='35' />
-        </IconButton>
+          <IconButton
+            color='inherit'
+            aria-label='More'
+            aria-owns={open ? 'long-menu' : undefined}
+            aria-haspopup='true'
+            onClick={this.handleClick}
+            style={{ marginRight: 5, position: 'relative' }}
+          >
+            <img src={NotificationIcon} alt='loading' width='40' height='35' />
+          </IconButton>
         </Tooltip>
         <Menu
           id='long-menu'
@@ -65,7 +82,7 @@ class NotificationDialog extends React.Component {
           style={{ position: 'absolute', top: 45 }}
         >
           {this.props.farmerNotification.map(option => (
-            <MenuItem key={option} onClick={() => this.handleSelect()}>
+            <MenuItem key={option} onClick={() => this.handleSelect(option)}>
               <Avatar
                 alt='Remy Sharp'
                 src={option.image_url}
@@ -94,7 +111,20 @@ function mapStateToProps (state) {
     farmerNotification: state.farmerReducer.farmerGlobalNoti
   }
 }
+function mapDispatchToProps (dispatch) {
+  return {
+    getFertilizerProduct: data => {
+      dispatch(getFertilizerIdAction(data))
+    },
+    getMachineryProduct: data => {
+      dispatch(getMachineryIdAction(data))
+    },
+    getPesticideProduct: data => {
+      dispatch(getPesticideIdAction(data))
+    }
+  }
+}
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(NotificationDialog)

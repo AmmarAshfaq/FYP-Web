@@ -64,6 +64,12 @@ function notificationResponse(obj){
   }
 }
 
+export function notificationDataDetail(data){
+  return{
+    type:"NOTIFICATION_RESPONSE_DETAIL",
+    payload:data
+  }
+}
 
 export function getFertilizerAction (obj) {
   getToken = localStorage.getItem('token')

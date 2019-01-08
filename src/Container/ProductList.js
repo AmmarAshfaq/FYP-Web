@@ -153,6 +153,7 @@ class ProductList extends Component {
     // browserHistory.push('/specificCrop')
   }
   companyFetch = (id, data) => {
+    console.log(data)
     if (data.name) {
       this.props.getFertilizerProduct(data)
     } else if (data.machineName) {

@@ -13,8 +13,8 @@ const style = {
     color: '#fff',
     textAlign: 'center',
     borderRadius: 10,
-    marginBottom: 70,
-    marginTop: 170
+    marginBottom: 95,
+    marginTop: 180
   },
   textStyle: {
     width: '100%',
@@ -47,10 +47,7 @@ class ChangePassword extends Component {
   }
   componentWillMount () {
     localStorage.removeItem('token')
-
-    // this.props.changeRoutes('Main')
   }
-  // here we have done only data passing error is left
   submit = () => {
     let { email, newPassword } = this.state
     console.log(email, newPassword)
@@ -109,9 +106,6 @@ class ChangePassword extends Component {
         <Loader type='Oval' color='#000' height={50} width={50} />
       ) : null} */}
 
-          {
-            
-          }
           <Button onClick={this.submit.bind(this)} style={style.button}>
             Submit
           </Button>

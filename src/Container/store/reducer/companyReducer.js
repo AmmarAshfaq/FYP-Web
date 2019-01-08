@@ -10,7 +10,8 @@ const INITIAL_STATE = {
   fertilizerProduct: {},
   connectMsg:{},
   upload: false,
-  error:{}
+  error:{},
+  notificationResponse:{}
 
 
   // machineryProduct: {},
@@ -180,6 +181,11 @@ export default (state = INITIAL_STATE, action) => {
                     pesticideArray: state.pesticideArray.filter(itemVal => {
                       return itemVal._id !== action.payload._id
                     })
+                  }
+                  case "NOTIFICATION_RESPONSE_DETAIL":
+                  return{
+                    ...state,
+                    notificationResponse:action.payload
                   }
     default:
       return state

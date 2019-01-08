@@ -191,7 +191,6 @@ function mapDispatchToProp (dispatch) {
 }
 function mapStateToProps (state) {
   return {
-    // farmerNotification: state.farmerReducer.farmerGlobalNoti
     companyNotification: state.farmerReducer.companyNotification
   }
 }

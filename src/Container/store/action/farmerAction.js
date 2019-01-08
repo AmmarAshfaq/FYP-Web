@@ -52,13 +52,13 @@ export function addCropAction (obj) {
       body: data
     })
     const getData = await result.json()
-    // console.log(getData)
+    console.log(getData)
     if (getData.error) {
       console.log(getData.error)
       dispatch(errorMessage(getData.error.message))
       dispatch(processDone())
     } else {
-      console.log(getData)
+      console.log(getData.type)
       dispatch(addCropData(getData))
       dispatch(notificationCrop(getData))
 

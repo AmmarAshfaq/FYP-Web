@@ -8,6 +8,13 @@ import { connect } from 'react-redux'
 import IconButton from '@material-ui/core/IconButton'
 import NotificationIcon from '../../images/Icons/notification.png'
 import Tooltip from '@material-ui/core/Tooltip'
+import {
+  getFertilizerIdAction,
+  getMachineryIdAction,
+  getPesticideIdAction
+} from '../../Container/store/action/companyAction'
+// import {}
+import { getSpecificCrop } from '../../Container/store/action/allAddItem'
 
 const ITEM_HEIGHT = 48
 
@@ -23,14 +30,31 @@ class NotificationDialog extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null })
   }
-  handleSelect = () => {
-    this.props.typeSelect === 'Crop'
-      ? browserHistory.push('/specificCrop')
-      : this.props.typeSelect === 'Problem'
-        ? browserHistory.push('/problemSolution')
-        : browserHistory.push('/notificationpanel')
+  handleSelect = data => {
+    // console.log(data.type)
+    data.type === 'Crop' ? this.cropFetch(data) : this.companyFetch(data)
   }
-
+  cropFetch = obj => {
+    console.log(obj)
+    let objData = {
+      _id: obj.id
+    }
+    // // console.log(id)
+    // console.log(objData)
+    this.props.cropGet(objData)
+    // browserHistory.push('/specificCrop')
+  }
+  companyFetch = data => {
+    console.log(data)
+    if (data.name) {
+      this.props.getFertilizerProduct(data)
+    } else if (data.machineName) {
+      this.props.getMachineryProduct(data)
+    } else if (data.pesticideName) {
+      this.props.getPesticideProduct(data)
+    }
+    browserHistory.push('/productdata')
+  }
   render () {
     const { anchorEl } = this.state
     const open = Boolean(anchorEl)
@@ -63,13 +87,14 @@ class NotificationDialog extends React.Component {
           style={{ position: 'absolute', top: 45 }}
         >
           {this.props.cropData.map(option => (
-            <MenuItem key={option} onClick={() => this.handleSelect()}>
+            <MenuItem key={option} onClick={() => this.handleSelect(option)}>
               <Avatar
                 alt='Remy Sharp'
                 src={option.image_url}
                 style={{ marginRight: 5 }}
               />
               <p>
+                {/* {console.log(option)} */}
                 {option.name
                   ? option.name.substring(0, 15)
                   : option.pesticideName
@@ -87,12 +112,28 @@ class NotificationDialog extends React.Component {
 }
 
 function mapStateToProps (state) {
-  console.log(state.farmerReducer.notificationCrop)
+  // console.log(state.farmerReducer.notificationCrop)
   return {
     cropData: state.farmerReducer.cropGlobal
   }
 }
+function mapDispatchToProps (dispatch) {
+  return {
+    cropGet: data => {
+      dispatch(getSpecificCrop(data))
+    },
+    getFertilizerProduct: data => {
+      dispatch(getFertilizerIdAction(data))
+    },
+    getMachineryProduct: data => {
+      dispatch(getMachineryIdAction(data))
+    },
+    getPesticideProduct: data => {
+      dispatch(getPesticideIdAction(data))
+    }
+  }
+}
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(NotificationDialog)

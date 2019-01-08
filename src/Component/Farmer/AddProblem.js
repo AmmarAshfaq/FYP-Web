@@ -8,6 +8,12 @@ import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { openModel } from '../../Container/store/action/action'
 import Alert from 'react-s-alert'
+import Create from '@material-ui/icons/Create'
+import AddPhoto from '@material-ui/icons/AddAPhoto'
+import MixIcon from '@material-ui/icons/Mic'
+import Typography from '@material-ui/core/Typography'
+
+import InputAdornment from '@material-ui/core/InputAdornment'
 
 import {
   addProblemAction,
@@ -15,7 +21,6 @@ import {
 } from '../../Container/store/action/farmerAction'
 import { withStyles } from '@material-ui/core/styles'
 import { compose } from 'redux'
-
 
 import Divider from '@material-ui/core/Divider'
 
@@ -75,7 +80,7 @@ class AddProblem extends Component {
         problemDescription,
         farmerID: this.props.farmerID,
         selectId: this.props.selectId,
-        type:'Problem'
+        type: 'Problem'
       }
       if (this.props.selectId && this.props.selectId !== undefined) {
         this.props.updateProblemData(objData)
@@ -109,7 +114,9 @@ class AddProblem extends Component {
           aria-labelledby='form-dialog-title'
         >
           <DialogTitle id='form-dialog-title' className={classes.main}>
-            Add Problem
+            <Typography variant='display1' color='secondry' align='center'>
+              Add Problem
+            </Typography>
           </DialogTitle>
           <Divider />
           <DialogContent>
@@ -117,24 +124,38 @@ class AddProblem extends Component {
               autoFocus
               margin='dense'
               id='name'
-              label='Enter Problem Name You Face'
+              placeholder='Enter Problem Name You Face'
               type='text'
               fullWidth
               value={this.state.problemName}
               onChange={event => {
                 this.updateBol(event, 'problemName')
               }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <Create />
+                  </InputAdornment>
+                )
+              }}
             />
             <TextField
               autoFocus
               margin='dense'
               id='name'
-              label='Enter Problem Description'
+              placeholder='Enter Problem Description'
               type='text'
               fullWidth
               value={this.state.problemDescription}
               onChange={event => {
                 this.updateBol(event, 'problemDescription')
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <Create />
+                  </InputAdornment>
+                )
               }}
             />
             <TextField
@@ -144,6 +165,13 @@ class AddProblem extends Component {
               style={styles.textStyle}
               type='file'
               label='Select Image'
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <AddPhoto />
+                  </InputAdornment>
+                )
+              }}
             />
 
             <TextField
@@ -153,6 +181,13 @@ class AddProblem extends Component {
               style={styles.textStyle}
               type='file'
               label='Select Audio'
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <MixIcon />
+                  </InputAdornment>
+                )
+              }}
             />
           </DialogContent>
           <Divider />

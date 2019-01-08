@@ -9,7 +9,7 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 import { browserHistory } from 'react-router'
-import { getSpecificCrop } from './store/action/allAddItem'
+import { getSpecificCrop, getSpecificProblem } from './store/action/allAddItem'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 
@@ -29,23 +29,29 @@ const styles = theme => ({
 })
 
 class ProblemSlider extends React.Component {
- 
-
   goToProblem = (selectId, type) => {
     console.log(selectId)
+    console.log(type)
     this.props.typeSelect === 'Crop'
       ? browserHistory.push({
         pathname: '/ProductList',
         state: { typeCheck: this.props.typeSelect, display: this.props.info }
       })
       : this.props.typeSelect === 'Problem' || type === 'Problem'
-        ? browserHistory.push({
-          pathname: '/problemSolution',
-          state: { typeCheck: this.props.typeSelect, selectId: selectId }
-        })
+        ? this.problemFetch(selectId)
         : type === 'Crop'
           ? this.cropFetch(selectId)
-          : null
+          : // : type === 'Problem'
+        // ? this.problemFetch(selectId)
+          null
+  }
+  problemFetch = id => {
+    // let obj = {
+    //   _id: id
+    // }
+    // changing
+    // console.log(obj)
+    this.props.getProblem(id)
   }
   cropFetch = id => {
     let obj = {
@@ -55,8 +61,7 @@ class ProblemSlider extends React.Component {
     // browserHistory.push('/specificCrop')
   }
   render () {
-    const { classes, 
-      info } = this.props
+    const { classes, info } = this.props
 
     const settings = {
       // dots: true,
@@ -71,22 +76,22 @@ class ProblemSlider extends React.Component {
     console.log(this.props.info)
     return (
       <div>
-      <Slider {...settings}>
-        {this.props.info.map((data, ind) => (
-          <Card className={classes.card} keys={ind}>
-            <CardHeader title={data.title} />
-            <CardMedia
-              className={classes.media}
-              image={data.image_url}
-              title='Contemplative Reptile'
-              onClick={this.goToProblem.bind(this, data._id, data.type)}
-            />
-            <CardContent>
-              <Typography component='p'>{data.name}</Typography>
-            </CardContent>
-          </Card>
-        ))}
-      </Slider>
+        <Slider {...settings}>
+          {this.props.info.map((data, ind) => (
+            <Card className={classes.card} keys={ind}>
+              <CardHeader title={data.title} />
+              <CardMedia
+                className={classes.media}
+                image={data.image_url}
+                title='Contemplative Reptile'
+                onClick={this.goToProblem.bind(this, data._id, data.type)}
+              />
+              <CardContent>
+                <Typography component='p'>{data.name}</Typography>
+              </CardContent>
+            </Card>
+          ))}
+        </Slider>
       </div>
     )
   }
@@ -95,6 +100,9 @@ function mapDispatchToProps (dispatch) {
   return {
     getCrop: obj => {
       dispatch(getSpecificCrop(obj))
+    },
+    getProblem: obj => {
+      dispatch(getSpecificProblem(obj))
     }
   }
 }

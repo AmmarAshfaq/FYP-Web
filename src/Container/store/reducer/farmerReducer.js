@@ -3,7 +3,6 @@ import ActionTypesCompany from '../constant/companyConstant'
 const INITIAL_STATE = {
   cropArray: [],
   problemArray: [],
-  // notificationCrop: {},
   // here cropGlobal is notification in buyer
   cropGlobal: [],
   upload: false,
@@ -15,29 +14,24 @@ const INITIAL_STATE = {
 
   // for company
   companyNotification: []
-  // notificationProblem:{}
 }
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ActionTypes.GET_CROP_SPECIFIC:
-      // console.log(action.payload)
       return { ...state, cropArray: action.payload }
     case ActionTypes.GET_PROBLEM_SPECIFIC:
       return { ...state, problemArray: action.payload }
     case ActionTypes.ADD_CROP:
+      console.log(action.payload)
       var arrCrop = state.cropArray
-      // console.log(arrValue)
       var arrObjCrop = action.payload
       arrCrop.push(arrObjCrop)
-      // console.log(arrValue)
       return { ...state, cropArray: arrCrop }
     case ActionTypes.ADD_PROBLEM:
       var arrValue = state.problemArray
-      // console.log(arrValue)
       var arrObj = action.payload
       arrValue.push(arrObj)
-      // console.log(arrValue)
       return { ...state, problemArray: arrValue }
     case ActionTypes.DELETE_CROP:
       return {
@@ -102,9 +96,7 @@ export default (state = INITIAL_STATE, action) => {
       }
     // here we are
     case ActionTypes.NOTIFICATION_CROP:
-      console.log(action.payload)
       var arrCropG = state.cropGlobal
-      console.log(arrCropG)
       // console.log(arrValue)
       var arrObjCG = action.payload
       arrCropG.push(arrObjCG)
@@ -113,9 +105,7 @@ export default (state = INITIAL_STATE, action) => {
         cropGlobal: arrCropG
       }
     case ActionTypes.NOTIFICATION_PROBLEM:
-      console.log(action.payload)
       var arrProblemG = state.problemGlobal
-      console.log(arrProblemG)
       // console.log(arrValue)
       var arrObjPG = action.payload
       arrProblemG.push(arrObjPG)
@@ -125,11 +115,9 @@ export default (state = INITIAL_STATE, action) => {
       }
 
     case ActionTypesCompany.NOTIFICATION_FERTILIZER:
-      console.log(action.payload)
       var arrCropG1 = state.cropGlobal
       var arrProblemG1 = state.problemGlobal
       var arrFarmerNoti = state.farmerGlobalNoti
-      console.log(arrCropG1)
       // console.log(arrValue)
       var arrObjCG1 = action.payload
       arrCropG1.unshift(arrObjCG1)
@@ -144,11 +132,9 @@ export default (state = INITIAL_STATE, action) => {
         farmerGlobalNoti: arrFarmerNoti
       }
     case ActionTypesCompany.NOTIFICATION_MACHINERY:
-      console.log(action.payload)
       var arrFarmerNoti2 = state.farmerGlobalNoti
       var arrCropG2 = state.cropGlobal
       var arrProblemG2 = state.problemGlobal
-      console.log(arrCropG2)
       // console.log(arrValue)
       var arrObjCG2 = action.payload
       arrCropG2.unshift(arrObjCG2)
@@ -163,14 +149,11 @@ export default (state = INITIAL_STATE, action) => {
         farmerGlobalNoti: arrFarmerNoti2
       }
     case ActionTypesCompany.NOTIFICATION_PESTICIDE:
-      console.log(action.payload)
       var arrCropG3 = state.cropGlobal
       var arrProblemG3 = state.problemGlobal
       var arrFarmerNoti3 = state.farmerGlobalNoti
-      console.log(arrCropG3)
-      // console.log(arrValue)
+     
       var arrObjCG3 = action.payload
-      arrCropG3.unshift(arrObjCG3)
       var arrObjPG3 = action.payload
       arrProblemG3.unshift(arrObjPG3)
       var arrObjFG2 = action.payload
@@ -186,7 +169,6 @@ export default (state = INITIAL_STATE, action) => {
 
       var arrObjR = action.payload
       arrResponse.unshift(arrObjR)
-      console.log(arrResponse)
       return {
         ...state,
         companyNotification: arrResponse

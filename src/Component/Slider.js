@@ -88,7 +88,18 @@ export default class Slider extends React.Component {
         >
           ◀
         </div>
+        <div style={
+          {
+           
+              width: '100%',
+              height: 500,
+              paddingTop: 40
+           
+          }
+        }>
+
         <ImageSlide url={imgUrls[this.state.currentImageIndex]} />
+        </div>
 
         <div
           onClick={this.previousSlide.bind(this)}

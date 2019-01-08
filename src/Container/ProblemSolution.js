@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import  { Grid, Paper, Typography } from '@material-ui/core'
+import { Grid, Paper, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 import CommentBox from '../Component/Farmer/CommentBox'
@@ -8,7 +8,6 @@ import { connect } from 'react-redux'
 import { getSpecificProblem } from './store/action/allAddItem'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { loaderProcessDone } from '../Container/store/action/allAddItem'
-
 
 const styles = theme => ({
   root: {
@@ -36,15 +35,14 @@ const styles = theme => ({
   }
 })
 class ProblemSolution extends Component {
- 
-  componentWillMount () {
-    // console.log("chal")
-    this.props.getProblemDetail(this.props.location.state.selectId)
-  }
-  componentDidMount(){
-    setTimeout(()=>{
-this.props.doneProcess()
-    },2000)
+  // componentWillMount () {
+  // console.log("chal")
+  // this.props.getProblemDetail(this.props.location.state.selectId)
+  // }
+  componentDidMount () {
+    setTimeout(() => {
+      this.props.doneProcess()
+    }, 2000)
   }
   render () {
     const { classes } = this.props
@@ -87,9 +85,7 @@ this.props.doneProcess()
                 </Grid>
                 <Grid item xs={12}>
                   <img
-                    src={
-                      this.props.problemData.image_url
-                    }
+                    src={this.props.problemData.image_url}
                     alt=''
                     className={classes.imgSize}
                   />
@@ -117,9 +113,7 @@ this.props.doneProcess()
                   >
                     Desciption:{' '}
                     <ul>
-                      <li>
-                       {this.props.problemData.description}
-                      </li>
+                      <li>{this.props.problemData.description}</li>
                     </ul>
                   </Typography>
                 </Grid>
@@ -127,12 +121,14 @@ this.props.doneProcess()
             </Grid>
             <Grid item xs={4} />
           </Grid>
-          {
-this.props.loader ?
-<CircularProgress className={classes.progress} />
-
-:          <CommentBox dataArr={this.props.problemData.comments} typeCheck="problem"/>
-          }
+          {this.props.loader ? (
+            <CircularProgress className={classes.progress} />
+          ) : (
+            <CommentBox
+              dataArr={this.props.problemData.comments}
+              typeCheck='problem'
+            />
+          )}
         </Grid>
       </div>
     )
@@ -141,15 +137,15 @@ this.props.loader ?
 
 function mapStateToProps (state) {
   return {
-    problemData:state.allAddedItemReducer.specificProblem,
-    loader:state.allAddedItemReducer.loader
+    problemData: state.allAddedItemReducer.specificProblem,
+    loader: state.allAddedItemReducer.loader
   }
 }
 function mapDispatchToProps (dispatch) {
   return {
-    getProblemDetail: obj => {
-      dispatch(getSpecificProblem(obj))
-    },
+    // getProblemDetail: obj => {
+    //   dispatch(getSpecificProblem(obj))
+    // },
     doneProcess: () => {
       dispatch(loaderProcessDone())
     }

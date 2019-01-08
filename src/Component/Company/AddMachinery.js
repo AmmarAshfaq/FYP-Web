@@ -9,6 +9,10 @@ import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { openModel } from '../../Container/store/action/action'
 import Alert from 'react-s-alert'
+import Create from '@material-ui/icons/Create'
+import AddPhoto from '@material-ui/icons/AddAPhoto'
+import PriceIcon from '@material-ui/icons/AttachMoney'
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 import {
   addMachineryAction,
@@ -108,39 +112,67 @@ class AddMachinery extends Component {
               autoFocus
               margin='dense'
               id='name'
-              label='Machine Name'
+              placeholder='Machine Name'
               type='text'
               fullWidth
               value={this.state.name}
               onChange={event => this.updateValue(event, 'name')}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Create />
+                  </InputAdornment>
+                ),
+              }}
             />
 
             <TextField
               autoFocus
               margin='dense'
               id='price'
-              label='Price'
+              placeholder='Price'
               type='text'
               fullWidth
               value={this.state.price}
               onChange={event => this.updateValue(event, 'price')}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PriceIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               autoFocus
               margin='dense'
               id='discription'
-              label='Machine Description'
+              placeholder='Machine Description'
               type='text'
               fullWidth
               value={this.state.description}
               onChange={event => this.updateValue(event, 'description')}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Create />
+                  </InputAdornment>
+                ),
+              }}
             />
 
             <TextField
            
               type='file'
-              label='Select File'
+              label='Select Image'
               onChange={this.updateFile}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AddPhoto />
+                  </InputAdornment>
+                ),
+              }}
             />
           </DialogContent>
           <Divider />

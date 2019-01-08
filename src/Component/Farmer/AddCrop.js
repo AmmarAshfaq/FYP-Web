@@ -3,12 +3,16 @@ import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
+import Typography from '@material-ui/core/Typography'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { openModel } from '../../Container/store/action/action'
 import Alert from 'react-s-alert'
-
+import Create from '@material-ui/icons/Create'
+import AddPhoto from '@material-ui/icons/AddAPhoto'
+import PriceIcon from '@material-ui/icons/AttachMoney'
+import InputAdornment from '@material-ui/core/InputAdornment';
 import {
   addCropAction,
   updateCropAction
@@ -75,7 +79,7 @@ class AddCrop extends Component {
         transport: transport,
         farmerId: this.props.farmerID,
         selectId: this.props.selectId,
-        type:'Crop'
+        type:'Crop',
       }
       if (this.props.selectId && this.props.selectId !== undefined) {
         this.props.cropDataUpdate(objData)
@@ -124,7 +128,9 @@ class AddCrop extends Component {
           aria-labelledby='form-dialog-title'
         >
           <DialogTitle id='form-dialog-title' className={classes.main}>
-            Add Crop
+          <Typography variant='display1' color='secondry' align='center'>
+              Add Crop
+            </Typography>
           </DialogTitle>
           <Divider />
           <DialogContent>
@@ -132,36 +138,57 @@ class AddCrop extends Component {
               autoFocus
               margin='dense'
               id='name'
-              label='Enter Crop Name'
+              placeholder='Enter Crop Name'
               type='text'
               fullWidth
               value={this.state.name}
               onChange={event => {
                 this.updateValue(event, 'name')
               }}
-            />
-            <TextField
-              autoFocus
-              margin='dense'
-              id='name'
-              label='Enter Crop Weight'
-              type='text'
-              fullWidth
-              value={this.state.wieght}
-              onChange={event => {
-                this.updateValue(event, 'wieght')
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Create />
+                  </InputAdornment>
+                ),
               }}
             />
             <TextField
               autoFocus
               margin='dense'
               id='name'
-              label='Enter Crop Price'
+              placeholder='Enter Crop Weight'
+              type='text'
+              fullWidth
+              value={this.state.wieght}
+              onChange={event => {
+                this.updateValue(event, 'wieght')
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Create />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <TextField
+              autoFocus
+              margin='dense'
+              id='name'
+              placeholder='Enter Crop Price'
               type='text'
               fullWidth
               value={this.state.price}
               onChange={event => {
                 this.updateValue(event, 'price')
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PriceIcon />
+                  </InputAdornment>
+                ),
               }}
             />
             <TextField
@@ -178,13 +205,21 @@ class AddCrop extends Component {
               onChange={event => {
                 this.updateValue(event, 'date')
               }}
+
             />
 
             <TextField
               onChange={this.handleChange}
               style={styles.textStyle}
               type='file'
-              label='Select File'
+              label='Select Image'
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AddPhoto />
+                  </InputAdornment>
+                ),
+              }}
             />
             <FormControlLabel
               label='Transport'
