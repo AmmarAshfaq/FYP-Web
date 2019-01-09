@@ -13,7 +13,10 @@ const INITIAL_STATE = {
   farmerGlobalNoti: [],
 
   // for company
-  companyNotification: []
+  companyNotification: [],
+
+  // all cityList
+  cityList: []
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -152,7 +155,7 @@ export default (state = INITIAL_STATE, action) => {
       var arrCropG3 = state.cropGlobal
       var arrProblemG3 = state.problemGlobal
       var arrFarmerNoti3 = state.farmerGlobalNoti
-     
+
       var arrObjCG3 = action.payload
       var arrObjPG3 = action.payload
       arrProblemG3.unshift(arrObjPG3)
@@ -172,6 +175,13 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         companyNotification: arrResponse
+      }
+
+    case ActionTypes.ALL_CITY_LIST:
+     
+      return {
+        ...state,
+        cityList: action.payload
       }
     default:
       return state

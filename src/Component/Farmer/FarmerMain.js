@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import croprates from '../AllData/CropRates'
 import MachinerySlider from '../../Container/ProductSlider'
 import ProblemData from '../AllData/ProblemData'
 import ImgData from '../AllData/MachineryDataCompany'
@@ -10,11 +9,12 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import 'weather-icons/css/weather-icons.css'
 import { weatherData } from '../../Container/store/action/weatherAction'
-import FormControl from '@material-ui/core/FormControl'
-import NativeSelect from '@material-ui/core/NativeSelect'
+import CropRates from '../../Container/CropRates'
 import Weather from '../../Container/Weather'
 import { loaderOffProcess } from '../../Container/store/action/authAction'
 import Loader from 'react-loader-spinner'
+import { getAllCityList } from '../../Container/store/action/farmerAction'
+
 import {
   getAllFertilizerAction,
   getAllPesticideAction,
@@ -27,29 +27,8 @@ import {
 
 import classNames from 'classnames'
 
-import {
-  Paper,
-  Table,
-  TableHead,
-  TableRow,
-  TableBody,
-  TableCell,
-  Grid,
-  Typography
-} from '@material-ui/core'
+import { Paper, Grid } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-
-const CustomTableCell = withStyles(theme => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    textAlign: 'left',
-    color: theme.palette.common.white
-  },
-  body: {
-    fontSize: 14,
-    textAlign: 'left'
-  }
-}))(TableCell)
 
 const styles = theme => ({
   root: {
@@ -68,9 +47,7 @@ const styles = theme => ({
     width: '100%',
     overflowX: 'auto'
   },
-  table: {
-    minWidth: 700
-  },
+
   tableCellIncrease: {
     fontSize: 20,
     lineHeight: 0
@@ -78,23 +55,11 @@ const styles = theme => ({
   weatherTable: {
     height: 50
   },
-  row: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.background.default
-    }
-  },
+
   margin: {
     margin: theme.spacing.unit
   },
-  formControl: {
-    margin: theme.spacing.unit * 2,
-    minWidth: 120,
-    float: 'right',
-    marginBottom: 10
-  },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2
-  },
+
   progress: {
     margin: theme.spacing.unit * 2
   },
@@ -105,9 +70,7 @@ const styles = theme => ({
 })
 class FarmerMain extends Component {
   state = {
-    selectList: [],
     search: '',
-    city: 'Karachi',
     anchorEl: null
   }
   componentWillMount () {
@@ -117,11 +80,17 @@ class FarmerMain extends Component {
     this.props.getFertilizer()
     this.props.getPesticide()
     this.props.getMachinery()
+    
+
   }
   componentDidMount () {
     setTimeout(() => {
       this.props.loaderOff()
     }, 2000)
+    setTimeout(()=>{
+
+      this.props.getLit()
+    },3000)
   }
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget })
@@ -131,17 +100,9 @@ class FarmerMain extends Component {
     this.setState({ anchorEl: null })
   }
 
-  onChange = event => {
-    this.setState({
-      city: event.target.value,
-      selectList: croprates.filter(item => item.city === this.state.city)
-    })
-  }
-
   render () {
     const { classes } = this.props
     const { selectList } = this.state
-    let i = 0
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
@@ -150,64 +111,7 @@ class FarmerMain extends Component {
           <Grid item xs={12} sm={9}>
             <Paper className={classes.paper}>
               <Paper className={classes.rootTable}>
-                <Table className={classes.table}>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell colSpan='3'>
-                        <Typography
-                          variant='headline'
-                          gutterBottom
-                          style={{ fontSize: 32 }}
-                        >
-                          Crop Rates
-                        </Typography>
-                      </TableCell>
-                      <TableCell colSpan='1'>
-                        <FormControl className={classes.formControl}>
-                          <NativeSelect
-                            value={this.state.city}
-                            onChange={this.onChange}
-                            name='Select City'
-                            className={classes.selectEmpty}
-                          >
-                            <option value={'Karachi'}>Karachi</option>a{' '}
-                            <option value={'Lahore'}>Lahore</option>
-                            <option value={'Hyderabad'}>Hyderabad</option>
-                          </NativeSelect>
-                        </FormControl>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell colSpan='4'>
-                        <Typography
-                          variant='headline'
-                          gutterBottom
-                          style={{ textAlign: 'center' }}
-                        >
-                          {this.state.city} Market Rate's
-                        </Typography>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow className={classes.row}>
-                      <CustomTableCell numeric>No.</CustomTableCell>
-                      <CustomTableCell numeric>Name</CustomTableCell>
-                      <CustomTableCell numeric>Price</CustomTableCell>
-                      <CustomTableCell numeric>Weight</CustomTableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {selectList.map((n, key) => {
-                      return (
-                        <TableRow className={classes.row} key={n.name}>
-                          <CustomTableCell numeric>{++i}</CustomTableCell>
-                          <CustomTableCell numeric>{n.name}</CustomTableCell>
-                          <CustomTableCell numeric>{n.price}</CustomTableCell>
-                          <CustomTableCell numeric>{n.weight}</CustomTableCell>
-                        </TableRow>
-                      )
-                    })}
-                  </TableBody>
-                </Table>
+                <CropRates list={this.props.cityList}/>
               </Paper>
             </Paper>
           </Grid>
@@ -288,7 +192,8 @@ function mapStateToProps (state) {
     farmerData: state.farmerReducer,
     loader: state.authReducer.authenticated,
     farmerId: state.authReducer.currentUserData.user.id,
-    allCompanyData: state.companyReducer
+    allCompanyData: state.companyReducer,
+    cityList:state.farmerReducer.cityList
   }
 }
 function mapDispatchToProps (dispatch) {
@@ -313,6 +218,9 @@ function mapDispatchToProps (dispatch) {
     },
     loaderOff: () => {
       dispatch(loaderOffProcess())
+    },
+    getLit: () => {
+      dispatch(getAllCityList())
     }
   }
 }

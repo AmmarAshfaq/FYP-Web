@@ -1,6 +1,6 @@
 import ActionTypes from '../constant/companyConstant'
 const ROOT_URL = 'http://localhost:8080'
-let getToken
+let getToken;
 export function responseAddFertilizerAction (obj) {
   getToken = localStorage.getItem('token')
 

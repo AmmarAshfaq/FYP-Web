@@ -22,6 +22,7 @@ export default (state = INITIAL_STATE, action) => {
     case ActionTypes.LISTEN_MESSAGE:
       var arrVal = state.allMsgList
       var arrObj = action.payload
+      console.log(action.payload)
       arrVal.push(arrObj)
 
       return { ...state, allMsgList: arrVal }

@@ -7,11 +7,20 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { openModel } from './store/action/action'
+import Create from '@material-ui/icons/Create'
+import EmailIcon from '@material-ui/icons/Email'
+
+import PriceIcon from '@material-ui/icons/AttachMoney'
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Typography from '@material-ui/core/Typography'
+
 import {
   responseAddFertilizerAction,
   responseAddMachineryAction,
   responseAddPesticideAction
 } from './store/action/companyAction'
+import Divider from '@material-ui/core/Divider'
+
 class PurchaseForm extends Component {
   constructor () {
     super()
@@ -103,50 +112,78 @@ class PurchaseForm extends Component {
           aria-labelledby='form-dialog-title'
         >
           <DialogTitle id='form-dialog-title' style={{ textAlign: 'center' }}>
-            Contact Form
+          <Typography variant='display1' color='secondry' align='center'>
+              Contact Form
+            </Typography>
           </DialogTitle>
+          <Divider/>
           <DialogContent>
             <TextField
               autoFocus
               margin='dense'
-              id='name'
-              label='Please Enter Your Name'
+              placeholder='Please Enter Your Name'
               type='text'
               fullWidth
               value={this.state.name}
               onChange={event => this.updateValue(event, 'name')}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Create />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               autoFocus
               margin='dense'
-              id='price'
-              label='Please Enter Expected Price'
+              placeholder='Please Enter Expected Price'
               type='text'
               fullWidth
               value={this.state.price}
               onChange={event => this.updateValue(event, 'price')}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PriceIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               autoFocus
               margin='dense'
-              id='image'
-              label='Please Enter Quantity'
+              placeholder='Please Enter Quantity'
               type='text'
               fullWidth
               value={this.state.quantity}
               onChange={event => this.updateValue(event, 'quantity')}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Create />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               autoFocus
               margin='dense'
-              id='email'
-              label='Please Enter Email'
+              placeholder='Please Enter Email'
               type='email'
               fullWidth
               value={this.state.email}
               onChange={event => this.updateValue(event, 'email')}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EmailIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
           </DialogContent>
+          <Divider/>
           <DialogActions>
             <Button onClick={this.handleClose} color='primary'>
               Cancel

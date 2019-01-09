@@ -6,11 +6,14 @@ let getToken
 export function ConnectWithSocket (data) {
   
   return dispatch => {
+    dispatch(processLoad())
     console.log(data)
     socket.emit('message', data)
     socket.on(data.conversationId, function (obj) {
       dispatch(listenMsg(obj))
     })
+    dispatch(processDone())
+
   }
 }
 

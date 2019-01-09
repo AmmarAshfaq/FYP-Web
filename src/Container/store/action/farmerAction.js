@@ -373,3 +373,32 @@ function deleteCrop (obj) {
     payload: obj
   }
 }
+
+/* Crop Rates */
+
+export function getAllCityList () {
+  getToken = localStorage.getItem('token')
+  return async dispatch => {
+    const result = await fetch(`${ROOT_URL}/getAllCity`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        authorization: getToken,
+        'if-none-match':'no-match-for-this' //    // Here we change header 
+
+      }
+    })
+
+    const getData = await result.json()
+    console.log(getData)
+    dispatch(getCities(getData))
+    
+  }
+}
+
+function getCities(obj){
+  return{
+    type:ActionTypes.ALL_CITY_LIST,
+    payload:obj
+  }
+}

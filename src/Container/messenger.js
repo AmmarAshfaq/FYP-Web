@@ -117,31 +117,17 @@ class Messenger extends React.Component {
   }
 
   componentWillMount () {
-    // console.log(window.document.referrer)
-    // this.props.connectSocket()
     this.props.getUserMessage(this.props.userId.id)
   }
-  // componentDidMount(){
-  //   console.log(window.document.referrer)
+  componentDidMount () {}
+  // componentWillReceiveProps (nextProps) {
+  //   console.log(this.props.msgList.length)
+  //   console.log(nextProps.length)
+  //   // if(this.props.msgList.length < nextProps.length)
+  //   // {
+
+  //   // }
   // }
-
-  handleProfileMenuOpen = event => {
-    this.setState({ anchorEl: event.currentTarget })
-  }
-
-  handleMenuClose = () => {
-    this.setState({ anchorEl: null })
-    this.handleMobileMenuClose()
-  }
-
-  handleMobileMenuOpen = event => {
-    this.setState({ mobileMoreAnchorEl: event.currentTarget })
-  }
-
-  handleMobileMenuClose = () => {
-    this.setState({ mobileMoreAnchorEl: null })
-  }
-
   changeValue = (event, target) => {
     let obj = {}
     obj[target] = event.target.value
@@ -440,58 +426,12 @@ class Messenger extends React.Component {
     this.props.connectSocket(obj)
   }
   render () {
-    const { anchorEl, 
-      
-    } = this.state
+    const { anchorEl } = this.state
     const { classes } = this.props
     const isMenuOpen = Boolean(anchorEl)
 
     return (
       <div className={classes.root}>
-        {/* <AppBar position='static' style={{ backgroundColor: '#00806d' }}>
-          <Toolbar>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <Input
-                placeholder='Search…'
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-              />
-            </div>
-            <Typography
-              className={classes.title}
-              variant='h1'
-              color='inherit'
-              noWrap
-            >
-              MESSAGES
-            </Typography>
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-              <IconButton
-                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                aria-haspopup='true'
-                onClick={this.handleProfileMenuOpen}
-                color='inherit'
-              >
-                <AccountCircle />
-              </IconButton>
-            </div>
-            <div className={classes.sectionMobile}>
-              <IconButton
-                aria-haspopup='true'
-                onClick={this.handleMobileMenuOpen}
-                color='inherit'
-              >
-                <MoreIcon />
-              </IconButton>
-            </div>
-          </Toolbar>
-        </AppBar> */}
         <Grid container>
           <Grid item xs={3}>
             <Paper>
@@ -580,7 +520,6 @@ class Messenger extends React.Component {
                             <span
                               style={{
                                 display: 'flex',
-                                // alignItems: 'flex-end',
                                 justifyContent: 'flex-start',
                                 height: '50%'
                               }}
@@ -621,7 +560,6 @@ class Messenger extends React.Component {
                 }}
               >
                 <TextField
-                  // id='standard-full-width'
                   style={{ width: '80%', marginBottom: 0 }}
                   placeholder='Enter Message ....'
                   fullWidth
@@ -663,9 +601,6 @@ function mapDispatchToProps (dispatch) {
 }
 
 function mapStateToProps (state) {
-  // console.log(state.companyReducer.connectMsg)
-  // console.log(state.authReducer.currentUserData.user)
-  console.log(state.messageReducer.selectUserFromList)
   return {
     userId: state.authReducer.currentUserData.user,
     msgList: state.messageReducer.allMsgList,
