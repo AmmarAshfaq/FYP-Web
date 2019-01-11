@@ -19,6 +19,8 @@ import MachinerData from '../AllData/MachineryDataCompany'
 import { getAllProblemAction } from '../../Container/store/action/allAddItem'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { loaderOffProcess } from '../../Container/store/action/authAction'
+import { getAllCityList } from '../../Container/store/action/farmerAction'
+import CropRates from '../../Container/CropRates'
 
 import classNames from 'classnames'
 import {
@@ -29,7 +31,7 @@ import {
   TableBody,
   TableCell,
   Grid,
-  Typography,
+  Typography
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import {
@@ -64,7 +66,9 @@ const styles = theme => ({
   },
   rootTable: {
     width: '100%',
-    overflowX: 'auto'
+    overflowX: 'auto',
+    height:900,
+
   },
   table: {
     minWidth: 700
@@ -92,10 +96,10 @@ const styles = theme => ({
   },
   progress: {
     margin: theme.spacing.unit * 2,
-    textAlign:'center'
+    textAlign: 'center'
   },
   marginTopIncrease: {
-    marginTop: 130,
+    marginTop: 20
     // textAlign: 'center'
   }
 })
@@ -120,6 +124,9 @@ class ExpertMain extends Component {
     setTimeout(() => {
       this.props.loaderOff()
     }, 2000)
+    setTimeout(() => {
+      this.props.getLit()
+    }, 3000)
   }
 
   handleClose = () => {
@@ -141,8 +148,7 @@ class ExpertMain extends Component {
 
   render () {
     const { classes } = this.props
-    const { selectList,
-      } = this.state
+    const { selectList } = this.state
     let i = 0
     return (
       <div className={classes.root}>
@@ -156,66 +162,7 @@ class ExpertMain extends Component {
           <Grid item xs={12} sm={9}>
             <Paper className={classes.paper}>
               <Paper className={classes.rootTable}>
-                <Table className={classes.table}>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell colSpan='3'>
-                        <Typography
-                          variant='headline'
-                          gutterBottom
-                          style={{ fontSize: 32 }}
-                        >
-                          Crop Rates
-                        </Typography>
-                      </TableCell>
-
-                      <TableCell colSpan='1'>
-                        <FormControl className={classes.formControl}>
-                          <NativeSelect
-                            value={this.state.city}
-                            onChange={this.onChange}
-                            name='Select City'
-                            className={classes.selectEmpty}
-                          >
-                            <option value=''>Select City</option>
-                            <option value={'Karachi'}>Karachi</option>
-                            <option value={'Lahore'}>Lahore</option>
-                            <option value={'Hyderabad'}>Hyderabad</option>
-                          </NativeSelect>
-                        </FormControl>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell colSpan='4'>
-                        <Typography
-                          variant='headline'
-                          gutterBottom
-                          style={{ textAlign: 'center' }}
-                        >
-                          {this.state.city} Market Rate's
-                        </Typography>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow className={classes.row}>
-                      <CustomTableCell numeric>No.</CustomTableCell>
-                      <CustomTableCell numeric>Name</CustomTableCell>
-                      <CustomTableCell numeric>Price</CustomTableCell>
-                      <CustomTableCell numeric>Weight</CustomTableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {selectList.map((n, key) => {
-                      return (
-                        <TableRow className={classes.row} key={n.name}>
-                          <CustomTableCell numeric>{++i}</CustomTableCell>
-                          <CustomTableCell numeric>{n.name}</CustomTableCell>
-                          <CustomTableCell numeric>{n.price}</CustomTableCell>
-                          <CustomTableCell numeric>{n.weight}</CustomTableCell>
-                        </TableRow>
-                      )
-                    })}
-                  </TableBody>
-                </Table>
+                <CropRates list={this.props.cityList} />
               </Paper>
             </Paper>
           </Grid>
@@ -260,7 +207,7 @@ class ExpertMain extends Component {
           </Grid>
 
           <Grid item xs={12}>
-            <Paper className={[classes.paper,classes.marginTopIncrease]}>
+            <Paper className={[classes.paper, classes.marginTopIncrease]}>
               {!this.props.loader ? (
                 <ProblemSlider
                   info={this.props.allProblem}
@@ -282,7 +229,8 @@ function mapStateToProps (state) {
     allProblem: state.allAddedItemReducer.problemData,
     allCompanyData: state.companyReducer,
     weatherDetail: state.reducer.weatherData,
-    loader: state.authReducer.authenticated
+    loader: state.authReducer.authenticated,
+    cityList: state.farmerReducer.cityList
   }
 }
 function mapDispatchToProps (dispatch) {
@@ -305,6 +253,9 @@ function mapDispatchToProps (dispatch) {
     },
     loaderOff: () => {
       dispatch(loaderOffProcess())
+    },
+    getLit: () => {
+      dispatch(getAllCityList())
     }
   }
 }

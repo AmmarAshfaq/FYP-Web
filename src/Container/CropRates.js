@@ -7,18 +7,26 @@ import {
   TableCell,
   Typography
 } from '@material-ui/core'
+import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import NativeSelect from '@material-ui/core/NativeSelect'
 import croprates from '../Component/AllData/CropRates'
+import Select from '@material-ui/core/Select'
 import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { getCropData } from './store/action/farmerAction'
 const styles = theme => ({
   selectEmpty: {
     marginTop: theme.spacing.unit * 2
   },
   table: {
     minWidth: 700
+  },
+  tableBody:{
+height:600,
+overflowY:'visible'
+
   },
   formControl: {
     margin: theme.spacing.unit * 2,
@@ -50,15 +58,20 @@ class CropRates extends Component {
     selectList: []
   }
   onChange = event => {
+    let change = JSON.parse(event.target.value)
+    // console.log(change)
+    // alert(JSON.stringify(event.target.value))
     this.setState({
-      city: event.target.value
+      city: change.cityName
       //   selectList: this.props.list.filter(item => item.city === this.state.city)
     })
+    this.props.getCrop(change.url)
   }
-  getCropRate = url => {
-    console.log(url)
-  }
+  // getCropRate = url => {
+  //   console.log(url, 'hello')
+  // }
   render () {
+    console.log(this.state.city)
     let i = 0
     const { selectList } = this.state
     const { classes } = this.props
@@ -85,9 +98,9 @@ class CropRates extends Component {
                 >
                   {this.props.list
                     ? this.props.list.map(item => {
-                      return (
-                        <option value={item.cityName}>{item.cityName}</option>
-                      )
+                      // {console.log(item)}
+                      let itemVal = JSON.stringify(item)
+                      return <option value={itemVal}>{item.cityName}</option>
                     })
                     : null}
 
@@ -112,18 +125,32 @@ class CropRates extends Component {
           <TableRow className={classes.row}>
             <CustomTableCell numeric>No.</CustomTableCell>
             <CustomTableCell numeric>Name</CustomTableCell>
-            <CustomTableCell numeric>Price</CustomTableCell>
-            <CustomTableCell numeric>Weight</CustomTableCell>
+            <CustomTableCell numeric>Max Price</CustomTableCell>
+            <CustomTableCell numeric>Min Price</CustomTableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {selectList.map((n, key) => {
+        <TableBody className={classes.tableBody}>
+{/*           
+          {
+            this.props.cityRates.map((n, index,arr) => {
             return (
               <TableRow className={classes.row} key={n.name}>
                 <CustomTableCell numeric>{++i}</CustomTableCell>
-                <CustomTableCell numeric>{n.name}</CustomTableCell>
-                <CustomTableCell numeric>{n.price}</CustomTableCell>
-                <CustomTableCell numeric>{n.weight}</CustomTableCell>
+                <CustomTableCell numeric>{n.cropName}</CustomTableCell>
+                <CustomTableCell numeric>{n.cropMax}</CustomTableCell>
+                <CustomTableCell numeric>{n.cropMin}</CustomTableCell>
+              </TableRow>
+            )
+          })} */}
+           
+           {
+            this.props.cityRates.map((n, index,arr) => {
+            return (
+              <TableRow className={classes.row} key={n.name}>
+                <CustomTableCell numeric>{++i}</CustomTableCell>
+                <CustomTableCell numeric>{n.cropName}</CustomTableCell>
+                <CustomTableCell numeric>{n.cropMax}</CustomTableCell>
+                <CustomTableCell numeric>{n.cropMin}</CustomTableCell>
               </TableRow>
             )
           })}
@@ -132,14 +159,22 @@ class CropRates extends Component {
     )
   }
 }
-
+function mapStateToProps(state){
+  return{
+    cityRates:state.farmerReducer.cityCrop
+  }
+}
 function mapDispatchToProps (dispatch) {
-  return {}
+  return {
+    getCrop: data => {
+      dispatch(getCropData(data))
+    }
+  }
 }
 export default compose(
   withStyles(styles),
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )
 )(CropRates)

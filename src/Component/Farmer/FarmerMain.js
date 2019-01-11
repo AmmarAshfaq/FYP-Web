@@ -45,7 +45,9 @@ const styles = theme => ({
   },
   rootTable: {
     width: '100%',
-    overflowX: 'auto'
+    overflowX: 'auto',
+    height:900,
+    // overflowY:'hidden'
   },
 
   tableCellIncrease: {
@@ -64,8 +66,11 @@ const styles = theme => ({
     margin: theme.spacing.unit * 2
   },
   marginTopIncrease: {
-    marginTop: 130
+    marginTop: 30
     // textAlign: 'center'
+  },
+  tableSize:{
+    height:300
   }
 })
 class FarmerMain extends Component {
@@ -85,7 +90,7 @@ class FarmerMain extends Component {
   }
   componentDidMount () {
     setTimeout(() => {
-      this.props.loaderOff()
+       this.props.loaderOff()
     }, 2000)
     setTimeout(()=>{
 
@@ -111,7 +116,7 @@ class FarmerMain extends Component {
           <Grid item xs={12} sm={9}>
             <Paper className={classes.paper}>
               <Paper className={classes.rootTable}>
-                <CropRates list={this.props.cityList}/>
+                <CropRates list={this.props.cityList} />
               </Paper>
             </Paper>
           </Grid>

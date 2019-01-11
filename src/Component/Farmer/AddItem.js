@@ -78,7 +78,8 @@ const styles = theme => ({
   paper: {
     margin: theme.spacing.unit * 6,
     textAlign: 'center',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
+    // height:'auto'
   },
   progress: {
     margin: theme.spacing.unit * 2

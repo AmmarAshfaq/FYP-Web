@@ -16,7 +16,10 @@ const INITIAL_STATE = {
   companyNotification: [],
 
   // all cityList
-  cityList: []
+  cityList: [],
+
+  // city crop
+  cityCrop: []
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -178,10 +181,14 @@ export default (state = INITIAL_STATE, action) => {
       }
 
     case ActionTypes.ALL_CITY_LIST:
-     
       return {
         ...state,
         cityList: action.payload
+      }
+    case ActionTypes.CITY_CROP_DATA:
+      return {
+        ...state,
+        cityCrop: action.payload
       }
     default:
       return state

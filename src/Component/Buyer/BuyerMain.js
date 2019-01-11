@@ -9,6 +9,8 @@ import FermerCrop from '../AllData/FarmerCrops'
 import Weather from '../../Container/Weather'
 import { weatherData } from '../../Container/store/action/weatherAction'
 import FarmerCropData from '../AllData/FarmerCropData'
+import { getAllCityList } from '../../Container/store/action/farmerAction'
+
 import classNames from 'classnames'
 import {
   Paper,
@@ -29,6 +31,8 @@ import MachinerData from '../AllData/MachineryDataCompany'
 import { getAllCropAction } from '../../Container/store/action/allAddItem'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { loaderOffProcess } from '../../Container/store/action/authAction'
+import CropRates from '../../Container/CropRates'
+
 
 import {
   getAllFertilizerAction,
@@ -65,7 +69,9 @@ const styles = theme => ({
   },
   rootTable: {
     width: '100%',
-    overflowX: 'auto'
+    overflowX: 'auto',
+    height:900,
+
   },
   table: {
     minWidth: 700
@@ -88,7 +94,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 2
   },
   marginTopIncrease: {
-    marginTop: 130,
+    marginTop: 20,
     textAlign: 'center'
   }
 })
@@ -113,6 +119,10 @@ class BuyerMain extends Component {
     setTimeout(() => {
       this.props.loaderOff()
     }, 2000)
+    setTimeout(()=>{
+
+      this.props.getLit()
+    },3000)
   }
   handleClose = () => {
     this.setState({ anchorEl: null })
@@ -141,61 +151,8 @@ class BuyerMain extends Component {
           <Grid item xs={12} sm={9}>
             <Paper className={classes.paper}>
               <Paper className={classes.rootTable}>
-                <Table className={classes.table}>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell colSpan='3'>
-                        <Typography variant='headline' gutterBottom>
-                          Crop Rates
-                        </Typography>
-                      </TableCell>
-                      <TableCell colSpan='1'>
-                        <FormControl className={classes.formControl}>
-                          <NativeSelect
-                            value={this.state.city}
-                            onChange={this.onChange}
-                            name='Select City'
-                            className={classes.selectEmpty}
-                          >
-                            <option value=''>Select City</option>
-                            <option value={'Karachi'}>Karachi</option>
-                            <option value={'Lahore'}>Lahore</option>
-                            <option value={'Hyderabad'}>Hyderabad</option>
-                          </NativeSelect>
-                        </FormControl>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell colSpan='4'>
-                        <Typography
-                          variant='headline'
-                          gutterBottom
-                          style={{ textAlign: 'center' }}
-                        >
-                          {this.state.city} Market Rate's
-                        </Typography>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow className={classes.row}>
-                      <CustomTableCell numeric>No.</CustomTableCell>
-                      <CustomTableCell numeric>Name</CustomTableCell>
-                      <CustomTableCell numeric>Price</CustomTableCell>
-                      <CustomTableCell numeric>Weight</CustomTableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {selectList.map((n, key) => {
-                      return (
-                        <TableRow className={classes.row} key={n.name}>
-                          <CustomTableCell numeric>{++i}</CustomTableCell>
-                          <CustomTableCell numeric>{n.name}</CustomTableCell>
-                          <CustomTableCell numeric>{n.price}</CustomTableCell>
-                          <CustomTableCell numeric>{n.weight}</CustomTableCell>
-                        </TableRow>
-                      )
-                    })}
-                  </TableBody>
-                </Table>
+              <CropRates list={this.props.cityList} />
+               
               </Paper>
             </Paper>
           </Grid>
@@ -259,7 +216,9 @@ function mapStateToProps (state) {
     weatherDetail: state.reducer.weatherData,
     cropArr: state.allAddedItemReducer.cropData,
     allCompanyData: state.companyReducer,
-    loader: state.authReducer.authenticated
+    loader: state.authReducer.authenticated,
+    cityList:state.farmerReducer.cityList
+
 
   }
 }
@@ -282,6 +241,9 @@ function mapDispatchToProps (dispatch) {
     },
     loaderOff: () => {
       dispatch(loaderOffProcess())
+    },
+    getLit: () => {
+      dispatch(getAllCityList())
     }
   }
 }

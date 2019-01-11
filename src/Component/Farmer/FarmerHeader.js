@@ -28,8 +28,6 @@ import AddItem from '@material-ui/icons/AddCircle'
 import LOGOUT from '../../images/Icons/logout.png'
 import ListItem from '@material-ui/icons/List'
 
-
-
 const styles = theme => ({
   avatarStyle: { width: 70, height: 70, margin: 5 },
   titleStyle: { flexDirection: 'column', flexGrow: 1 },
@@ -99,27 +97,29 @@ class FarmerHeader extends Component {
               </Typography>
             </div>
             <div>
-            <Tooltip title='Home'>
-              
-              <IconButton
-                color='inherit'
-                className={classes.buttonStyle}
-                onClick={this.openHome.bind(this)}
-              >
-                <img src={HomeIcon} alt='lloading' width='40' height='35' />
-              </IconButton>
-
-</Tooltip>
-              <Badge color='secondary' badgeContent={4}>
-              <Tooltip title='Message'>
-              
+              <Tooltip title='Home'>
                 <IconButton
                   color='inherit'
                   className={classes.buttonStyle}
-                  onClick={this.messengerApp.bind(this, 'Messenger')}
+                  onClick={this.openHome.bind(this)}
                 >
-                  <img src={MessegeIcon} alt='loading' width='40' height='35' />
+                  <img src={HomeIcon} alt='lloading' width='30' height='25' />
                 </IconButton>
+              </Tooltip>
+              <Badge color='secondary' badgeContent={4}>
+                <Tooltip title='Message'>
+                  <IconButton
+                    color='inherit'
+                    className={classes.buttonStyle}
+                    onClick={this.messengerApp.bind(this, 'Messenger')}
+                  >
+                    <img
+                      src={MessegeIcon}
+                      alt='loading'
+                      width='30'
+                      height='25'
+                    />
+                  </IconButton>
                 </Tooltip>
               </Badge>
 
@@ -133,23 +133,21 @@ class FarmerHeader extends Component {
                     : this.props.farmerNotification.length
                 }
               >
-              <Tooltip title='Home'>
-
-                <FarmerNotification typeSelect='Crop' />
+                <Tooltip title='Home'>
+                  <FarmerNotification typeSelect='Crop' />
                 </Tooltip>
               </Badge>
               <Tooltip title='More features'>
-
-              <IconButton
-                aria-haspopup='true'
-                onClick={this.handleClick}
-                color='inherit'
-                className={classes.buttonStyle}
-              >
-                <img src={MoreIcon} alt='loading' width='40' height='35' />
-              </IconButton>
+                <IconButton
+                  aria-haspopup='true'
+                  onClick={this.handleClick}
+                  color='inherit'
+                  className={classes.buttonStyle}
+                >
+                  <img src={MoreIcon} alt='loading' width='30' height='25' />
+                </IconButton>
               </Tooltip>
-              
+
               <Menu
                 id='simple-menu'
                 anchorEl={anchorEl}
@@ -158,17 +156,17 @@ class FarmerHeader extends Component {
                 style={{ position: 'absolute', top: 50 }}
               >
                 <MenuItem onClick={this.handleClickOpen.bind(this, 'Problem')}>
-               <AddItem/>  {"\u00A0"} Add Problem
+                  <AddItem /> {'\u00A0'} Add Problem
                 </MenuItem>
                 <MenuItem onClick={this.handleClickOpen.bind(this, 'Crops')}>
-                <AddItem/>  {"\u00A0"} Add Crop
+                  <AddItem /> {'\u00A0'} Add Crop
                 </MenuItem>
                 <MenuItem onClick={this.handleClickAddItem.bind(this)}>
-                <ListItem/>  {"\u00A0"}  Added Item
+                  <ListItem /> {'\u00A0'} Added Item
                 </MenuItem>
                 <MenuItem onClick={this.handleLogOut.bind(this, 'Main')}>
-                <img src={LOGOUT} alt='loading' width='25' height='25' />
-                {"\u00A0"}      Log Out
+                  <img src={LOGOUT} alt='loading' width='25' height='25' />
+                  {'\u00A0'} Log Out
                 </MenuItem>
                 s{' '}
               </Menu>

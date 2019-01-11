@@ -384,21 +384,53 @@ export function getAllCityList () {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
         authorization: getToken,
-        'if-none-match':'no-match-for-this' //    // Here we change header 
-
+        'if-none-match': 'no-match-for-this' //    // Here we change header
       }
     })
 
     const getData = await result.json()
     console.log(getData)
     dispatch(getCities(getData))
-    
   }
 }
 
-function getCities(obj){
-  return{
-    type:ActionTypes.ALL_CITY_LIST,
-    payload:obj
+export function getCropData (obj) {
+  getToken = localStorage.getItem('token')
+  const objData = {
+    link: obj
+  }
+  console.log(obj, 'Crop list')
+  return async dispatch => {
+    const result = await fetch(`${ROOT_URL}/getCityData`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        authorization: getToken,
+        'if-none-match': 'no-match-for-this' //    // Here we change header
+      },
+      body: JSON.stringify(objData)
+    })
+
+    const getData = await result.json()
+    // console.log(getData)
+    let arrFilter = []
+    for (var i = 10; i < getData.length; i++) {
+      arrFilter.push(getData[i])
+    }
+    // console.log(arrFilter)
+    dispatch(getCityData(arrFilter))
+  }
+}
+
+function getCities (obj) {
+  return {
+    type: ActionTypes.ALL_CITY_LIST,
+    payload: obj
+  }
+}
+function getCityData (obj) {
+  return {
+    type: ActionTypes.CITY_CROP_DATA,
+    payload: obj
   }
 }

@@ -67,7 +67,7 @@ class DrawerOpenClose extends Component {
                   color='inherit'
                   className={classes.buttonStyle}
                 >
-                  <img src={HomeIcon} alt='lloading' width='40' height='35' />
+                  <img src={HomeIcon} alt='lloading' width='30' height='25' />
                 </IconButton>
               </Tooltip>
               <Tooltip title='About'>
@@ -76,7 +76,7 @@ class DrawerOpenClose extends Component {
                   color='inherit'
                   className={classes.buttonStyle}
                 >
-                  <img src={AboutIcon} alt='lloading' width='40' height='35' />
+                  <img src={AboutIcon} alt='lloading' width='30' height='25'/>
                 </IconButton>
               </Tooltip>
               <Tooltip title='Contact Us'>
@@ -88,8 +88,7 @@ class DrawerOpenClose extends Component {
                   <img
                     src={ContactIcon}
                     alt='lloading'
-                    width='40'
-                    height='35'
+                    width='30' height='25'
                   />
                 </IconButton>
               </Tooltip>
@@ -100,7 +99,7 @@ class DrawerOpenClose extends Component {
                   color='inherit'
                   className={classes.buttonStyle}
                 >
-                  <img src={LoginIcon} alt='lloading' width='40' height='35' />
+                  <img src={LoginIcon} alt='lloading' width='30' height='25' />
                 </IconButton>
               </Tooltip>
             </div>

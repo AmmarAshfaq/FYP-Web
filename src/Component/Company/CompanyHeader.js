@@ -97,7 +97,7 @@ class CompanyHeader extends Component {
                 onClick={this.openHome.bind(this)}
                 className={classes.buttonStyle}
               >
-                <img src={HomeIcon} alt='lloading' width='40' height='35' />
+                <img src={HomeIcon} alt='lloading' width='30' height='25' />
               </IconButton>
               </Tooltip>
               <Badge color='secondary' badgeContent={4}>
@@ -108,7 +108,7 @@ class CompanyHeader extends Component {
                   className={classes.buttonStyle}
                   onClick={this.messengerApp.bind(this, 'Messenger')}
                 >
-                  <img src={MessegeIcon} alt='loading' width='40' height='35' />
+                  <img src={MessegeIcon} alt='loading' width='30' height='25' />
                 </IconButton>
                 </Tooltip>
               </Badge>
@@ -132,7 +132,7 @@ class CompanyHeader extends Component {
                 className={classes.buttonStyle}
                 color='inherit'
               >
-                <img src={MoreIcon} alt='loading' width='40' height='35' />
+                <img src={MoreIcon} alt='loading' width='30' height='25' />
               </IconButton>
               </Tooltip>
               <Menu

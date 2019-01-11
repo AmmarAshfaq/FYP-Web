@@ -75,7 +75,7 @@ class BuyerHeader extends Component {
                 color='inherit'
                 onClick={() => browserHistory.push('/buyermain')}
               >
-               <img src={HomeIcon} alt="lloading" width='40' height='35'/>
+               <img src={HomeIcon} alt="lloading" width='30' height='25'/>
               </IconButton>
           </Tooltip>
 
@@ -95,7 +95,7 @@ class BuyerHeader extends Component {
                   className={classes.buttonStyle}
                   onClick={this.messengerApp.bind(this, 'Messenger')}
                 >
-                  <img src={MessegeIcon} alt="loading" width='40' height='35'/>
+                  <img src={MessegeIcon} alt="loading" width='30' height='25'/>
                 </IconButton>
                 </Tooltip>
               </Badge>

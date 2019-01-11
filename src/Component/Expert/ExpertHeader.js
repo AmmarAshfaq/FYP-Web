@@ -70,7 +70,7 @@ class ExpertHeader extends Component {
             <div>
               <Tooltip title='Home'>
                 <IconButton onClick={this.openHome.bind(this)} color='inherit'>
-                  <img src={HomeIcon} alt='lloading' width='40' height='35' />
+                  <img src={HomeIcon} alt='lloading' width='30' height='25' />
                 </IconButton>
               </Tooltip>
               <Badge color='secondary' badgeContent={4}>
@@ -83,8 +83,7 @@ class ExpertHeader extends Component {
                     <img
                       src={MessegeIcon}
                       alt='loading'
-                      width='40'
-                      height='35'
+                      width='30' height='25'
                     />
                   </IconButton>
                 </Tooltip>

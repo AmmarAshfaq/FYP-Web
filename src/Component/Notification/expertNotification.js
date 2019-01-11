@@ -66,7 +66,7 @@ class NotificationDialog extends React.Component {
             onClick={this.handleClick}
             style={{ marginRight: 5, position: 'relative' }}
           >
-            <img src={NotificationIcon} alt='loading' width='40' height='35' />
+            <img src={NotificationIcon} alt='loading' width='30' height='25' />
           </IconButton>
         </Tooltip>
         <Menu
