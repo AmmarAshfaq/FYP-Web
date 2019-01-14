@@ -21,7 +21,7 @@ export function signinUser (obj) {
       body: JSON.stringify(data)
     })
     const getData = await result.json()
-console.log(getData)
+    console.log(getData)
     if (getData.user) {
       if (getData.user.userType === 'Company') {
         localStorage.setItem('token', getData.token)
@@ -48,16 +48,14 @@ console.log(getData)
         dispatch(signupSucced(getData))
         browserHistory.push('/buyermain')
         dispatch(changeNavbar(`${getData.user.userType}Home`))
-      }
-      else if(getData.user.userType === 'Admin'){
+      } else if (getData.user.userType === 'Admin') {
         /* Admin Login */
         localStorage.setItem('token', getData.token)
         dispatch(signupSucced(getData))
 
         browserHistory.push('/adminmain')
         dispatch(changeNavbar(`${getData.user.userType}Home`))
-      } 
-      else {
+      } else {
         browserHistory.push('/login')
       }
     } else if (getData.error) {
@@ -85,7 +83,7 @@ export function emailSendAction (obj) {
       body: JSON.stringify(obj)
     })
 
-    const getData = await result.json();
+    const getData = await result.json()
     if (getData.success === 'true') {
       dispatch(sendSuccess(getData))
     } else {
@@ -100,10 +98,9 @@ function sendSuccess (obj) {
   }
 }
 
-export function emailSuccessEmpty(){
-  return{
-    type:ActionTypes.EMAIL_EMPTY,
-
+export function emailSuccessEmpty () {
+  return {
+    type: ActionTypes.EMAIL_EMPTY
   }
 }
 export function signoutUser (data) {
@@ -172,10 +169,11 @@ export function signupUser (obj) {
 }
 
 export function forgetPassword (obj) {
+  console.log(obj)
   return async dispatch => {
     dispatch(signupRequest())
 
-    const result = await fetch(`${ROOT_URL}/passwordReset`, {
+    const result = await fetch(`${ROOT_URL}/auth/forgot_password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8'
@@ -184,41 +182,24 @@ export function forgetPassword (obj) {
       body: JSON.stringify(obj)
     })
     const getData = await result.json()
+    console.log(getData)
+  }
+}
+export function passwordReset (obj) {
+  console.log(obj)
+  return async dispatch => {
+    dispatch(signupRequest())
 
-    if (getData.user) {
-      if (getData.user.userType === 'Company') {
-        localStorage.setItem('token', getData.token)
-        dispatch(signupSucced(getData))
-
-        browserHistory.push('/companymain')
-
-        dispatch(changeNavbar(`${getData.user.userType}Home`))
-        // dispatch(signupSucced(getData))
-      } else if (getData.user.userType === 'Farmer') {
-        localStorage.setItem('token', getData.token)
-        dispatch(signupSucced(getData))
-
-        browserHistory.push('/farmermain')
-        dispatch(changeNavbar(`${getData.user.userType}Home`))
-      } else if (getData.user.userType === 'Expert') {
-        localStorage.setItem('token', getData.token)
-        dispatch(signupSucced(getData))
-
-        browserHistory.push('/expertmain')
-        dispatch(changeNavbar(`${getData.user.userType}Home`))
-      } else if (getData.user.userType === 'Buyer') {
-        localStorage.setItem('token', getData.token)
-        dispatch(signupSucced(getData))
-        browserHistory.push('/buyermain')
-        dispatch(changeNavbar(`${getData.user.userType}Home`))
-      } else {
-        browserHistory.push('/changePassword')
-      }
-    } else if (getData.error) {
-      browserHistory.push('/changePassword')
-      dispatch(authError(getData))
-      dispatch(signupUnAuthRequest()) // if use doesnot give correct email then they should not be signin
-    }
+    const result = await fetch(`${ROOT_URL}/auth/reset_password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+        // "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: JSON.stringify(obj)
+    })
+    const getData = await result.json()
+    console.log(getData)
   }
 }
 function signupRequest () {

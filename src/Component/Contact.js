@@ -10,14 +10,18 @@ import {
   emailSuccessEmpty
 } from '../Container/store/action/authAction'
 import { compose } from 'redux'
+import Background from '../images/theme.png'
 import { connect } from 'react-redux'
 const styles = theme => ({
   root: {
-    marginTop: 80
+    marginTop: 80,
+    backgroundImage:`url(${Background})`,
+
     // flexGrow: 1
   },
   paperStyle: {}
 })
+
 const userType = [
   {
     value: 'Buyer'

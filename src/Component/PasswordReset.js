@@ -1,18 +1,12 @@
 import React, { Component } from 'react'
 import { TextField, Button } from '@material-ui/core'
 import { connect } from 'react-redux'
-import { forgetPassword } from '../Container/store/action/authAction'
-import Alert from 'react-s-alert'
+import { passwordReset } from '../Container/store/action/authAction'
 import Background from '../images/theme.png'
 
+import Alert from 'react-s-alert'
 const style = {
-  root: {
-    backgroundImage:`url(${Background})`,
-    padding: 50,
-
-  },
   paperWapper: {
-   
     width: '30%',
     margin: '100px auto 0px',
     border: '3px solid #E8E8E8',
@@ -22,8 +16,6 @@ const style = {
     borderRadius: 15,
     marginBottom: 70,
     marginTop: 160,
-    height: 350,
-    
   },
   textStyle: {
     width: '80%',
@@ -53,27 +45,39 @@ const style = {
     borderTopRightRadius: 10,
     fontSize: 32
   }
+  ,
+  root: {
+    backgroundImage:`url(${Background})`,
+    padding: 50,
+
+  }
 }
 class ChangePassword extends Component {
   constructor () {
     super()
     this.state = {
-      email: '',
-      newPassword: ''
+      newPassword: '',
+      verifyPassword: ''
     }
   }
   componentWillMount () {
     localStorage.removeItem('token')
   }
   submit = () => {
-    let { email, newPassword } = this.state
-    console.log(email, newPassword)
+    let { newPassword, verifyPassword } = this.state
+    console.log(newPassword, verifyPassword)
     let obj = {}
-    if (email !== '') {
+    var token = document.location.href.split('token=')[1];
+    console.log(token)
+    if (verifyPassword !== '' && newPassword !== '') {
+
       obj = {
-        email: email,
+        newPassword: newPassword,
+        verifyPassword: verifyPassword,
+        token:token
       }
       this.props.getData(obj)
+    console.log(obj)
     } else {
       this.showAlertMessage('Data Badly Formated')
     }
@@ -96,20 +100,28 @@ class ChangePassword extends Component {
 
       <div style={style.paperWapper}>
         <div>
-          <h1 style={style.heading}>Forgot Password</h1>
+          <h1 style={style.heading}>Reset Password Form</h1>
 
           <TextField
             onChange={event => {
-              this.updateValue(event, 'email')
+              this.updateValue(event, 'newPassword')
             }}
-            value={this.state.email}
+            value={this.state.newPassword}
             style={style.textStyle}
-            type='email'
-            label='Email'
+            type='password'
+            label='New Password'
           />
 
           <br />
-        
+          <TextField
+            onChange={event => {
+              this.updateValue(event, 'verifyPassword')
+            }}
+            value={this.state.verifyPassword}
+            style={style.textStyle}
+            type='password'
+            label='Confirm Password'
+          />
           <br />
           <br />
           {/* {this.props.loader ? (
@@ -129,7 +141,7 @@ class ChangePassword extends Component {
 function mapDispatchToProps (dispatch) {
   return {
     getData: obj => {
-      dispatch(forgetPassword(obj))
+      dispatch(passwordReset(obj))
     }
   }
 }

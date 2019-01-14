@@ -28,6 +28,7 @@ import AdminCompany from './Component/Admin/AdminCompany'
 import AdminExpert from './Component/Admin/AdminExpert'
 import AdminFarmer from './Component/Admin/AdminFarmer'
 import CompanyResponse from './Component/Company/CompanyResponse'
+import ResetPassword from './Component/PasswordReset'
 export default class Routers extends Component {
   render () {
     return (
@@ -36,6 +37,8 @@ export default class Routers extends Component {
         <Route path='/login' component={Login} />
         <Route path='/signup' component={SignUp} />
         <Route path='/changePassword' component={ChangePassword} />
+        <Route path='/auth/reset_password' component={ResetPassword} />
+
 
         <Route path='/buyermain' component={AuthReducer(BuyerMain)} />
         <Route path='/expertmain' component={AuthReducer(ExpertMain)} />

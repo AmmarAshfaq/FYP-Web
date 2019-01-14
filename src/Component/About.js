@@ -11,15 +11,18 @@ import classNames from 'classnames'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { changeNavbar } from '../Container/store/action/authAction'
-
-const styles = theme => ({
+// import { url } from 'inspector';
+import Background from '../images/theme.png'
+ const styles = theme => ({
   paper: {
     textAlign: 'center',
-    padding: 5
+    padding: 5,
   },
   root: {
     marginTop: 70,
-    padding: 50
+    padding: 50,
+    backgroundImage:`url(${Background})`,
+
   },
   avatar: {
     margin: 10
@@ -29,6 +32,10 @@ const styles = theme => ({
     width: 80,
     height: 80,
     margin: 10
+  },
+  parentPaper:{
+    opacity: 0.9
+
   },
   titleText: {
     display: 'inline-block',
@@ -65,15 +72,13 @@ class About extends Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <Paper elevation={5}>
+        <Paper elevation={5} className={classes.parentPaper}>
           <Grid container spacing={24} style={{ padding: 20 }} fullWidth>
             <Grid item xs={12} sm={4} />
             <Grid item xs={12} sm={4}>
-              <Paper className={classes.paper}>
-                <Typography variant='display2' gutterBottom>
+                <Typography variant='display2' gutterBottom style={{textAlign:'center'}}>
                   Our Team
                 </Typography>
-              </Paper>
             </Grid>
             <Grid item xs={12} sm={4} />
             <Grid item xs={12} sm={6}>

@@ -116,6 +116,7 @@ class FarmerMain extends Component {
           <Grid item xs={12} sm={9}>
             <Paper className={classes.paper}>
               <Paper className={classes.rootTable}>
+              
                 <CropRates list={this.props.cityList} />
               </Paper>
             </Paper>

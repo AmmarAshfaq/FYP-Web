@@ -1,22 +1,35 @@
 import ActionTypes from '../constant/farmerConstant'
 
-const ROOT_URL = 'http://localhost:8080'
+const ROOT_URL = 'http://localhost:8080';
 let getToken
 
 export function notificationAction (obj) {
   let objConfig = {
+    // message:{
+    //   token : obj,
+    //   notification : {
+    //     body : "This is an FCM notification message!",
+    //     title : "FCM Message",
+    //     }
+    //  }
     notification: {
       title: 'Firebase',
       body: 'Firebase is awsone',
-      click_action: 'http://localhost:3000/',
+      click_action: 'http://localhost:3000/buyermain',
       icon: ''
     },
-    to: obj
+    to: obj // for single we use user token
+    // to: "/topics/Buyer" // for multiple user we use topic
   }
   console.log(obj)
   console.log(objConfig)
   return async dispatch => {
-    const result = await fetch('https://fcm.googleapis.com/fcm/send', {
+    const result = 
+    await fetch(
+      // `https://iid.googleapis.com/iid/info/${obj}`
+      'https://fcm.googleapis.com/fcm/send'
+        // `https://iid.googleapis.com/iid/v1/${obj}/rel/topics/Buyer`
+      , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',

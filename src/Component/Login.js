@@ -9,40 +9,53 @@ import {
 } from '../Container/store/action/authAction'
 import Alert from 'react-s-alert'
 import Loader from 'react-loader-spinner'
+import Background from '../images/theme.png'
+
 
 const style = {
   paperWapper: {
-    width: '70%',
+    width: '30%',
     margin: '100px auto 0px',
-    border: '5px solid darkgray',
-    padding: '20px',
-    backgroundColor: '#00806d',
+    border: '3px solid #E8E8E8',
+    backgroundColor: '#fff',
     color: '#fff',
     textAlign: 'center',
-    borderRadius: 10,
-    marginBottom: 70,
-    marginTop: 170
+    borderRadius: 15,
+   
   },
   textStyle: {
-    width: '100%',
-    color: '#fff'
+    width: '80%',
+    color: '#fff',
+    marginBottom: 8,
+    boxShadow: 'none'
   },
   button: {
-    width: '100%',
+    width: '80%',
     marginTop: '10px',
     marginBottom: '10px',
+    marginRight: '10px',
+    marginLeft: '10px',
     color: '#fff',
-    backgroundColor: '#000'
+    backgroundColor: '#3c806d',
+    borderRadius: 10
   },
   heading: {
-    color: '#212121'
+    color: '#fff',
+    backgroundColor: '#3c806d',
+    marginTop: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    marginBottom: 50,
+    padding: 20,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    fontSize: 32
   },
-  formControl: {
-    minWidth: 120,
-    width: '28%',
-    float: 'right',
-    lineHeight: '2.1875em'
-  }
+  root: {
+    backgroundImage:`url(${Background})`,
+    padding: 50,
+
+  },
 }
 
 class Login extends React.Component {
@@ -75,7 +88,7 @@ class Login extends React.Component {
     )
   }
 
-  changeRoute = ()=>{
+  changeRoute = () => {
     browserHistory.push('/changePassword')
   }
   signIn = authenticate => {
@@ -90,9 +103,10 @@ class Login extends React.Component {
 
   render () {
     return (
+      <div style={style.root}>
       <div style={style.paperWapper}>
         <div>
-          <h1 style={style.heading}>Log In</h1>
+          <h1 style={style.heading}>Sign In</h1>
 
           <TextField
             onChange={event => {
@@ -101,7 +115,8 @@ class Login extends React.Component {
             value={this.state.email}
             style={style.textStyle}
             type='email'
-            label='Email'
+            // label='Email'
+            placeholder='Email'
           />
 
           <br />
@@ -112,8 +127,28 @@ class Login extends React.Component {
             value={this.state.password}
             style={style.textStyle}
             type='password'
-            label='Password'
+            // label='Password'
+            placeholder='Password'
           />
+          <br />
+
+          <p
+            style={{
+              fontSize: 16,
+              color: 'silver',
+              float: 'right',
+              marginRight: 35
+            }}
+          >
+            Forgot{' '}
+            <span
+              style={{ color: '#3c806d', cursor: 'pointer' }}
+              onClick={this.changeRoute.bind(this)}
+            >
+              Password?
+            </span>{' '}
+          </p>
+          {/* </span> */}
           <br />
           <br />
           {this.props.loader ? (
@@ -124,19 +159,30 @@ class Login extends React.Component {
             onClick={this.signIn.bind(this, 'companymain')}
             style={style.button}
           >
-            LOGIN
+            SIGN IN
           </Button>
-          <Button
-            onClick={this.changeRoute.bind(this)}
-            style={style.button}
-          >
-          Forget Password
-          </Button>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
 
-          <Button onClick={this.register} style={style.button}>
-            Register
-          </Button>
+          <p
+            style={{
+              color: 'silver',
+              lineHeight: '0.2em'
+            }}
+          >
+            Don't have an account?
+          </p>
+          <h3
+            style={{ color: '#3c806d', cursor: 'pointer' }}
+            onClick={this.register}
+          >
+            SIGN UP NOW
+          </h3>
         </div>
+      </div>
       </div>
     )
   }
