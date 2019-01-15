@@ -105,7 +105,8 @@ class ChangePassword extends Component {
             value={this.state.email}
             style={style.textStyle}
             type='email'
-            label='Email'
+            // label='Email'
+            placeholder='Email'
           />
 
           <br />

@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Grid,
-   Typography,
-   } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Avatar from '@material-ui/core/Avatar'
@@ -38,7 +36,7 @@ const styles = theme => ({
     margin: theme.spacing.unit
   },
   butonPosition: {
-    float: 'right'
+    float: 'left'
   }
 })
 class CommentBox extends Component {
@@ -102,10 +100,9 @@ class CommentBox extends Component {
         type: this.props.typeCheck,
         comment_id: this.props.selectId,
         userType: this.props.userImage.userType
-
       }
     }
-  
+
     if (this.props.selectId && this.props.selectId !== undefined) {
       this.props.commentUpdate(obj)
       this.props.commentId(undefined)
@@ -116,107 +113,105 @@ class CommentBox extends Component {
   render () {
     const { classes } = this.props
     return (
-      <Grid item xs={12} container spacing={24} className={classes.leftMargin}>
-        <Grid item xs={8}>
-          <Grid item xs={12} container spacing={24}>
-            <Grid item xs={1}>
-              <Avatar
-                alt='user'
-                src={this.props.userImage.image_url}
-                className={classes.avatar}
-              />
-            </Grid>
-            <Grid item xs={10}>
-              <TextField
-                style={{ margin: 8 }}
-                placeholder='Add Comment'
-                value={this.state.comment}
-                onChange={event => this.handleChange(event, 'comment')}
-                fullWidth
-                margin='normal'
-                InputLabelProps={{
-                  shrink: true
-                }}
-              />
-            </Grid>
-            <Grid item xs={1}>
-              <Button
-                variant='contained'
-                color='primary'
-                className={classes.button}
-                onClick={() => this.submitComment()}
-              >
-                Submit
-              </Button>
-            </Grid>
+      // <Grid item xs={12} container spacing={24} className={classes.leftMargin}>
+      //   <Grid item xs={8}>
+      <Fragment>
+        <Grid item xs={12} container spacing={24}>
+          <Grid item xs={2}>
+            <Fragment />
+            <Avatar
+              alt='user'
+              src={this.props.userImage.image_url}
+              className={classes.avatar}
+            />
           </Grid>
-          {this.props.dataArr.map((item, ind) => (
-            <Grid item xs={12} keys={ind}>
-              <Grid container spacing={16}>
-                <Grid item>
-                  <img
-                    className={classes.img}
-                    alt='complex'
-                    src={require('../../images/malik.jpg')}
-                    width='60'
-                    height='60'
-                  />
-                </Grid>
-                <Grid item xs={12} sm container>
-                  <Grid item xs container direction='column' spacing={16}>
-                    <Grid item xs>
-                      <Typography gutterBottom variant='title'>
-                        {item.user_name}
-                      </Typography>
-                      <Typography gutterBottom>{item.comment}</Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography style={{ cursor: 'pointer' }}>
-                        Reply
-                      </Typography>
-                    </Grid>
+          <Grid item xs={7}>
+            <TextField
+              // style={{ margin:  }}
+              placeholder='Add Comment'
+              value={this.state.comment}
+              onChange={event => this.handleChange(event, 'comment')}
+              fullWidth
+              margin='normal'
+              InputLabelProps={{
+                shrink: true
+              }}
+            />
+          </Grid>
+          <Grid item xs={1}>
+            <Button
+              variant='contained'
+              color='primary'
+              className={classes.button}
+              onClick={() => this.submitComment()}
+            >
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
+        {this.props.dataArr.map((item, ind) => (
+          <Grid item xs={12} keys={ind}>
+            <Grid container spacing={16}>
+              <Grid item>
+                <img
+                  className={classes.img}
+                  alt='complex'
+                  src={require('../../images/malik.jpg')}
+                  width='60'
+                  height='60'
+                />
+              </Grid>
+              <Grid item xs={12} sm container>
+                <Grid item xs container direction='column' spacing={16}>
+                  <Grid item xs>
+                    <Typography gutterBottom variant='title'>
+                      {item.user_name}
+                    </Typography>
+                    <Typography gutterBottom>{item.comment}</Typography>
                   </Grid>
-                  {item.user_id === this.props.userImage.id ? (
-                    <Fragment>
-                      <IconButton
-                        aria-label='Update'
-                        className={classes.butonPosition}
-                        onClick={() =>
-                          this.updateComment(item.comment, item._id)
-                        }
-                      >
-                        <UpdateIcon />
-                      </IconButton>
-                      <IconButton
-                        aria-label='Delete'
-                        className={classes.butonPosition}
-                        onClick={() => this.deleteComment(item._id)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Fragment>
-                  ) : null}
-                  {item.user_id !== this.props.userImage.id ? (
-                    <IconButton
-                      aria-label='Message'
-                      className={classes.butonPosition}
-                      onClick={() => this.startMessage(item)}
-                    >
-                      <MessageIcon />
-                    </IconButton>
-                  ) : null}
+                  <Grid item>
+                    <Typography style={{ cursor: 'pointer' }}>Reply</Typography>
+                  </Grid>
                 </Grid>
+                {item.user_id === this.props.userImage.id ? (
+                  <Fragment>
+                    <IconButton
+                      aria-label='Update'
+                      className={classes.butonPosition}
+                      onClick={() => this.updateComment(item.comment, item._id)}
+                    >
+                      <UpdateIcon />
+                    </IconButton>
+                    <IconButton
+                      aria-label='Delete'
+                      className={classes.butonPosition}
+                      onClick={() => this.deleteComment(item._id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Fragment>
+                ) : null}
+                {item.user_id !== this.props.userImage.id ? (
+                  <IconButton
+                    aria-label='Message'
+                    className={classes.butonPosition}
+                    onClick={() => this.startMessage(item)}
+                  >
+                    <MessageIcon />
+                  </IconButton>
+                ) : null}
               </Grid>
             </Grid>
-          ))}
-        </Grid>
-        <Grid item xs={4} />
-      </Grid>
+          </Grid>
+        ))}
+        {/* // </Grid> */}
+      </Fragment>
+      //   <Grid item xs={4} />
+      // </Grid>
     )
   }
 }
 function mapStateToProps (state) {
- 
   return {
     userImage: state.authReducer.currentUserData.user,
     cropDetail: state.allAddedItemReducer.specificCrop,

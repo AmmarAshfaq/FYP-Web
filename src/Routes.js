@@ -29,15 +29,17 @@ import AdminExpert from './Component/Admin/AdminExpert'
 import AdminFarmer from './Component/Admin/AdminFarmer'
 import CompanyResponse from './Component/Company/CompanyResponse'
 import ResetPassword from './Component/PasswordReset'
+import AuthLoading from './Component/AuthLoading'
 export default class Routers extends Component {
   render () {
     return (
       <Router history={browserHistory}>
-        <Route exact path='/' component={Main} />
-        <Route path='/login' component={Login} />
-        <Route path='/signup' component={SignUp} />
-        <Route path='/changePassword' component={ChangePassword} />
-        <Route path='/auth/reset_password' component={ResetPassword} />
+        <Route exact path='/' component={AuthReducer(Main)} />
+        <Route path="/loading" component={AuthLoading}/>
+        <Route path='/login' component={AuthReducer(Login)} />
+        <Route path='/signup' component={AuthReducer(SignUp)} />
+        <Route path='/changePassword' component={AuthReducer(ChangePassword)} />
+        <Route path='/auth/reset_password' component={AuthReducer(ResetPassword)} />
 
 
         <Route path='/buyermain' component={AuthReducer(BuyerMain)} />
@@ -56,8 +58,8 @@ export default class Routers extends Component {
         <Route path='/addpesticide' component={AuthReducer(AddPesticide)} />
         <Route path='/addmachinery' component={AuthReducer(AddMachinery)} />
         <Route path='/addfertilizer' component={AuthReducer(AddFertilizer)} />
-        <Route path='/about' component={About} />
-        <Route path='/contact' component={Contact} />
+        <Route path='/about' component={AuthReducer(About)} />
+        <Route path='/contact' component={AuthReducer(Contact)} />
         <Route path='/productList' component={AuthReducer(ProductList)} />
         <Route
           path='/problemSolution'

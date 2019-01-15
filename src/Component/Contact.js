@@ -93,11 +93,7 @@ class Contact extends Component {
       phonenumber: ''
     }
   }
-  componentWillMount () {
-    localStorage.removeItem('token')
-
-    this.props.changeRoutes('Main')
-  }
+  
   fieldUpdate = (event, target) => {
     let obj = {}
     obj[target] = event.target.value

@@ -63,11 +63,7 @@ import Background from '../images/theme.png'
   }
 })
 class About extends Component {
-  componentWillMount () {
-    localStorage.removeItem('token')
-
-    this.props.changeRoutes('Main')
-  }
+ 
   render () {
     const { classes } = this.props
     return (

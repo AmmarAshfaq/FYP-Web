@@ -8,7 +8,14 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import {storeDataForMsg} from '../../Container/store/action/companyAction'
 import {browserHistory} from 'react-router'
+import Background from '../../images/theme.png'
+
 const styles = theme => ({
+  parentRoot: {
+    marginTop: 1,
+    padding: 1,
+    backgroundImage: `url(${Background})`
+  },
   root: {
     flexGrow: 1,
     marginTop: 100
@@ -16,7 +23,8 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing.unit * 2,
     color: theme.palette.text.secondary,
-    marginBottom: 20
+    marginBottom: 20,
+    opacity:0.9
   }
 })
 class CompanyResponse extends Component {
@@ -48,6 +56,7 @@ class CompanyResponse extends Component {
     const { classes } = this.props
 
     return (
+      <div className={classes.parentRoot}>
       <div className={classes.root}>
         <Grid container spacing={12}>
           {unique.map(item => (
@@ -132,6 +141,7 @@ class CompanyResponse extends Component {
             </Grid>
           ))}
         </Grid>
+      </div>
       </div>
     )
   }

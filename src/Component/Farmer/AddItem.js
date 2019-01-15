@@ -10,6 +10,7 @@ import {
 
 import { connect } from 'react-redux'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Background from '../../images/theme.png'
 
 import FarmerProblemData from '../AllData/FarmerProblemData'
 import FarmerCropData from '../AllData/FarmerCropData'
@@ -40,10 +41,10 @@ class AddedItem extends Component {
  
     const { classes } = this.props
     return (
-      <div style={{ marginTop: 100, flexGrow: 1 }}>
+      <div style={{  flexGrow: 1, backgroundImage: `url(${Background})` }}>
         <Grid container spacing={0}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
+            <Paper className={[classes.paper,classes.marginTopTable]}>
               {
                 
                 this.props.cropList.problemArray ? (
@@ -79,7 +80,13 @@ const styles = theme => ({
     margin: theme.spacing.unit * 6,
     textAlign: 'center',
     color: theme.palette.text.secondary,
+    opacity: 0.9,
+
     // height:'auto'
+  },
+  marginTopTable:{
+    marginTop: 100,
+
   },
   progress: {
     margin: theme.spacing.unit * 2

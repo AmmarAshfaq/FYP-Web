@@ -25,7 +25,7 @@ export default (state = INITIAL_STATE, action) => {
         authenticated:false
       }
     case ActionTypes.UNAUTH_USER:
-      return { ...state, authenticated: false }
+      return { ...state, authenticated: false,currentUserData:[] }
     case ActionTypes.AUTH_ERROR:
       return { ...state, error: action.payload }
     case ActionTypes.EMAIL_SEND:

@@ -60,9 +60,7 @@ class ChangePassword extends Component {
       verifyPassword: ''
     }
   }
-  componentWillMount () {
-    localStorage.removeItem('token')
-  }
+ 
   submit = () => {
     let { newPassword, verifyPassword } = this.state
     console.log(newPassword, verifyPassword)
@@ -109,7 +107,7 @@ class ChangePassword extends Component {
             value={this.state.newPassword}
             style={style.textStyle}
             type='password'
-            label='New Password'
+            placeholder='New Password'
           />
 
           <br />
@@ -120,7 +118,7 @@ class ChangePassword extends Component {
             value={this.state.verifyPassword}
             style={style.textStyle}
             type='password'
-            label='Confirm Password'
+            placeholder='Confirm Password'
           />
           <br />
           <br />

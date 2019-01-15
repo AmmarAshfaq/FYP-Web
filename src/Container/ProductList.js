@@ -29,9 +29,15 @@ import {
   getMachineryIdAction,
   getPesticideIdAction
 } from './store/action/companyAction'
-
+import Background from '../images/theme.png'
 const styles = theme => ({
+  parentRoot:{
+    marginTop: 1,
+    padding: 1,
+    backgroundImage: `url(${Background})`
+  },
   root: {
+    // backgroundImage: `url(${Background})`,
     flexGrow: 1,
     marginTop: 90,
     overflowX: 'hidden',
@@ -40,7 +46,8 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing.unit,
     textAlign: 'center',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
+    opacity:0.9
   },
   textField: {
     border: '1px solid #000',
@@ -57,7 +64,8 @@ const styles = theme => ({
   },
   media: {
     height: 0,
-    paddingTop: '56.25%' // 16:9
+    paddingTop: '56.25%' ,// 16:9,
+    opacity:0.9
   }
 })
 function FormRow (props) {
@@ -202,6 +210,7 @@ class ProductList extends Component {
       autoplaySpeed: 2000
     }
     return (
+      <div className={classes.parentRoot}>
       <div className={classes.root}>
         <Grid container spacing={8}>
           <Grid item xs={12} container>
@@ -324,6 +333,7 @@ class ProductList extends Component {
           </Grid>
         </Grid>
         <PurchaseForm />
+      </div>
       </div>
     )
   }

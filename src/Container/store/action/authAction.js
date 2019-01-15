@@ -107,7 +107,7 @@ export function signoutUser (data) {
   return dispatch => {
     localStorage.removeItem('token')
     browserHistory.push('/login')
-    localStorage.removeItem('state')
+    // localStorage.removeItem('state')
     dispatch(signOut())
     dispatch(changeNavbar(data))
   }

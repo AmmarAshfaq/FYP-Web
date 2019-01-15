@@ -14,12 +14,11 @@ import {
   getAllPesticideAction,
   getAllMachineryAction
 } from '../../Container/store/action/companyAction'
+import Background from '../../images/theme.png'
 
 class AdminCompany extends Component {
   componentWillMount () {
-    // this.props.getFertilizerData(this.props.companyID.id)
-    // this.props.getMachineryData(this.props.companyID.id)
-    // this.props.getPesticideData(this.props.companyID.id)
+  
     this.props.getFertilizerData()
     this.props.getMachineryData()
     this.props.getPesticideData()
@@ -27,6 +26,9 @@ class AdminCompany extends Component {
   render () {
     const { classes } = this.props
     return (
+      <div style={{ marginTop: 1,
+        padding: 1,
+        backgroundImage: `url(${Background})`}}>
       <div className={classes.root}>
         <Grid container spacing={0}>
           <Grid item xs={12}>
@@ -67,6 +69,7 @@ class AdminCompany extends Component {
           </Grid>
         </Grid>
       </div>
+      </div>
     )
   }
 }
@@ -79,7 +82,8 @@ const styles = theme => ({
   paper: {
     margin: theme.spacing.unit * 6,
     textAlign: 'center',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
+    opacity:0.9
   },
   progress: {
     margin: theme.spacing.unit * 2

@@ -10,6 +10,8 @@ import Weather from '../../Container/Weather'
 import { weatherData } from '../../Container/store/action/weatherAction'
 import FarmerCropData from '../AllData/FarmerCropData'
 import { getAllCityList } from '../../Container/store/action/farmerAction'
+import Background from '../../images/theme.png'
+
 
 import classNames from 'classnames'
 import {
@@ -52,12 +54,17 @@ const CustomTableCell = withStyles(theme => ({
 }))(TableCell)
 
 const styles = theme => ({
+  parentRoot: {
+    marginTop: 1,
+    padding: 1,
+    backgroundImage: `url(${Background})`
+  },
   root: {
-    flexGrow: 1,
     marginTop: 100,
     marginRight: 15,
     marginLeft: 15,
-    marginBottom: 15
+    marginBottom: 15,
+    opacity: 0.9
   },
 
   // aaaaaaa
@@ -146,6 +153,7 @@ class BuyerMain extends Component {
 
     let i = 0
     return (
+      <div className={classes.parentRoot}>
       <div className={classes.root}>
         <Grid container spacing={24}>
           <Weather data={this.props.weatherDetail} />
@@ -153,6 +161,7 @@ class BuyerMain extends Component {
           <Grid item xs={12} sm={9}>
             <Paper className={classes.paper}>
               <Paper className={classes.rootTable}>
+              {console.log(this.props.cityList)}
               <CropRates list={this.props.cityList} />
                
               </Paper>
@@ -208,6 +217,7 @@ class BuyerMain extends Component {
             </Paper>
           </Grid>
         </Grid>
+      </div>
       </div>
     )
   }

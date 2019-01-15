@@ -24,6 +24,7 @@ import {
   getCropAddData,
   getProblemAddData
 } from '../../Container/store/action/farmerAction'
+import Background from '../../images/theme.png'
 
 import classNames from 'classnames'
 
@@ -31,23 +32,28 @@ import { Paper, Grid } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
+  parentRoot: {
+    marginTop: 1,
+    padding: 1,
+    backgroundImage: `url(${Background})`
+  },
   root: {
-    flexGrow: 1,
     marginTop: 100,
     marginRight: 15,
     marginLeft: 15,
     marginBottom: 15,
-    backgroundImage: 'url(require("../../images/farmer.jpg"))'
+    opacity: 0.9
   },
   papper: {
     padding: theme.spacing.unit * 2,
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
+    opacity: 0.9
   },
   rootTable: {
     width: '100%',
     overflowX: 'auto',
-    height:900,
-    // overflowY:'hidden'
+    height: 900,
+    opacity: 0.9
   },
 
   tableCellIncrease: {
@@ -66,11 +72,11 @@ const styles = theme => ({
     margin: theme.spacing.unit * 2
   },
   marginTopIncrease: {
-    marginTop: 30
+    marginTop: 20
     // textAlign: 'center'
   },
-  tableSize:{
-    height:300
+  tableSize: {
+    height: 300
   }
 })
 class FarmerMain extends Component {
@@ -85,17 +91,14 @@ class FarmerMain extends Component {
     this.props.getFertilizer()
     this.props.getPesticide()
     this.props.getMachinery()
-    
-
   }
   componentDidMount () {
     setTimeout(() => {
-       this.props.loaderOff()
+      this.props.loaderOff()
     }, 2000)
-    setTimeout(()=>{
-
+    setTimeout(() => {
       this.props.getLit()
-    },3000)
+    }, 3000)
   }
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget })
@@ -109,85 +112,107 @@ class FarmerMain extends Component {
     const { classes } = this.props
     const { selectList } = this.state
     return (
-      <div className={classes.root}>
-        <Grid container spacing={24}>
-          <Weather data={this.props.weatherDetail} />
+      <div className={classes.parentRoot}>
+        <div className={classes.root}>
+          <Grid container spacing={24}>
+            <Weather data={this.props.weatherDetail} />
 
-          <Grid item xs={12} sm={9}>
-            <Paper className={classes.paper}>
-              <Paper className={classes.rootTable}>
-              
-                <CropRates list={this.props.cityList} />
+            <Grid item xs={12} sm={9}>
+              <Paper className={classes.paper}>
+                <Paper className={classes.rootTable}>
+                  <CropRates list={this.props.cityList} />
+                </Paper>
               </Paper>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction='column'>
-              <Grid item xs>
-                <Paper className={classNames(classes.paper)}>
-                  <div style={{ textAlign: 'center' }}>
-                    {!this.props.loader ? (
-                      <MachinerySlider
-                        info={this.props.allCompanyData.allMachineryData}
-                        allDataMac={this.props.allCompanyData.allMachineryData}
-                        typeSelect='Machinery'
-                      />
-                    ) : (
-                      <Loader type='Oval' color='#000' height={50} width={50} />
-                    )}
-                  </div>
-                </Paper>
-                <Paper className={classNames(classes.paper)}>
-                  <div style={{ textAlign: 'center' }}>
-                    {!this.props.loader ? (
-                      <MachinerySlider
-                        info={this.props.allCompanyData.allFertilizerData}
-                        allDataFer={this.props.allCompanyData.allFertilizerData}
-                        typeSelect='Fertilizer'
-                      />
-                    ) : (
-                      <Loader type='Oval' color='#000' height={50} width={50} />
-                    )}
-                  </div>
-                </Paper>
-                <Paper className={classNames(classes.paper)}>
-                  <div style={{ textAlign: 'center' }}>
-                    {!this.props.loader ? (
-                      <MachinerySlider
-                        info={this.props.allCompanyData.allPesticideData}
-                        allDataPes={this.props.allCompanyData.allPesticideData}
-                        typeSelect='Pesticide'
-                      />
-                    ) : (
-                      <Loader type='Oval' color='#000' height={50} width={50} />
-                    )}
-                  </div>
-                </Paper>
+            </Grid>
+            <Grid item xs={12} sm container>
+              <Grid item xs container direction='column'>
+                <Grid item xs>
+                  <Paper className={classNames(classes.paper)}>
+                    <div style={{ textAlign: 'center' }}>
+                      {!this.props.loader ? (
+                        <MachinerySlider
+                          info={this.props.allCompanyData.allMachineryData}
+                          allDataMac={
+                            this.props.allCompanyData.allMachineryData
+                          }
+                          typeSelect='Machinery'
+                        />
+                      ) : (
+                        <Loader
+                          type='Oval'
+                          color='#000'
+                          height={50}
+                          width={50}
+                        />
+                      )}
+                    </div>
+                  </Paper>
+                  <Paper className={classNames(classes.paper)}>
+                    <div style={{ textAlign: 'center' }}>
+                      {!this.props.loader ? (
+                        <MachinerySlider
+                          info={this.props.allCompanyData.allFertilizerData}
+                          allDataFer={
+                            this.props.allCompanyData.allFertilizerData
+                          }
+                          typeSelect='Fertilizer'
+                        />
+                      ) : (
+                        <Loader
+                          type='Oval'
+                          color='#000'
+                          height={50}
+                          width={50}
+                        />
+                      )}
+                    </div>
+                  </Paper>
+                  <Paper className={classNames(classes.paper)}>
+                    <div style={{ textAlign: 'center' }}>
+                      {!this.props.loader ? (
+                        <MachinerySlider
+                          info={this.props.allCompanyData.allPesticideData}
+                          allDataPes={
+                            this.props.allCompanyData.allPesticideData
+                          }
+                          typeSelect='Pesticide'
+                        />
+                      ) : (
+                        <Loader
+                          type='Oval'
+                          color='#000'
+                          height={50}
+                          width={50}
+                        />
+                      )}
+                    </div>
+                  </Paper>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
 
-          <Grid item xs={12}>
-            <Paper className={[classes.paper, classes.marginTopIncrease]}>
-              <div style={{ textAlign: 'center' }}>
-                {!this.props.loader ? (
-                  <ProblemSlider
-                    info={
-                      this.props.farmerData.cropArray
-                        ? this.props.farmerData.cropArray.concat(
-                          this.props.farmerData.problemArray
-                        )
-                        : null
-                    }
-                  />
-                ) : (
-                  <Loader type='Oval' color='#000' height={50} width={50} />
-                )}
-              </div>
-            </Paper>
+            <Grid item xs={12}>
+              <Paper className={[classes.paper, classes.marginTopIncrease]}>
+                <div style={{ textAlign: 'center' }}>
+                  {!this.props.loader ? (
+                    <ProblemSlider
+                      info={
+                        this.props.farmerData.cropArray
+                          ? this.props.farmerData.cropArray.concat(
+                            this.props.farmerData.problemArray
+                          )
+                          : null
+                      }
+                    />
+                  ) : (
+                    <Loader type='Oval' color='#000' height={50} width={50} />
+                  )}
+                </div>
+              </Paper>
+            </Grid>
           </Grid>
-        </Grid>
-        {/* )} */}
+          {/* )} */}
+        </div>
       </div>
     )
   }
@@ -199,7 +224,7 @@ function mapStateToProps (state) {
     loader: state.authReducer.authenticated,
     farmerId: state.authReducer.currentUserData.user.id,
     allCompanyData: state.companyReducer,
-    cityList:state.farmerReducer.cityList
+    cityList: state.farmerReducer.cityList
   }
 }
 function mapDispatchToProps (dispatch) {

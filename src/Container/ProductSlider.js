@@ -13,7 +13,8 @@ const styles = theme => ({
     maxWidth: 400,
     textAlign: 'center',
     marginBottom: 10,
-    maxHeight:400
+    maxHeight:400,
+    opacity:0.9
   },
   media: {
     height: 0,
@@ -30,7 +31,6 @@ class MachinerySlider extends React.Component {
       currentImageIndex: 0
     }
 
-    //  console.log(props.info)
   }
 
   previousSlide () {

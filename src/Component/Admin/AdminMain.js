@@ -6,13 +6,21 @@ import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import { compose } from 'redux'
 import CardStyle from '../../Container/CardStyle'
+import Background from '../../images/theme.png'
+
 const styles = theme => ({
+  parentRoot: {
+    marginTop: 1,
+    padding: 1,
+    backgroundImage: `url(${Background})`
+  },
   root: {
     flexGrow: 1,
     marginTop: 100,
     marginBottom: 20,
     marginRight: 40,
-    marginLeft: 40
+    marginLeft: 40,
+    opacity:0.9
   },
   cardStyling:{
 cursor:'pointer'
@@ -28,6 +36,7 @@ class AdminMain extends Component {
   render () {
     const { classes } = this.props
     return (
+      <div className={classes.parentRoot}>
       <div className={classes.root}>
         <Grid container spacing={24}>
           <Grid item xs={6}>
@@ -69,6 +78,7 @@ class AdminMain extends Component {
             />
           </Grid>
         </Grid>
+      </div>
       </div>
     )
   }

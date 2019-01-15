@@ -14,6 +14,7 @@ import {
   getMachineryAction,
   getPesticideAction
 } from '../../Container/store/action/companyAction'
+import Background from '../../images/theme.png'
 
 class CompanyMain extends Component {
   componentWillMount () {
@@ -24,6 +25,9 @@ class CompanyMain extends Component {
   render () {
     const { classes } = this.props
     return (
+      <div className={classes.parentRoot}>
+
+      
       <div className={classes.root}>
         <Grid container spacing={0}>
           <Grid item xs={12}>
@@ -64,11 +68,18 @@ class CompanyMain extends Component {
           </Grid>
         </Grid>
       </div>
+      </div>
     )
+
   }
 }
 
 const styles = theme => ({
+  parentRoot: {
+    marginTop: 1,
+    padding: 1,
+    backgroundImage: `url(${Background})`
+  },
   root: {
     flexGrow: 1,
     marginTop: 100
@@ -76,7 +87,8 @@ const styles = theme => ({
   paper: {
     margin: theme.spacing.unit * 6,
     textAlign: 'center',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
+    opacity:0.9
   },
   progress: {
     margin: theme.spacing.unit * 2

@@ -7,17 +7,19 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { loaderProcessDone } from '../Container/store/action/allAddItem'
+import Background from '../images/theme.png'
 
 const styles = theme => ({
   root: {
     marginTop: 80,
     flexGrow: 1,
     overflowX: 'hidden',
-    overflowY: 'hidden'
+    overflowY: 'hidden',
+    backgroundImage: `url(${Background})`
   },
   leftMargin: {
     marginLeft: 10,
-    marginRight: 10
+    // marginRight: 10
   },
   textCenter: {
     textAlign: 'center',
@@ -32,7 +34,10 @@ const styles = theme => ({
   },
   paddingText: {
     padding: 10
-  }
+  },
+  paper: {
+    opacity: 0.9
+  },
 })
 class SpecificCrop extends Component {
   componentDidMount () {
@@ -128,13 +133,14 @@ class SpecificCrop extends Component {
                 </Grid>
               </Paper>
             </Grid>
-            <Grid item xs={4} />
-          </Grid>
+            <Grid item xs={4} >
           {this.props.loader ? (
             <CircularProgress className={classes.progress} />
           ) : (
             <CommentBox dataArr={cropData.comments} typeCheck='crop' />
           )}
+            </Grid>
+          </Grid>
         </Grid>
       </div>
     )

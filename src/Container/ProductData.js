@@ -9,7 +9,14 @@ import {
   responseAddMachineryAction,
   responseAddPesticideAction
 } from './store/action/companyAction'
+import Background from '../images/theme.png'
+
 const styles = theme => ({
+  parentRoot:{
+    marginTop: 1,
+    padding: 1,
+    backgroundImage: `url(${Background})`
+  },
   root: {
     flexGrow: 1,
     marginTop: 100,
@@ -19,7 +26,8 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing.unit * 2,
     // textAlign: 'center',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
+    opacity:0.9
   },
   textFieldPad: {
     margin: '10px 30px 10px 30px',
@@ -108,6 +116,7 @@ class ProductData extends Component {
   render () {
     const { classes } = this.props
     return (
+      <div className={classes.parentRoot}>
       <div className={classes.root}>
         <Grid container spacing={8} xs={12}>
           <Grid item xs={3}>
@@ -293,6 +302,7 @@ class ProductData extends Component {
             </Paper>
           </Grid>
         </Grid>
+      </div>
       </div>
     )
   }

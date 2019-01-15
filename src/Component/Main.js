@@ -34,11 +34,7 @@ const styles = theme => ({
   }
 })
 class Main extends Component {
-  componentWillMount () {
-    localStorage.removeItem('token')
-
-    this.props.changeRoutes('Main')
-  }
+  
   render () {
     const { classes } = this.props
     return (

@@ -12,6 +12,7 @@ import { compose } from 'redux'
 import 'weather-icons/css/weather-icons.css'
 import { weatherData } from '../../Container/store/action/weatherAction'
 import Weather from '../../Container/Weather'
+import Background from '../../images/theme.png'
 
 import FormControl from '@material-ui/core/FormControl'
 import NativeSelect from '@material-ui/core/NativeSelect'
@@ -53,12 +54,17 @@ const CustomTableCell = withStyles(theme => ({
 }))(TableCell)
 
 const styles = theme => ({
+  parentRoot: {
+    marginTop: 1,
+    padding: 1,
+    backgroundImage: `url(${Background})`
+  },
   root: {
-    flexGrow: 1,
     marginTop: 100,
     marginRight: 15,
     marginLeft: 15,
-    marginBottom: 15
+    marginBottom: 15,
+    opacity: 0.9
   },
   papper: {
     padding: theme.spacing.unit * 2,
@@ -151,6 +157,7 @@ class ExpertMain extends Component {
     const { selectList } = this.state
     let i = 0
     return (
+      <div className={classes.parentRoot}>
       <div className={classes.root}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
@@ -219,6 +226,7 @@ class ExpertMain extends Component {
             </Paper>
           </Grid>
         </Grid>
+      </div>
       </div>
     )
   }
